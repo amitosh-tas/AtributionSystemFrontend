@@ -42,51 +42,52 @@ function Sidebar({
     <aside
       className="
         bg-sidebar text-sidebar-text
-        w-[15%] p-5
-        sticky top-0 h-dvh
-
-        flex flex-col gap-2
+        relative
       "
     >
-      <div className="flex flex-col">
-
-        <h1
-          className="
-            text-primary
-            font-heading
-            uppercase
-            text-lg
-          "
-        >
-          Ledger
-        </h1>
-
-        <p className="text-[10px]">
-          {companyName}
-        </p>
-
-        <div className="bg-gray-400/20 h-px w-full mt-5" />
-      </div>
-
       <div
-      className="flex flex-col gap-0.5">
-        {items.map((item) => (
-          <NavLink
-            to={item.path}
-            key={item.path}
-            className={
-              ({isActive}) => ` 
-              
-              duration-300 py-1.5
+      className="sticky top-0 h-max w-50 p-5
+      flex flex-col gap-2
+      ">
+        <div className="flex flex-col">
 
-              ${isActive ? "text-primary translate-x-2" : "" } `
-            }
+          <h1
+            className="
+              text-primary
+              font-heading
+              uppercase
+              text-lg
+            "
           >
-            {item.label}
-          </NavLink>
-        ))}
-      </div>
+            Ledger
+          </h1>
 
+          <p className="text-[10px]">
+            {companyName}
+          </p>
+
+          <div className="bg-gray-400/20 h-px w-full mt-5" />
+        </div>
+
+        <div
+        className="flex flex-col gap-0.5">
+          {items.map((item) => (
+            <NavLink
+              to={item.path}
+              key={item.path}
+              className={
+                ({isActive}) => ` 
+                
+                duration-300 py-1.5
+
+                ${isActive ? "text-primary translate-x-2" : "" } `
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </div>
+      </div>
     </aside>
   );
 }

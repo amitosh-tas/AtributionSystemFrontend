@@ -7,7 +7,7 @@ function DashboardLayout() {
   return (
     <div
     className="flex min-h-dvh 
-    font-body cursor-default
+    font-body cursor-default bg-sidebar
     "
     >
 

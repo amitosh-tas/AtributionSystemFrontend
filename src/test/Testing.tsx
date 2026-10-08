@@ -8,7 +8,9 @@ function Testing() {
 
 
   async function name(link: string) {
-    const res = await axios.get(link)
+    const res = await axios.get(link, {
+      withCredentials: true
+    })
 
     setData(res);
   }

@@ -54,7 +54,7 @@ const cardData: ICardData[] = [
   },
 ];
 
-function Home() {
+function Overview() {
   return (
     <>
       <PageLayout
@@ -92,4 +92,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Overview

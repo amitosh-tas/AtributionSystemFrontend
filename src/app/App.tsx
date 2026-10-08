@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom"
 import Notfound from "@/components/layout/Notfound"
 import Testing from "@/test/Testing"
 import DashboardLayout from "../components/layout/DashboardLayout"
-import Home from "../pages/company/Home"
+import Overview from "../pages/company/Overview"
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <>
       <Routes>
         <Route path="/" element= {<DashboardLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Overview />} />
           
         </Route>
 

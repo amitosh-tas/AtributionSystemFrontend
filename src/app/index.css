@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+
+@theme{
+  /* Canvas */
+  --color-page-background: #F5F1E9;
+
+  /* Navigation */
+  --color-sidebar: #171519;
+  --color-sidebar-text: #B8B3AC;
+  --color-sidebar-active: #FFFFFF;
+
+  /* Surfaces */
+  --color-card: #FFFFFF;
+  --color-border: #E5E0D8;
+
+  /* Brand */
+  --color-primary: #B45F3C;
+  --color-primary-hover: #984B2D;
+
+  /* Typography */
+  --color-text: #171519;
+  --color-text-muted: #8A8279;
+
+  /* Semantic */
+  --color-success: #71896A;
+  --color-warning: #B45F3C;
+  --color-danger: #B84A45;
+
+
+  --font-manrope : "Manrope", sans-serif ;
+  --font-oranienbaum : "Oranienbaum", serif;
+
+}

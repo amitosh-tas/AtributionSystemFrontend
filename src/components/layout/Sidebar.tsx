@@ -13,7 +13,7 @@ function Sidebar() {
 
         <h1
         className="
-        text-primary font-oranienbaum
+        text-primary font-heading
         uppercase text-lg
         ">
           Ledger

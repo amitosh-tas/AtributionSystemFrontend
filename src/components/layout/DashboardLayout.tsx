@@ -3,11 +3,11 @@
 import { Outlet } from "react-router-dom"
 import Sidebar from "./Sidebar"
 
-function Main() {
+function DashboardLayout() {
   return (
     <div
     className="flex h-dvh 
-    font-manrope cursor-default
+    font-body cursor-default
     "
     >
 
@@ -22,4 +22,4 @@ function Main() {
   )
 }
 
-export default Main
+export default DashboardLayout

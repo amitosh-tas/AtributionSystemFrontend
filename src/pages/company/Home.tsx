@@ -1,5 +1,5 @@
 import PageLayout from "@/components/layout/PageLayout"
-import RevenueLedger from "@/features/companyDashboard/components/RevenueLedgerCard"
+import RevenueLedger from "@/features/companyDashboard/components/RevenueLedger"
 
 
 function Home() {

@@ -7,6 +7,7 @@ import Overview from "../pages/company/Overview"
 import Analytics from "@/pages/company/Analytics"
 import Transactions from "@/pages/company/Transactions"
 import Customers from "@/pages/company/Customers"
+import SignIn from "@/pages/signin/SignIn"
 
 
 function App() {
@@ -19,6 +20,8 @@ function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/customers" element={<Customers />} />
         </Route>
+
+        <Route path="/signin" element={<SignIn />} />
 
         <Route path="/test" element= { <Testing /> } />
 

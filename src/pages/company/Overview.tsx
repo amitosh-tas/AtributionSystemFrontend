@@ -58,7 +58,7 @@ function Overview() {
   return (
     <>
       <PageLayout
-      companyName="TAS"
+      headTitle="TAS"
       title="Master Report"
       description="Everything in one place — company-wide totals or a single location, any date range."
       >

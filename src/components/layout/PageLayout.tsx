@@ -2,7 +2,7 @@ import type { ReactNode } from "react"
 
 
 interface IPageLayout{
-  companyName: string,
+  headTitle: string,
   children: ReactNode,
   title?: string,
   description?: string,
@@ -12,7 +12,7 @@ interface IPageLayout{
 
 
 export default function PageLayout({
-  companyName,
+  headTitle,
   children,
   title,
   description,
@@ -26,7 +26,7 @@ export default function PageLayout({
           <div className="flex flex-col gap-2.5">
             <p
             className="text-xs uppercase text-text-muted">
-              {companyName}
+              {headTitle}
             </p>
             {title && 
               <h1

@@ -21,7 +21,7 @@ function Analytics({
   });
 
   return (
-    <div className="flex flex-col md:flex-row items-baseline gap-5">
+    <div className="flex flex-col lg:flex-row items-baseline gap-5">
       <div>
         <p className="text-6xl font-heading">
           {currency.format(revenue)}

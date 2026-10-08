@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 
 function Testing() {
@@ -11,15 +11,16 @@ function Testing() {
     const res = await axios.get(link)
 
     setData(res);
-    
   }
 
 
   useEffect( ()=> {
     name("https://airplane-snow-becomes-moderators.trycloudflare.com/click?utm_source=gdlib&utm_campaign=affiliate");
-    console.log(data)
-
   }, [])
+  
+  useEffect(()=>{
+    console.log(data)
+  }, [data])
 
   return (
     <div>

@@ -1,9 +1,18 @@
+import PageLayout from "@/components/layout/PageLayout"
 
 
 
 function Customers() {
   return (
-    <>Customers</>
+    <>
+    <PageLayout
+    title="Customers"
+    headTitle="Audience"
+
+    >
+      <p>yo</p>
+    </PageLayout>
+    </>
   )
 }
 

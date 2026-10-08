@@ -1,15 +1,15 @@
 const data = [
   {
     name: "Google",
-    perc: 94,
+    perc: 50,
   },
   {
     name: "Direct",
-    perc: 5,
+    perc: 20,
   },
   {
     name: "Meta",
-    perc: 1,
+    perc: 30,
   },
 ];
 
@@ -19,70 +19,53 @@ const colors = [
   "#71896A",
 ];
 
-function RevenueLedger() {
+function RevenueLedgerChart() {
   return (
-    <div
-      className="
-        p-5
-        bg-card
-        border-2 border-border
-        text-text-muted
-        rounded-xl
-        shadow
-      "
-    >
-      {/* Header */}
-      <div className="text-[10px] uppercase flex justify-between">
-        <p>Revenue Ledger - By Source</p>
-
-        <p>
-          Rs Total
-        </p>
-      </div>
-
-      <div className="bg-black/10 w-full h-px my-2.5" />
-
-      {/* Mixed horizontal bar */}
+    <div className="w-full">
+      {/* Mixed Revenue Bar */}
       <div className="w-full h-10 flex overflow-hidden rounded-md">
         {data.map((item, index) => (
           <div
             key={item.name}
+            className="h-full transition-all duration-300"
             style={{
               width: `${item.perc}%`,
               backgroundColor: colors[index],
             }}
-            className="h-full"
-            />
-          ))}
+            title={`${item.name}: ${item.perc}%`}
+          />
+        ))}
       </div>
 
-      <div className="bg-black/5 w-full h-px my-2.5" />
-
       {/* Legend */}
-      <div className="flex items-center gap-5 mt-4">
+      <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-4">
         {data.map((item, index) => (
           <div
             key={item.name}
             className="flex items-center gap-2 text-xs"
           >
+            {/* Color indicator */}
             <span
-              className="w-2.5 h-2.5 rounded-sm"
+              className="w-2.5 h-2.5 rounded-sm shrink-0"
               style={{
                 backgroundColor: colors[index],
               }}
             />
 
-            <span>{item.name}</span>
+            {/* Source */}
+            <span className="text-text">
+              {item.name}
+            </span>
 
+            {/* Percentage */}
             <span className="text-text-muted">
               {item.perc}%
             </span>
           </div>
         ))}
       </div>
-
     </div>
   );
 }
 
-export default RevenueLedger;
+export default RevenueLedgerChart;

@@ -1,5 +1,6 @@
 import PageLayout from "@/components/layout/PageLayout"
-import RevenueLedger from "@/features/companyDashboard/components/RevenueLedger"
+import RevenueLedger from "@/features/revenue/components/RevenueLedger"
+import RevenueLedgerChart from "@/features/revenue/RevenueLedgerChart"
 
 
 function Home() {
@@ -10,7 +11,9 @@ function Home() {
       title="Master Report"
       description="Everything in one place — company-wide totals or a single location, any date range."
       >
-        <RevenueLedger/>
+        <RevenueLedger> 
+          <RevenueLedgerChart/>
+        </RevenueLedger>
         <p>Testing</p>
       </PageLayout>
 

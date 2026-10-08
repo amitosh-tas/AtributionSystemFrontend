@@ -1,15 +1,15 @@
 const data = [
   {
     name: "Google",
-    perc: 50,
+    perc: 95,
   },
   {
     name: "Direct",
-    perc: 20,
+    perc: 2,
   },
   {
     name: "Meta",
-    perc: 30,
+    perc: 3,
   },
 ];
 

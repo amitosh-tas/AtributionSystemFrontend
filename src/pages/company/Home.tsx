@@ -1,5 +1,6 @@
 import PageLayout from "@/components/layout/PageLayout"
 import Card from "@/components/ui/Card"
+import Analytics from "@/features/analytics/components/Analytics"
 import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid"
 import RevenueLedger from "@/features/revenue/components/RevenueLedger"
 import RevenueLedgerChart from "@/features/revenue/components/RevenueLedgerChart"
@@ -65,6 +66,12 @@ function Home() {
           <RevenueLedgerChart/>
         </RevenueLedger>
         
+        <Analytics 
+        revenue={49849.4}
+        invoices={144}
+        tax={30}
+        />
+
         <AnalyticsGrid>
           {
             cardData.map( ({title, value, description}, index) => (

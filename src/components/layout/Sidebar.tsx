@@ -44,6 +44,8 @@ function Sidebar({
         bg-sidebar text-sidebar-text
         w-[15%] p-5
         sticky top-0 h-dvh
+
+        flex flex-col gap-2
       "
     >
       <div className="flex flex-col">
@@ -64,24 +66,27 @@ function Sidebar({
         </p>
 
         <div className="bg-gray-400/20 h-px w-full mt-5" />
-
-        <div
-        className="flex flex-col gap-0.5">
-          {items.map((item) => (
-            <NavLink
-              to={item.path}
-              key={item.path}
-              className={`
-              ${({isActive}: boolean ) => isActive ? `text-primary` : ``}
-              `}
-            >
-              {item.label}
-            </NavLink>
-          ))}
-        </div>
-
-
       </div>
+
+      <div
+      className="flex flex-col gap-0.5">
+        {items.map((item) => (
+          <NavLink
+            to={item.path}
+            key={item.path}
+            className={
+              ({isActive}) => ` 
+              
+              duration-300 py-1.5
+
+              ${isActive ? "text-primary translate-x-2" : "" } `
+            }
+          >
+            {item.label}
+          </NavLink>
+        ))}
+      </div>
+
     </aside>
   );
 }

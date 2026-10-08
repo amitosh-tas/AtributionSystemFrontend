@@ -6,7 +6,7 @@ import Sidebar from "./Sidebar"
 function DashboardLayout() {
   return (
     <div
-    className="flex h-dvh 
+    className="flex min-h-dvh 
     font-body cursor-default
     "
     >

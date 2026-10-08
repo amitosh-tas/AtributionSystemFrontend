@@ -6,7 +6,9 @@ function Sidebar() {
 
   return (
     <div 
-    className="bg-sidebar text-sidebar-text w-[15%] p-5">
+    className="bg-sidebar text-sidebar-text w-[15%] p-5
+    sticky top-0 h-dvh
+    ">
 
       <div
       className="flex flex-col">

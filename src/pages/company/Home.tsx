@@ -1,6 +1,8 @@
 import PageLayout from "@/components/layout/PageLayout"
+import Card from "@/components/ui/Card"
+import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid"
 import RevenueLedger from "@/features/revenue/components/RevenueLedger"
-import RevenueLedgerChart from "@/features/revenue/RevenueLedgerChart"
+import RevenueLedgerChart from "@/features/revenue/components/RevenueLedgerChart"
 
 
 function Home() {
@@ -14,7 +16,35 @@ function Home() {
         <RevenueLedger> 
           <RevenueLedgerChart/>
         </RevenueLedger>
-        <p>Testing</p>
+        
+        <AnalyticsGrid>
+          <Card 
+            title="new customers"
+            value="383"
+            description="company-wide"
+          />
+          
+          <Card 
+            title="new customers"
+            value="383"
+            description="company-wide"
+          />
+          
+          <Card 
+            title="new customers"
+            value="383"
+            description="company-wide"
+          />
+          
+          <Card 
+            title="new customers"
+            value="383"
+            description="company-wide"
+          />
+
+        </AnalyticsGrid>
+
+
       </PageLayout>
 
     </>

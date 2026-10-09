@@ -1,11 +1,14 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
+import { useAppSelector } from "@/app/hooks";
+import RoleSwitcher from "@/components/dev/RoleSwitcher";
 
 
 function Testing() {
 
   const [data, setData] = useState({});
-
+  const user = useAppSelector((state) => state.auth.user);
+  
 
   async function name(link: string) {
     const res = await axios.get(link, {
@@ -25,15 +28,12 @@ function Testing() {
   }, [data])
 
   return (
-    <div>
-      testing
+    <div 
+    className="flex items-center justify-center">
 
-      <pre>
-        {
+      <RoleSwitcher />
 
-        }
-      </pre>
-
+      <p>{user ? user.role : "Not logged in"}</p>
     </div>
   )
 }

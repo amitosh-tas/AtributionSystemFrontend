@@ -2,6 +2,7 @@
 
 import { Outlet } from "react-router-dom"
 import Sidebar from "./Sidebar"
+import RoleSwitcher from "@/components/dev/RoleSwitcher";
 
 function DashboardLayout() {
   return (
@@ -15,6 +16,7 @@ function DashboardLayout() {
 
       <div
       className="flex-1 bg-page-background p-10">
+        <RoleSwitcher />
         <Outlet />
       </div>
       

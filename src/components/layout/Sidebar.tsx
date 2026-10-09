@@ -1,9 +1,5 @@
 import { NavLink } from "react-router-dom";
-
-
-interface ISidebarProps {
-  companyName?: string;
-}
+import { useAppSelector } from "@/app/hooks";
 
 interface ISidebarItem {
   label: string;
@@ -16,93 +12,58 @@ interface ISidebarProps {
 }
 
 const defaultItems: ISidebarItem[] = [
-  {
-    label: "Dashboard",
-    path: "/",
-  },
-  {
-    label: "Analytics",
-    path: "/analytics",
-  },
-  {
-    label: "Campaign",
-    path: "/campaigns"
-  },
-  {
-    label: "Customers",
-    path: "/customers"
-  },
-  {
-    label: "Transactions",
-    path: "/transactions",
-  },
-  {
-    label: "Upcoming",
-    path: "/upcoming",
-  },
-  {
-    label: "Team",
-    path: "/team",
-  },
+  { label: "Dashboard", path: "/" },
+  { label: "Analytics", path: "/analytics" },
+  { label: "Campaign", path: "/campaigns" },
+  { label: "Customers", path: "/customers" },
+  { label: "Transactions", path: "/transactions" },
+  { label: "Upcoming", path: "/upcoming" },
+  { label: "Team", path: "/team" },
 ];
 
 function Sidebar({
   companyName = "COMPANY NAME",
   items = defaultItems,
 }: ISidebarProps) {
+  const user = useAppSelector((state) => state.auth.user);
+
+  const visibleItems = items.filter(
+    (item) => !(user?.role === "VIEWER" && item.path === "/team"),
+  );
+
   return (
-    <>
-      <aside
-        className="
-          bg-sidebar text-sidebar-text
-          relative
-        "
-      >
-        <div
-        className="sticky top-0 h-max w-50 p-5
-        flex flex-col gap-2
-        ">
-          <div className="flex flex-col">
+    <aside className="relative bg-sidebar text-sidebar-text">
+      <div className="sticky top-0 flex h-max w-50 flex-col gap-2 p-5">
+        <div className="flex flex-col">
+          <h1 className="font-heading text-lg uppercase text-primary">
+            Ledger
+          </h1>
 
-            <h1
-              className="
-                text-primary
-                font-heading
-                uppercase
-                text-lg
-              "
-            >
-              Ledger
-            </h1>
+          <p className="text-[10px]">{companyName}</p>
 
-            <p className="text-[10px]">
-              {companyName}
-            </p>
-
-            <div className="bg-gray-400/20 h-px w-full mt-5" />
-          </div>
-
-          <div
-          className="flex flex-col gap-0.5">
-            {items.map((item) => (
-              <NavLink
-                to={item.path}
-                key={item.path}
-                className={
-                  ({isActive}) => ` 
-                  
-                  duration-300 py-1.5
-
-                  ${isActive ? "text-primary translate-x-2" : "" } `
-                }
-              >
-                {item.label}
-              </NavLink>
-            ))}
-          </div>
+          <div className="mt-5 h-px w-full bg-gray-400/20" />
         </div>
-      </aside>
-    </>
+
+        <nav className="flex flex-col gap-0.5">
+          {visibleItems.map((item) => (
+            <NavLink
+              to={item.path}
+              key={item.path}
+              end={item.path === "/"}
+              className={({ isActive }) =>
+                `rounded-md py-1.5 transition-all duration-300 ${
+                  isActive
+                    ? "translate-x-2 text-primary"
+                    : "hover:text-primary"
+                }`
+              }
+            >
+              {item.label}
+            </NavLink>
+          ))}
+        </nav>
+      </div>
+    </aside>
   );
 }
 

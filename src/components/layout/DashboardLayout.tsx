@@ -16,6 +16,7 @@ function DashboardLayout() {
 
       <div
       className="flex-1 bg-page-background p-10">
+        {/* Remove RoleSwitcher after testing */}
         <RoleSwitcher />
         <Outlet />
       </div>

@@ -31,7 +31,7 @@ const rolePermissions: Record<UserRole, Permission[]> = {
   VIEWER: [
     "dashboard:view",
     "revenue:view",
-    "teams:view",
+    // "teams:view",
   ],
 };
 

@@ -1,3 +1,5 @@
+import RoleSwitcher from "@/components/dev/RoleSwitcher";
+import Sidebar from "@/components/layout/Sidebar";
 
 
 function SignIn() {
@@ -16,6 +18,10 @@ function SignIn() {
         p-5
       "
     >
+      {/* REMOVE AFTER TESTING */}
+      <RoleSwitcher />
+      <Sidebar/>
+
       <div
         className="
           w-full max-w-md

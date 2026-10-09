@@ -2,6 +2,7 @@ import PageLayout from "@/components/layout/PageLayout"
 import Card from "@/components/ui/Card"
 import Analytics from "@/features/analytics/components/Analytics"
 import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid"
+import RevenueByPlatform from "@/features/revenue/components/RevenueByPlatform"
 import RevenueLedger from "@/features/revenue/components/RevenueLedger"
 import RevenueLedgerChart from "@/features/revenue/components/RevenueLedgerChart"
 
@@ -85,6 +86,7 @@ function Overview() {
           }
         </AnalyticsGrid>
 
+        <RevenueByPlatform />
 
       </PageLayout>
 

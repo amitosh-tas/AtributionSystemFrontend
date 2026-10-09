@@ -15,10 +15,11 @@ import Team from "@/pages/company/Team";
 import Campaign from "@/pages/company/Campaign";
 import Upcoming from "@/pages/company/Upcoming";
 
-import SignIn from "@/pages/signin/SignIn";
+import SignIn from "@/pages/auth/SignIn";
 import Dashboard from "@/pages/superAdmin/Dashboard";
 import Unauthorized from "@/pages/Unauthorized";
 import SuperAdminLayout from "@/components/layout/SuperAdminLayout";
+import SignUp from "@/pages/auth/SignUp";
 
 function App() {
   return (
@@ -65,6 +66,7 @@ function App() {
 
         {/* Public routes */}
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/test" element={<Testing />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 

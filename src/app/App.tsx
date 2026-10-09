@@ -18,6 +18,7 @@ import Upcoming from "@/pages/company/Upcoming";
 import SignIn from "@/pages/signin/SignIn";
 import Dashboard from "@/pages/superAdmin/Dashboard";
 import Unauthorized from "@/pages/Unauthorized";
+import SuperAdminLayout from "@/components/layout/SuperAdminLayout";
 
 function App() {
   return (
@@ -57,7 +58,7 @@ function App() {
             <ProtectedRoute allowedRoles={["SUPER_ADMIN"]} />
           }
         >
-          <Route path="/super" element={<DashboardLayout />}>
+          <Route path="/super" element={<SuperAdminLayout />}>
             <Route index element={<Dashboard />} />
           </Route>
         </Route>

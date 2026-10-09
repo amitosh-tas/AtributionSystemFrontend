@@ -1,19 +1,19 @@
 import { useAppSelector } from "@/app/hooks";
-import RoleSwitcher from "@/components/dev/RoleSwitcher";
+// import RoleSwitcher from "@/components/dev/RoleSwitcher";
 
 // Remove After testing
-import Sidebar from "@/components/layout/Sidebar";
+// import Sidebar from "@/components/layout/Sidebar";
 import { getCompanyNavigation } from "@/config/navigation";
 
 
 function SignIn() {
 
   // Test
-  const user = useAppSelector((state) => state.auth.user);
+  // const user = useAppSelector((state) => state.auth.user);
 
-  const items = user
-    ? getCompanyNavigation(user.role)
-    : [];
+  // const items = user
+  //   ? getCompanyNavigation(user.role)
+  //   : [];
   //
 
   async function handleSignIn( e: React.SubmitEvent<HTMLFormElement>){
@@ -31,8 +31,8 @@ function SignIn() {
       "
     >
       {/* REMOVE AFTER TESTING */}
-      <RoleSwitcher />
-      <Sidebar items={items}/>
+      {/* <RoleSwitcher />
+      <Sidebar items={items}/> */}
 
       <div
         className="

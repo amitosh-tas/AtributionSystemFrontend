@@ -1,9 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import {
   setCredentials,
   type UserRole,
 } from "@/store/slices/authSlice";
 
+// Keep your existing testUsers object
 const testUsers: Record<UserRole, {
   id: string;
   name: string;
@@ -32,12 +34,20 @@ const testUsers: Record<UserRole, {
 
 export default function RoleSwitcher() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const currentRole = useAppSelector(
     (state) => state.auth.user?.role ?? "ADMIN",
   );
 
   function switchRole(role: UserRole) {
     dispatch(setCredentials(testUsers[role]));
+
+    if (role === "SUPER_ADMIN") {
+      navigate("/super");
+    } else {
+      navigate("/");
+    }
   }
 
   return (

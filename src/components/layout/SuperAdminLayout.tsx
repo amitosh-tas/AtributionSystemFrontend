@@ -4,13 +4,14 @@ import { superAdminNavigation } from "@/config/navigation";
 
 function SuperAdminLayout() {
   return (
-    <div className="flex min-h-dvh">
+    <div className="flex min-h-dvh 
+    font-body cursor-default bg-sidebar">
       <Sidebar
         companyName="PLATFORM ADMIN"
         items={superAdminNavigation}
       />
 
-      <main className="min-w-0 flex-1">
+      <main className="flex-1 bg-page-background p-10">
         <Outlet />
       </main>
     </div>

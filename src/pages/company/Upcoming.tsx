@@ -1,19 +1,17 @@
 import PageLayout from "@/components/layout/PageLayout"
 
 
-
-
-function Transactions() {
+function Upcoming() {
   return (
     <>
       <PageLayout
-      headTitle="sales"
-      title="Transactions"
+      headTitle="pipeline"
+      title="Upcoming Bookings"
       >
-        <p>transactions</p>
+        <p>upcoming</p>
       </PageLayout>
     </>
   )
 }
 
-export default Transactions
+export default Upcoming

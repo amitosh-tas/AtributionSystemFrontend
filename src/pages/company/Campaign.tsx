@@ -2,18 +2,18 @@ import PageLayout from "@/components/layout/PageLayout"
 
 
 
-
-function Transactions() {
+function Campaign() {
   return (
     <>
       <PageLayout
-      headTitle="sales"
-      title="Transactions"
+      headTitle="attribution"
+      title="Campaigns"
+      
       >
-        <p>transactions</p>
+        <p>test</p>
       </PageLayout>
     </>
   )
 }
 
-export default Transactions
+export default Campaign

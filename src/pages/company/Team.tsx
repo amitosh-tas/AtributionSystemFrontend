@@ -2,18 +2,17 @@ import PageLayout from "@/components/layout/PageLayout"
 
 
 
-
-function Transactions() {
+function Team() {
   return (
     <>
       <PageLayout
-      headTitle="sales"
-      title="Transactions"
+      headTitle="access"
+      title="Team"
       >
-        <p>transactions</p>
+        <p>Acces</p>
       </PageLayout>
     </>
   )
 }
 
-export default Transactions
+export default Team

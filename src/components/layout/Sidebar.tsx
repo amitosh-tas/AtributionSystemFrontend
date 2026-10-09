@@ -17,7 +17,7 @@ interface ISidebarProps {
 
 const defaultItems: ISidebarItem[] = [
   {
-    label: "Overview",
+    label: "Dashboard",
     path: "/",
   },
   {
@@ -25,12 +25,24 @@ const defaultItems: ISidebarItem[] = [
     path: "/analytics",
   },
   {
+    label: "Campaign",
+    path: "/campaigns"
+  },
+  {
     label: "Customers",
-    path: "/customers",
+    path: "/customers"
   },
   {
     label: "Transactions",
     path: "/transactions",
+  },
+  {
+    label: "Upcoming",
+    path: "/upcoming",
+  },
+  {
+    label: "Team",
+    path: "/team",
   },
 ];
 

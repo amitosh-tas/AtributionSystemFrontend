@@ -1,30 +1,41 @@
 interface IPill {
   name: string;
-  variant?: "direct" | "google" | "awin" | "chatgpt" | "klaviyo" | "default";
 }
 
-const variants = {
-  direct: "bg-[#DCE8E9] text-[#376A70]",
-  google: "bg-[#F1DDD3] text-[#A95532]",
-  awin: "bg-[#E4E9DF] text-[#697D5C]",
-  chatgpt: "bg-[#DCEBF1] text-[#357B9B]",
-  klaviyo: "bg-[#F3E0E5] text-[#B85470]",
-  default: "bg-gray-100 text-gray-700",
-};
+function getPlatformColors(name: string) {
+  // Generate a consistent hash from the platform name
+  let hash = 0;
 
-function Pill({ name, variant = "default" }: IPill) {
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    hash |= 0;
+  }
+
+  // Generate a pleasant, muted color
+  const hue = Math.abs(hash) % 360;
+
+  return {
+    backgroundColor: `hsl(${hue}, 45%, 92%)`,
+    textColor: `hsl(${hue}, 45%, 30%)`,
+    dotColor: `hsl(${hue}, 50%, 42%)`,
+  };
+}
+
+function Pill({ name }: IPill) {
+  const colors = getPlatformColors(name.trim().toLowerCase());
+
   return (
     <span
-      className={[
-        "inline-flex w-fit items-center gap-2",
-        "whitespace-nowrap rounded-full px-3 py-1",
-        "text-xs font-medium",
-        variants[variant],
-      ].join(" ")}
+      className="inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-medium whitespace-nowrap"
+      style={{
+        backgroundColor: colors.backgroundColor,
+        color: colors.textColor,
+      }}
     >
       <span
         aria-hidden="true"
-        className="size-1.5 shrink-0 rounded-full bg-current opacity-90"
+        className="size-1.5 shrink-0 rounded-full"
+        style={{ backgroundColor: colors.dotColor }}
       />
       {name}
     </span>

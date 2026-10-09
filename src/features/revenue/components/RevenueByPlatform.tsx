@@ -5,7 +5,11 @@ import Pill from "@/components/ui/Pill";
 
 interface PlatformRevenue {
   id: string;
-  platform: string;
+  platform: {
+    name: string;
+    key: string;
+    category: string;
+  };
   conversions: number;
   revenue: number;
 }
@@ -13,21 +17,43 @@ interface PlatformRevenue {
 const platformData: PlatformRevenue[] = [
   {
     id: "direct",
-    platform: "Direct",
+    platform: {
+      name: "Direct",
+      key: "direct",
+      category: "direct",
+    },
     conversions: 735,
     revenue: 47585.16,
   },
   {
     id: "google",
-    platform: "Google",
+    platform: {
+      name: "Google",
+      key: "google",
+      category: "paid_search",
+    },
     conversions: 91,
     revenue: 6542.63,
   },
   {
     id: "awin",
-    platform: "AWIN",
+    platform: {
+      name: "AWIN",
+      key: "awin",
+      category: "affiliate",
+    },
     conversions: 8,
     revenue: 276.03,
+  },
+  {
+    id: "meta",
+    platform: {
+      name: "META",
+      key: "meta",
+      category: "affiliate",
+    },
+    conversions: 7,
+    revenue: 296.03,
   },
 ];
 
@@ -40,22 +66,7 @@ const columns: DataTableColumn<PlatformRevenue>[] = [
   {
     key: "platform",
     header: "Platform",
-    render: (row) => {
-      const platformVariants = {
-        Direct: "direct",
-        Google: "google",
-        AWIN: "awin",
-        "chatgpt.com": "chatgpt",
-        Klaviyo: "klaviyo",
-      } as const; 
-
-      const variant =
-        platformVariants[
-          row.platform as keyof typeof platformVariants
-        ] ?? "default";
-
-      return <Pill name={row.platform} variant={variant} />;
-    },
+    render: (row) => <Pill name={row.platform.name} />,
   },
   {
     key: "conversions",

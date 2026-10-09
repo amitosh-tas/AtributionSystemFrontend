@@ -11,12 +11,14 @@ import SignIn from "@/pages/signin/SignIn"
 import Team from "@/pages/company/Team"
 import Campaign from "@/pages/company/Campaign"
 import Upcoming from "@/pages/company/Upcoming"
+import Dashboard from "@/pages/superAdmin/Dashboard"
 
 
 function App() {
   return (
     <>
       <Routes>
+        {/* COmpany Dashboard */}
         <Route path="/" element= {<DashboardLayout />}>
           <Route index element={<Overview />} />
           <Route path="/analytics" element={<Analytics />} />
@@ -25,6 +27,12 @@ function App() {
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/upcoming" element={<Upcoming />}/>
           <Route path="/team" element={<Team/>} />
+        </Route>
+
+        {/* SUperAdmin */}
+        <Route path="/super" element={<DashboardLayout/>}>
+          <Route index element={<Dashboard />}/>
+
         </Route>
 
         <Route path="/signin" element={<SignIn />} />

@@ -10,7 +10,7 @@ function Campaign() {
       title="Campaigns"
       
       >
-        <p>test</p>
+        <p className="h-[200dvh]">test</p>
       </PageLayout>
     </>
   )

@@ -12,11 +12,13 @@ import Team from "@/pages/company/Team"
 import Campaign from "@/pages/company/Campaign"
 import Upcoming from "@/pages/company/Upcoming"
 import Dashboard from "@/pages/superAdmin/Dashboard"
+import ScrollToTop from "@/components/ScrollToTop"
 
 
 function App() {
   return (
     <>
+    <ScrollToTop/>
       <Routes>
         {/* COmpany Dashboard */}
         <Route path="/" element= {<DashboardLayout />}>

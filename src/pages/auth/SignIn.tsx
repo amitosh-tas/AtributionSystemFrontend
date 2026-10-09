@@ -1,23 +1,40 @@
-import { useAppSelector } from "@/app/hooks";
-// import RoleSwitcher from "@/components/dev/RoleSwitcher";
+import { loginUser } from "@/services/authService";
+import { useEffect, useState } from "react";
 
-// Remove After testing
-// import Sidebar from "@/components/layout/Sidebar";
-import { getCompanyNavigation } from "@/config/navigation";
 
+interface ISignInData{
+  api?: string,
+  email: string,
+  password: string,
+}
 
 function SignIn() {
 
-  // Test
-  // const user = useAppSelector((state) => state.auth.user);
+  const [formData, setFormData] = useState<ISignInData>({
+    api:"",
+    email: "",
+    password: "",
+  });
 
-  // const items = user
-  //   ? getCompanyNavigation(user.role)
-  //   : [];
-  //
+  useEffect(()=>{
+    console.log(formData);
+  },[formData])
 
   async function handleSignIn( e: React.SubmitEvent<HTMLFormElement>){
-    e.stopPropagation();
+    e.preventDefault();
+    
+    console.log("clicked")
+
+    try {
+      
+      console.log(await loginUser(formData))
+
+    } catch (e) {
+      if(e instanceof Error){
+        console.error(e)
+      }
+    }
+    
   }
 
   return (
@@ -30,10 +47,6 @@ function SignIn() {
         p-5
       "
     >
-      {/* REMOVE AFTER TESTING */}
-      {/* <RoleSwitcher />
-      <Sidebar items={items}/> */}
-
       <div
         className="
           w-full max-w-md
@@ -75,6 +88,8 @@ function SignIn() {
             </label>
 
             <input
+            value={formData.api}
+            onChange={(e)=> { setFormData( prev => ({...prev , api: e.target.value}) ) }}
               id="api"
               type="text"
               placeholder="https://api.example.com"
@@ -104,6 +119,8 @@ function SignIn() {
             </label>
 
             <input
+            value={formData.email}
+            onChange={(e)=> { setFormData( prev => ({...prev , email: e.target.value}) ) }}
               id="email"
               type="email"
               placeholder="you@example.com"
@@ -146,6 +163,8 @@ function SignIn() {
             </div>
 
             <input
+            value={formData.password}
+            onChange={(e)=> { setFormData( prev => ({...prev , password: e.target.value}) ) }}
               id="password"
               type="password"
               placeholder="Enter your password"
@@ -167,7 +186,6 @@ function SignIn() {
           </div>
 
           <button
-            type="button"
             className="
               w-full
               h-11

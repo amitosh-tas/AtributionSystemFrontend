@@ -20,8 +20,60 @@ import Dashboard from "@/pages/superAdmin/Dashboard";
 import Unauthorized from "@/pages/Unauthorized";
 import SuperAdminLayout from "@/components/layout/SuperAdminLayout";
 import SignUp from "@/pages/auth/SignUp";
+import GuestRoute from "@/components/auth/GuestRoute";
+
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import {
+  setCredentials,
+  type UserRole,
+} from "@/store/slices/authSlice";
+import { useEffect } from "react";
+import { loginUser } from "@/services/authService";
+
+const testUsers: Record<UserRole, {
+  id: string;
+  name: string;
+  email: string;
+  role: UserRole;
+}> = {
+  SUPER_ADMIN: {
+    id: "test-super-admin",
+    name: "Test Super Admin",
+    email: "superadmin@test.local",
+    role: "SUPER_ADMIN",
+  },
+  ADMIN: {
+    id: "test-admin",
+    name: "Test Admin",
+    email: "admin@test.local",
+    role: "ADMIN",
+  },
+  VIEWER: {
+    id: "test-viewer",
+    name: "Test Viewer",
+    email: "viewer@test.local",
+    role: "VIEWER",
+  },
+};
 
 function App() {
+
+  // const dispatch = useAppDispatch();
+  // // const\
+
+  // useEffect(()=>{
+  //   // dispatch(setCredentials(testUsers["ADMIN"]));
+
+  //   console.log( loginUser({
+  //     email: "techarch@gmail.com",
+  //     password: "HELLO"
+  //   }) );
+  // },[]) 
+  
+
+
+
   return (
     <>
       <ScrollToTop />
@@ -65,8 +117,11 @@ function App() {
         </Route>
 
         {/* Public routes */}
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route
+        element={<GuestRoute />}>
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+        </Route>
         <Route path="/test" element={<Testing />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 

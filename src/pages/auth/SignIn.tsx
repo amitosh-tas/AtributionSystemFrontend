@@ -52,7 +52,7 @@ function SignIn() {
   const labelClass = "text-sm font-medium text-gray-800";
 
   return (
-    <div className="flex min-h-dvh w-full bg-white text-black">
+    <div className="flex min-h-dvh w-full bg-page-background text-black">
       {/* Sign-in form */}
       <main className="flex w-full items-center justify-center px-7 py-12 sm:px-12 lg:w-[30%]">
         <div className="w-full max-w-sm">
@@ -87,8 +87,8 @@ function SignIn() {
                 type="email"
                 autoComplete="email"
                 placeholder="https://api.example.com"
-                required
-                value={formData.email}
+                // required
+                value={formData.api}
                 onChange={(e) =>
                   setFormData((prev) => ({
                     ...prev,
@@ -217,7 +217,7 @@ function SignIn() {
       </main>
 
       {/* Image panel */}
-      <aside className="sticky top-0 h-dvh hidden overflow-hidden lg:block flex-1">
+      <aside className="sticky top-0 h-dvh hidden overflow-hidden lg:block lg:flex-1">
         <img
           src={bg}
           alt=""

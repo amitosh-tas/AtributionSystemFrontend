@@ -68,14 +68,9 @@ function App() {
 
   // // const\
 
-  // useEffect(()=>{
-  //   // dispatch(setCredentials(testUsers["ADMIN"]));
-
-  //   console.log( loginUser({
-  //     email: "techarch@gmail.com",
-  //     password: "HELLO"
-  //   }) );
-  // },[]) 
+  useEffect(()=>{
+    dispatch(setCredentials(testUsers["ADMIN"]));
+  },[]) 
   
 
 

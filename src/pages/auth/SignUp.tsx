@@ -203,7 +203,7 @@ function SignUp() {
   }
 
   return (
-    <div className="min-h-dvh w-full bg-white text-black">
+    <div className="min-h-dvh w-full bg-page-background text-black">
       <div className="flex min-h-dvh w-full">
         {/* Form panel */}
         <main className="flex w-full justify-center px-6 py-12 sm:px-10 lg:w-[55%] lg:px-12 xl:px-20">
@@ -540,7 +540,7 @@ function SignUp() {
         </main>
 
         {/* Image panel */}
-        <aside className="hidden sticky top-0 h-full overflow-hidden lg:block lg:w-[45%]">
+        <aside className="hidden sticky top-0 h-full overflow-hidden lg:block lg:w-[70%]">
           <img
             src={bg}
             alt=""

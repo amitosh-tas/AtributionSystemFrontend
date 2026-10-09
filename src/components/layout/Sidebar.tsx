@@ -1,40 +1,19 @@
 import { NavLink } from "react-router-dom";
-import { useAppSelector } from "@/app/hooks";
+import type { SidebarItem } from "@/config/navigation";
 
-interface ISidebarItem {
-  label: string;
-  path: string;
-}
-
-interface ISidebarProps {
+interface SidebarProps {
   companyName?: string;
-  items?: ISidebarItem[];
+  items: SidebarItem[];
 }
-
-const defaultItems: ISidebarItem[] = [
-  { label: "Dashboard", path: "/" },
-  { label: "Analytics", path: "/analytics" },
-  { label: "Campaign", path: "/campaigns" },
-  { label: "Customers", path: "/customers" },
-  { label: "Transactions", path: "/transactions" },
-  { label: "Upcoming", path: "/upcoming" },
-  { label: "Team", path: "/team" },
-];
 
 function Sidebar({
   companyName = "COMPANY NAME",
-  items = defaultItems,
-}: ISidebarProps) {
-  const user = useAppSelector((state) => state.auth.user);
-
-  const visibleItems = items.filter(
-    (item) => !(user?.role === "VIEWER" && item.path === "/team"),
-  );
-
+  items,
+}: SidebarProps) {
   return (
     <aside className="relative bg-sidebar text-sidebar-text">
       <div className="sticky top-0 flex h-max w-50 flex-col gap-2 p-5">
-        <div className="flex flex-col">
+        <div>
           <h1 className="font-heading text-lg uppercase text-primary">
             Ledger
           </h1>
@@ -45,11 +24,11 @@ function Sidebar({
         </div>
 
         <nav className="flex flex-col gap-0.5">
-          {visibleItems.map((item) => (
+          {items.map((item) => (
             <NavLink
-              to={item.path}
               key={item.path}
-              end={item.path === "/"}
+              to={item.path}
+              end={item.path === "/" || item.path === "/super"}
               className={({ isActive }) =>
                 `rounded-md py-1.5 transition-all duration-300 ${
                   isActive

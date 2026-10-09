@@ -59,7 +59,13 @@ const testUsers: Record<UserRole, {
 
 function App() {
 
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+
+
+  useEffect(()=>{
+    // dispatch()
+  }, []);
+
   // // const\
 
   // useEffect(()=>{

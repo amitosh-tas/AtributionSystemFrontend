@@ -22,14 +22,14 @@ import SuperAdminLayout from "@/components/layout/SuperAdminLayout";
 import SignUp from "@/pages/auth/SignUp";
 import GuestRoute from "@/components/auth/GuestRoute";
 
-import { useNavigate } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "@/app/hooks";
+// import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/app/hooks";
 import {
   setCredentials,
   type UserRole,
 } from "@/store/slices/authSlice";
 import { useEffect } from "react";
-import { loginUser } from "@/services/authService";
+// import { loginUser } from "@/services/authService";
 
 const testUsers: Record<UserRole, {
   id: string;
@@ -70,8 +70,8 @@ function App() {
 
   useEffect(()=>{
     dispatch(setCredentials(testUsers["ADMIN"]));
-  },[]) 
-  
+  },[])
+
 
 
 

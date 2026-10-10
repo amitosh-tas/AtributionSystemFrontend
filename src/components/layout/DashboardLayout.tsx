@@ -2,7 +2,7 @@
 
 import { Outlet } from "react-router-dom"
 import Sidebar from "./Sidebar"
-import RoleSwitcher from "@/components/dev/RoleSwitcher";
+// import RoleSwitcher from "@/components/dev/RoleSwitcher";
 import { useAppSelector } from "@/app/hooks";
 import { getCompanyNavigation } from "@/config/navigation";
 
@@ -14,7 +14,7 @@ function DashboardLayout() {
     : [];
   return (
     <div
-    className="flex min-h-dvh 
+    className="flex min-h-dvh
     font-body cursor-default bg-sidebar
     "
     >
@@ -27,7 +27,7 @@ function DashboardLayout() {
         {/* <RoleSwitcher /> */}
         <Outlet />
       </div>
-      
+
     </div>
   )
 }

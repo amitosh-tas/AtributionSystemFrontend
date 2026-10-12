@@ -1,3 +1,4 @@
+import { useMemo, useState } from "react";
 import DataTable, {
   type DataTableColumn,
 } from "@/components/ui/DataTable";
@@ -13,6 +14,8 @@ interface PlatformRevenue {
   conversions: number;
   revenue: number;
 }
+
+// Keep your existing platformData and columns here.
 
 const platformData: PlatformRevenue[] = [
   {
@@ -86,15 +89,44 @@ const columns: DataTableColumn<PlatformRevenue>[] = [
   },
 ];
 
+
 export default function RevenueByPlatform() {
+  const [category, setCategory] = useState("all");
+
+  const filteredData = useMemo(() => {
+    if (category === "all") return platformData;
+
+    return platformData.filter(
+      (row) => row.platform.category === category
+    );
+  }, [category]);
+
   return (
     <DataTable
       tableHead="Revenue by Platform"
       tableSubHead="all locations · sent conversions only"
       columns={columns}
-      data={platformData}
+      data={filteredData}
       getRowKey={(row) => row.id}
       emptyMessage="No platform revenue found."
+      // filters={s
+      //   <div className="flex flex-wrap items-center gap-2">
+      //     <span className="text-xs text-text-muted">
+      //       Category
+      //     </span>
+
+      //     <select
+      //       value={category}
+      //       onChange={(e) => setCategory(e.target.value)}
+      //       className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-text"
+      //     >
+      //       <option value="all">All categories</option>
+      //       <option value="direct">Direct</option>
+      //       <option value="paid_search">Paid Search</option>
+      //       <option value="affiliate">Affiliate</option>
+      //     </select>
+      //   </div>
+      // }
     />
   );
 }

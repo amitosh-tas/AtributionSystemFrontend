@@ -16,6 +16,9 @@ interface DataTableProps<T> {
   getRowKey: (row: T) => string | number;
   emptyMessage?: string;
   onRowClick?: (row: T) => void;
+
+  // Optional toolbar / filter controls
+  filters?: ReactNode;
 }
 
 export default function DataTable<T>({
@@ -26,6 +29,7 @@ export default function DataTable<T>({
   getRowKey,
   emptyMessage = "No data available.",
   onRowClick,
+  filters,
 }: DataTableProps<T>) {
   const alignment = {
     left: "text-left",
@@ -34,23 +38,32 @@ export default function DataTable<T>({
   };
 
   return (
-    <div className="w-full overflow-x-auto bg-card px-4 rounded-xl border-2 border-border shadow">
-      <div
-      className="flex justify-between items-end px-4 pt-4">
-        { tableHead && 
-        <p
-        className="font-heading font-medium">
-          {tableHead}
-        </p> 
-        }
-        {
-          tableSubHead &&
-          <p
-          className="text-[10px] text-text-muted">
-            {tableSubHead}
-          </p>
-        }
-      </div>
+    <div className="w-full overflow-x-auto bg-card rounded-xl border-2 border-border shadow">
+      {/* Table header */}
+      {(tableHead || tableSubHead) && (
+        <div className="flex justify-between items-end px-6 pt-5">
+          {tableHead && (
+            <p className="font-heading font-medium">
+              {tableHead}
+            </p>
+          )}
+
+          {tableSubHead && (
+            <p className="text-xs text-text-muted">
+              {tableSubHead}
+            </p>
+          )}
+        </div>
+      )}
+
+      {/* Optional filters / toolbar */}
+      {filters && (
+        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
+          {filters}
+        </div>
+      )}
+
+      {/* Table */}
       <table className="w-full min-w-150 border-collapse text-sm">
         <thead>
           <tr className="border-b border-border">
@@ -85,13 +98,15 @@ export default function DataTable<T>({
             data.map((row) => (
               <tr
                 key={getRowKey(row)}
-                onClick={onRowClick ? () => onRowClick(row) : undefined}
+                onClick={
+                  onRowClick
+                    ? () => onRowClick(row)
+                    : undefined
+                }
                 className={[
                   "border-b border-border last:border-b-0",
                   "transition-colors hover:bg-surface-muted/50",
-                  onRowClick
-                    ? "cursor-pointer focus-within:bg-surface-muted/50"
-                    : "",
+                  onRowClick ? "cursor-pointer" : "",
                 ].join(" ")}
               >
                 {columns.map((column) => (

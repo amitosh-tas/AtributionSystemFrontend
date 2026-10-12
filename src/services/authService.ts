@@ -13,24 +13,16 @@ interface LoginCredentials {
 }
 
 export async function loginUser(credentials: LoginCredentials) {
-  const res = await api.post(
-    "/auth/user/login",
-    credentials
-  );
-
+  const res = await api.post("/auth/user/login", credentials);
   return res.data;
 }
 
 export async function getMe() {
   const res = await api.get("/auth/me");
-  console.log(res)
   return res.data.decoded;
 }
 
 export async function logoutUser() {
-  await axios.post(
-    `${API_BASE_URL}/auth/user/logout`,
-    {},
-    { withCredentials: true }
-  );
+  const res = await api.post("/auth/logout");
+  return res.data;
 }

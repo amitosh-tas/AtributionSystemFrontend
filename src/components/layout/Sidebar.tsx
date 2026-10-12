@@ -33,7 +33,7 @@ function Sidebar({
       onClick={handleClick}
       className={`
         md:hidden
-        bg-sidebar text-text-muted fixed top-2.5 left-2.5 z-10 p-2 rounded-full
+        bg-sidebar text-text-muted fixed top-2.5 left-2.5 z-10 p-2 rounded-sm
         duration-300 cursor-pointer
         ${isActive? "translate-x-39": ""}
         `}

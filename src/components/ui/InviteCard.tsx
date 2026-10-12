@@ -1,21 +1,21 @@
 import { useState } from "react";
 import { useAppSelector } from "@/app/hooks";
 
-type Role = "SUPER_ADMIN" | "ADMIN" | "VIEWER";
+type Role = "platform_admin" | "company_admin" | "company_viewer";
 
 function InviteCard() {
   const currentRole = useAppSelector(
     (state) => state.auth.user?.role
   ) as Role | undefined;
 
-  const isSuperAdmin = currentRole === "SUPER_ADMIN";
-  const isAdmin = currentRole === "ADMIN";
+  const isSuperAdmin = currentRole === "platform_admin";
+  const isAdmin = currentRole === "company_admin";
   const canInvite = isSuperAdmin || isAdmin;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<Role>("VIEWER");
+  const [role, setRole] = useState<Role>("company_viewer");
   const [company, setCompany] = useState("");
 
   // Replace with your actual company data from the API.
@@ -24,7 +24,7 @@ function InviteCard() {
     { id: "2", name: "Company Two" },
   ];
 
-  const allowedRoles: Role[] = ["ADMIN", "VIEWER"];
+  const allowedRoles: Role[] = ["company_admin", "company_viewer"];
 
   function handleSubmit(e:  React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -114,9 +114,9 @@ function InviteCard() {
           >
             {allowedRoles.map((item) => (
               <option key={item} value={item}>
-                {item === "SUPER_ADMIN"
+                {item === "platform_admin"
                   ? "Super Admin"
-                  : item === "ADMIN"
+                  : item === "company_admin"
                     ? "Admin"
                     : "Viewer"}
               </option>

@@ -26,3 +26,11 @@ export async function getMe() {
   console.log(res)
   return res.data.decoded;
 }
+
+export async function logoutUser() {
+  await axios.post(
+    `${API_BASE_URL}/auth/user/logout`,
+    {},
+    { withCredentials: true }
+  );
+}

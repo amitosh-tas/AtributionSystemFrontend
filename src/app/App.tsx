@@ -64,18 +64,6 @@ function App() {
 
   const dispatch = useAppDispatch();
 
-
-  useEffect(()=>{
-    // dispatch()
-  }, []);
-
-  // // const\
-
-  useEffect(()=>{
-  // dispatch(setCredentials(testUsers["company_admin"]));
-    dispatch(setAuthLoading(false));
-  },[])
-
   useEffect(() => {
     const restoreSession = async () => {
       try {

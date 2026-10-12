@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import bg from "@/assets/bg1.png";
+import { useAppDispatch } from "@/app/hooks";
+import { setCredentials } from "@/store/slices/authSlice";
 
 interface ISignInData {
   api?: string,
@@ -11,6 +13,9 @@ interface ISignInData {
 }
 
 function SignIn() {
+
+  const dispatch = useAppDispatch();
+
   const [formData, setFormData] = useState<ISignInData>({
     api: "",
     email: "",
@@ -27,7 +32,10 @@ function SignIn() {
 
     try {
       const result = await loginUser(formData);
-      console.log(result);
+      console.log(result)
+      const user = await getMe();
+      dispatch(setCredentials(user))
+      
     } catch (e) {
       setError(
         e instanceof Error ? e.message : "Unable to sign in. Please try again."

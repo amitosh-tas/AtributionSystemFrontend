@@ -1,8 +1,9 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import type { SidebarItem } from "@/config/navigation";
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { logout } from "@/store/slices/authSlice";
+import { logoutUser } from "@/services/authService";
 
 interface SidebarProps {
   companyName?: string;
@@ -93,11 +94,19 @@ function Sidebar({
 function AccountComponent(){
   
   const user = useAppSelector( state => state.auth.user )
+  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  function handleLogOut(){
-    dispatch(logout())
-  }
+  const handleLogout = async () => {
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.error("Logout API failed:", error);
+    } finally {
+      dispatch(logout());
+      navigate("/signin", { replace: true });
+    }
+  };
 
   return (
     <div
@@ -122,7 +131,7 @@ function AccountComponent(){
       </div>
 
       <button
-      onClick={handleLogOut}
+      onClick={handleLogout}
       className="px-3 py-1.5 border border-gray-400/20 rounded-sm text-xs cursor-pointer">
         Sign out
       </button>

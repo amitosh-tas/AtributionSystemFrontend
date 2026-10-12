@@ -31,6 +31,9 @@ import {
 } from "@/store/slices/authSlice";
 import { useEffect } from "react";
 import { getMe } from "@/services/authService";
+import Companies from "@/pages/superAdmin/Companies";
+import Members from "@/pages/superAdmin/Members";
+import Settings from "@/pages/superAdmin/Settings";
 
 function App() {
 
@@ -101,6 +104,9 @@ function App() {
         >
           <Route path="/super" element={<SuperAdminLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path="companies" element={<Companies/>} />
+            <Route path="members" element={<Members />} />
+            <Route path="settings" element={<Settings />}/>
           </Route>
         </Route>
 

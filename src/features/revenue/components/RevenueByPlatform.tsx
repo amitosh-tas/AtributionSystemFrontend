@@ -109,24 +109,24 @@ export default function RevenueByPlatform() {
       data={filteredData}
       getRowKey={(row) => row.id}
       emptyMessage="No platform revenue found."
-      // filters={s
-      //   <div className="flex flex-wrap items-center gap-2">
-      //     <span className="text-xs text-text-muted">
-      //       Category
-      //     </span>
+      filters={
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="text-xs text-text-muted">
+            Category
+          </span>
 
-      //     <select
-      //       value={category}
-      //       onChange={(e) => setCategory(e.target.value)}
-      //       className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-text"
-      //     >
-      //       <option value="all">All categories</option>
-      //       <option value="direct">Direct</option>
-      //       <option value="paid_search">Paid Search</option>
-      //       <option value="affiliate">Affiliate</option>
-      //     </select>
-      //   </div>
-      // }
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-text"
+          >
+            <option value="all">All categories</option>
+            <option value="direct">Direct</option>
+            <option value="paid_search">Paid Search</option>
+            <option value="affiliate">Affiliate</option>
+          </select>
+        </div>
+      }
     />
   );
 }

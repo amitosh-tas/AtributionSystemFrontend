@@ -1,4 +1,5 @@
 import PageLayout from "@/components/layout/PageLayout"
+import InviteCard from "@/components/ui/InviteCard"
 
 
 
@@ -9,7 +10,7 @@ function Team() {
       headTitle="access"
       title="Team"
       >
-        <p>Acces</p>
+        <InviteCard/>
       </PageLayout>
     </>
   )

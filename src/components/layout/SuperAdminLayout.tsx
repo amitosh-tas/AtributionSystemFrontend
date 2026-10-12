@@ -11,7 +11,7 @@ function SuperAdminLayout() {
         items={superAdminNavigation}
       />
 
-      <main className="flex-1 bg-page-background p-10">
+      <main className="flex-1 bg-page-background p-2.5 pt-10 md:p-10 w-full">
         <Outlet />
       </main>
     </div>

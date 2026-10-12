@@ -22,7 +22,7 @@ function DashboardLayout() {
       <Sidebar items={items} />
 
       <div
-      className="flex-1 bg-page-background p-10">
+      className="flex-1 bg-page-background p-2.5 pt-10 md:p-10 w-full">
         {/* Remove RoleSwitcher after testing */}
         {/* <RoleSwitcher /> */}
         <Outlet />

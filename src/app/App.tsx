@@ -25,6 +25,7 @@ import GuestRoute from "@/components/auth/GuestRoute";
 // import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/hooks";
 import {
+  setAuthLoading,
   setCredentials,
   type UserRole,
 } from "@/store/slices/authSlice";
@@ -70,9 +71,23 @@ function App() {
 
   useEffect(()=>{
     dispatch(setCredentials(testUsers["ADMIN"]));
+    dispatch(setAuthLoading(false));
   },[])
 
+  // useEffect(() => {
+  //   const restoreSession = async () => {
+  //     try {
+  //       const user = await getMe();
+  //       dispatch(setCredentials(user));
+  //     } catch {
+  //       dispatch(logout());
+  //     } finally {
+  //       dispatch(setAuthLoading(false));
+  //     }
+  //   };
 
+  //   restoreSession();
+  // }, [dispatch]);
 
 
   return (

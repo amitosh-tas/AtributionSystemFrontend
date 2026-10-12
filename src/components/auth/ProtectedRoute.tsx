@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "@/app/hooks";
 import type { UserRole } from "@/store/slices/authSlice";
 
@@ -8,10 +8,27 @@ interface ProtectedRouteProps {
 
 function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   const user = useAppSelector((state) => state.auth.user);
+  const isLoading = useAppSelector((state) => state.auth.isLoading);
+  const location = useLocation();
 
-  // Not logged in
+  // Wait until authentication/session restoration finishes
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-indigo-600" />
+      </div>
+    );
+  }
+
+  // Not logged in: remember the route they wanted
   if (!user) {
-    return <Navigate to="/signin" replace />;
+    return (
+      <Navigate
+        to="/signin"
+        state={{ from: location }}
+        replace
+      />
+    );
   }
 
   // Logged in, but role is not permitted
@@ -19,7 +36,7 @@ function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
     return <Navigate to="/unauthorized" replace />;
   }
 
-  // Authorized: render the nested route
+  // Authorized: stay on the requested URL
   return <Outlet />;
 }
 

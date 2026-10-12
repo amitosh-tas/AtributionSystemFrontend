@@ -46,11 +46,11 @@ function InviteCard() {
   return (
     <section className="w-full rounded-xl border border-gray-200 bg-card p-6 shadow-sm">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-xl font-semibold text-gray-900">
+        <h2 className=" font-medium font-heading text-gray-900">
           Invite a teammate
         </h2>
 
-        <p className="text-sm text-gray-500">
+        <p className="text-[10px] text-gray-500">
           {isSuperAdmin
             ? "Manage users across companies"
             : "Admins manage users · Viewers see the dashboard only"}
@@ -70,7 +70,7 @@ function InviteCard() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Full name"
-            className="h-13.25 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
           />
         </div>
 
@@ -84,7 +84,7 @@ function InviteCard() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="teammate@company.com"
-            className="h-13.25 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
           />
         </div>
 
@@ -99,7 +99,7 @@ function InviteCard() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="At least 8 characters"
-            className="h-13.25 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
           />
         </div>
 
@@ -110,7 +110,7 @@ function InviteCard() {
           <select
             value={role}
             onChange={(e) => setRole(e.target.value as Role)}
-            className="h-13.25 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
           >
             {allowedRoles.map((item) => (
               <option key={item} value={item}>
@@ -133,7 +133,7 @@ function InviteCard() {
               required
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              className="h-13.25 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+              className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
             >
               <option value="">Select company</option>
               {companies.map((item) => (
@@ -148,7 +148,7 @@ function InviteCard() {
         <div className="sm:col-span-2 xl:col-span-full">
           <button
             type="submit"
-            className="h-12.5 rounded-lg bg-gray-950 px-6 text-sm font-semibold text-white transition hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="h-10 rounded-lg bg-gray-950 px-6 text-sm font-semibold text-white transition hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
           >
             Create user
           </button>

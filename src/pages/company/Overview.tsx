@@ -87,7 +87,7 @@ function Overview() {
         </AnalyticsGrid>
 
         <RevenueByPlatform />
-
+        
       </PageLayout>
 
     </>

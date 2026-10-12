@@ -2,6 +2,8 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "@/app/hooks";
 import type { UserRole } from "@/store/slices/authSlice";
 
+import "@/app/loader.css"
+
 interface ProtectedRouteProps {
   allowedRoles: UserRole[];
 }
@@ -14,8 +16,11 @@ function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
   // Wait until authentication/session restoration finishes
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-indigo-600" />
+      <div className="flex min-h-screen items-center justify-center
+      bg-page-background
+      ">
+        {/* <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-300 border-t-indigo-600" /> */}
+        <span className="loader"></span>
       </div>
     );
   }

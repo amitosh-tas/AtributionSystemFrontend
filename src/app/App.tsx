@@ -44,7 +44,7 @@ function App() {
       } catch {
         dispatch(logout());
       } finally {
-        // dispatch(setAuthLoading(false));
+        dispatch(setAuthLoading(false));
       }
     };
 

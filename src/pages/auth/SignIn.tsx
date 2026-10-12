@@ -20,7 +20,7 @@ function SignIn() {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  async function handleSignIn(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSignIn(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
     setIsLoading(true);

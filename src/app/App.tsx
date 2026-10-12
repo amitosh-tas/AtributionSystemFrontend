@@ -70,7 +70,7 @@ function App() {
   // // const\
 
   useEffect(()=>{
-  dispatch(setCredentials(testUsers["ADMIN"]));
+  // dispatch(setCredentials(testUsers["ADMIN"]));
     dispatch(setAuthLoading(false));
   },[])
 

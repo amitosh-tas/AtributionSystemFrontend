@@ -1,39 +1,50 @@
-
-
-interface ICard{
-  title?: string,
-  value?: string,
-  description?: string,
+interface ICard {
+  title?: string;
+  value?: string;
+  description?: string;
+  trend?: {
+    value: string;
+    direction: "up" | "down";
+  };
 }
 
 function Card({
   title,
   value,
-  description
+  description,
+  trend,
 }: ICard) {
   return (
     <div
-    className="text-text bg-card border-2 border-border
-    p-5 h-35 rounded-xl shadow
-    flex flex-col gap-1.5
-    ">
-      
-      <p 
-      className="uppercase text-[10px] text-text-muted">
+      className="text-text bg-card border-2 border-border
+      p-5 h-35 rounded-xl shadow
+      flex flex-col gap-1.5"
+    >
+      <p className="uppercase text-[10px] tracking-widest text-text-muted">
         {title}
       </p>
 
-      <p
-      className="font-heading text-xl font-medium">
+      <p className="font-heading text-xl font-medium">
         {value}
       </p>
 
-      <p className="text-[10px] text-text-muted">
-        {description}
-      </p>
-
+      {trend ? (
+        <p
+          className={`text-xs ${
+            trend.direction === "down"
+              ? "text-red-500"
+              : "text-emerald-500"
+          }`}
+        >
+          {trend.direction === "down" ? "▼" : "▲"} {trend.value}
+        </p>
+      ) : (
+        <p className="text-xs text-text-muted">
+          {description}
+        </p>
+      )}
     </div>
-  )
+  );
 }
 
-export default Card
+export default Card;

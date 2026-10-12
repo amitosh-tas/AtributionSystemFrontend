@@ -79,6 +79,16 @@ function App() {
     restoreSession();
   }, [dispatch]);
 
+  // useEffect(()=>{
+  //   dispatch(setCredentials({
+  //     id: "test-admin",
+  //     name: "Test Admin",
+  //     email: "admin@test.local",
+  //     role: "company_admin",
+  //   }))
+
+  //   dispatch(setAuthLoading(false))
+  // },[])
 
   return (
     <>

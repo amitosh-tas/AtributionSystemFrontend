@@ -7,11 +7,14 @@ import RevenueLedger from "@/features/revenue/components/RevenueLedger"
 import RevenueLedgerChart from "@/features/revenue/components/RevenueLedgerChart"
 
 interface ICardData {
-  title: string,
-  value: string,
-  description: string,
+  title: string;
+  value: string;
+  description?: string;
+  trend?: {
+    value: string;
+    direction: "up" | "down";
+  };
 }
-
 const cardData: ICardData[] = [
   {
     title: "New Customers",
@@ -53,6 +56,14 @@ const cardData: ICardData[] = [
     value: "$-127.32",
     description: "3 refunds · all locations",
   },
+  {
+    title: "Avg Order Value",
+    value: "$64.65",
+    trend: {
+      value: "18.1% vs prior period",
+      direction: "down",
+    },
+  },
 ];
 
 function Overview() {
@@ -74,16 +85,15 @@ function Overview() {
         />
 
         <AnalyticsGrid>
-          {
-            cardData.map( ({title, value, description}, index) => (
-              <Card
-              key={index} 
+          {cardData.map(({ title, value, description, trend }) => (
+            <Card
+              key={title}
               title={title}
               value={value}
               description={description}
-              />
-            ) )
-          }
+              trend={trend}
+            />
+          ))}
         </AnalyticsGrid>
 
         <RevenueByPlatform />

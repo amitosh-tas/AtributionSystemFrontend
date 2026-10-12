@@ -12,23 +12,23 @@ const testUsers: Record<UserRole, {
   email: string;
   role: UserRole;
 }> = {
-  SUPER_ADMIN: {
+  platform_admin: {
     id: "test-super-admin",
     name: "Test Super Admin",
     email: "superadmin@test.local",
-    role: "SUPER_ADMIN",
+    role: "platform_admin",
   },
-  ADMIN: {
+  company_admin: {
     id: "test-admin",
     name: "Test Admin",
     email: "admin@test.local",
-    role: "ADMIN",
+    role: "company_admin",
   },
-  VIEWER: {
+  company_viewer: {
     id: "test-viewer",
     name: "Test Viewer",
     email: "viewer@test.local",
-    role: "VIEWER",
+    role: "company_viewer",
   },
 };
 
@@ -37,13 +37,13 @@ export default function RoleSwitcher() {
   const navigate = useNavigate();
 
   const currentRole = useAppSelector(
-    (state) => state.auth.user?.role ?? "ADMIN",
+    (state) => state.auth.user?.role ?? "company_admin",
   );
 
   function switchRole(role: UserRole) {
     dispatch(setCredentials(testUsers[role]));
 
-    if (role === "SUPER_ADMIN") {
+    if (role === "platform_admin") {
       navigate("/super");
     } else {
       navigate("/");
@@ -67,9 +67,9 @@ export default function RoleSwitcher() {
         className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-indigo-500"
         aria-label="Switch test role"
       >
-        <option value="SUPER_ADMIN">Super Admin</option>
-        <option value="ADMIN">Admin</option>
-        <option value="VIEWER">Viewer</option>
+        <option value="platform_admin">Super Admin</option>
+        <option value="company_admin">Admin</option>
+        <option value="company_viewer">Viewer</option>
       </select>
     </div>
   );

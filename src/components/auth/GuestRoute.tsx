@@ -8,7 +8,7 @@ function GuestRoute() {
 
   if (isAuthenticated) {
     const destination =
-      user?.role === "SUPER_ADMIN" ? "/super" : "/";
+      user?.role === "platform_admin" ? "/super" : "/";
 
     return <Navigate to={destination} replace />;
   }

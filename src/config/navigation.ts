@@ -23,7 +23,7 @@ export const superAdminNavigation: SidebarItem[] = [
 ];
 
 export function getCompanyNavigation(role: UserRole) {
-  if (role === "VIEWER") {
+  if (role === "company_viewer") {
     return companyNavigation.filter((item) => item.path !== "/team");
   }
 

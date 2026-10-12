@@ -25,11 +25,13 @@ import GuestRoute from "@/components/auth/GuestRoute";
 // import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/hooks";
 import {
+  logout,
   setAuthLoading,
   setCredentials,
   type UserRole,
 } from "@/store/slices/authSlice";
 import { useEffect } from "react";
+import { getMe } from "@/services/authService";
 // import { loginUser } from "@/services/authService";
 
 const testUsers: Record<UserRole, {
@@ -38,23 +40,23 @@ const testUsers: Record<UserRole, {
   email: string;
   role: UserRole;
 }> = {
-  SUPER_ADMIN: {
+  platform_admin: {
     id: "test-super-admin",
     name: "Test Super Admin",
     email: "superadmin@test.local",
-    role: "SUPER_ADMIN",
+    role: "platform_admin",
   },
-  ADMIN: {
+  company_admin: {
     id: "test-admin",
     name: "Test Admin",
     email: "admin@test.local",
-    role: "ADMIN",
+    role: "company_admin",
   },
-  VIEWER: {
+  company_viewer: {
     id: "test-viewer",
     name: "Test Viewer",
     email: "viewer@test.local",
-    role: "VIEWER",
+    role: "company_viewer",
   },
 };
 
@@ -70,24 +72,24 @@ function App() {
   // // const\
 
   useEffect(()=>{
-  // dispatch(setCredentials(testUsers["ADMIN"]));
+  // dispatch(setCredentials(testUsers["company_admin"]));
     dispatch(setAuthLoading(false));
   },[])
 
-  // useEffect(() => {
-  //   const restoreSession = async () => {
-  //     try {
-  //       const user = await getMe();
-  //       dispatch(setCredentials(user));
-  //     } catch {
-  //       dispatch(logout());
-  //     } finally {
-  //       dispatch(setAuthLoading(false));
-  //     }
-  //   };
+  useEffect(() => {
+    const restoreSession = async () => {
+      try {
+        const user = await getMe();
+        dispatch(setCredentials(user));
+      } catch {
+        dispatch(logout());
+      } finally {
+        dispatch(setAuthLoading(false));
+      }
+    };
 
-  //   restoreSession();
-  // }, [dispatch]);
+    restoreSession();
+  }, [dispatch]);
 
 
   return (
@@ -95,10 +97,10 @@ function App() {
       <ScrollToTop />
 
       <Routes>
-        {/* Company dashboard: ADMIN and VIEWER */}
+        {/* Company dashboard: company_admin and company_viewer */}
         <Route
           element={
-            <ProtectedRoute allowedRoles={["ADMIN", "VIEWER"]} />
+            <ProtectedRoute allowedRoles={["company_admin", "company_viewer"]} />
           }
         >
           <Route path="/" element={<DashboardLayout />}>
@@ -112,9 +114,9 @@ function App() {
           </Route>
         </Route>
 
-        {/* Team: ADMIN only */}
+        {/* Team: company_admin only */}
         <Route
-          element={<ProtectedRoute allowedRoles={["ADMIN"]} />}
+          element={<ProtectedRoute allowedRoles={["company_admin"]} />}
         >
           <Route path="/team" element={<DashboardLayout />}>
             <Route index element={<Team />} />
@@ -124,7 +126,7 @@ function App() {
         {/* Super Admin dashboard */}
         <Route
           element={
-            <ProtectedRoute allowedRoles={["SUPER_ADMIN"]} />
+            <ProtectedRoute allowedRoles={["platform_admin"]} />
           }
         >
           <Route path="/super" element={<SuperAdminLayout />}>

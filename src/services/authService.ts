@@ -24,5 +24,5 @@ export async function loginUser(credentials: LoginCredentials) {
 export async function getMe() {
   const res = await api.get("/auth/me");
   console.log(res)
-  return res.data;
+  return res.data.decoded;
 }

@@ -33,7 +33,7 @@ function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
 
   // console.log(location)
 
-  if(user.role === "SUPER_ADMIN" && location.pathname === "/"){
+  if(user.role === "platform_admin" && location.pathname === "/"){
     return <Navigate to="/super" replace />
   }
 

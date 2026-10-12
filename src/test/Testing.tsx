@@ -34,6 +34,13 @@ function Testing() {
       <RoleSwitcher />
 
       <p>{user ? user.role : "Not logged in"}</p>
+
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa ratione nobis deserunt ea ipsum beatae non, recusandae corporis perspiciatis atque voluptatum, accusantium, sequi cumque! Corporis consequuntur nulla temporibus ex exercitationem!</p>
+
+      <p>
+        idk what to doo... 
+      </p>
+
     </div>
   )
 }

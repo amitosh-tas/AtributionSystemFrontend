@@ -161,7 +161,7 @@ function SignUp() {
     setError("");
   }
 
-  async function handleSignUp(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSignUp(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
 

@@ -31,6 +31,12 @@ function ProtectedRoute({ allowedRoles }: ProtectedRouteProps) {
     );
   }
 
+  // console.log(location)
+
+  if(user.role === "SUPER_ADMIN" && location.pathname === "/"){
+    return <Navigate to="/super" replace />
+  }
+
   // Logged in, but role is not permitted
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/unauthorized" replace />;

@@ -22,7 +22,6 @@ import SuperAdminLayout from "@/components/layout/SuperAdminLayout";
 import SignUp from "@/pages/auth/SignUp";
 import GuestRoute from "@/components/auth/GuestRoute";
 
-// import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/hooks";
 import {
   logout,
@@ -32,33 +31,6 @@ import {
 } from "@/store/slices/authSlice";
 import { useEffect } from "react";
 import { getMe } from "@/services/authService";
-// import { loginUser } from "@/services/authService";
-
-// const testUsers: Record<UserRole, {
-//   id: string;
-//   name: string;
-//   email: string;
-//   role: UserRole;
-// }> = {
-//   platform_admin: {
-//     id: "test-super-admin",
-//     name: "Test Super Admin",
-//     email: "superadmin@test.local",
-//     role: "platform_admin",
-//   },
-//   company_admin: {
-//     id: "test-admin",
-//     name: "Test Admin",
-//     email: "admin@test.local",
-//     role: "company_admin",
-//   },
-//   company_viewer: {
-//     id: "test-viewer",
-//     name: "Test Viewer",
-//     email: "viewer@test.local",
-//     role: "company_viewer",
-//   },
-// };
 
 function App() {
 
@@ -72,7 +44,7 @@ function App() {
       } catch {
         dispatch(logout());
       } finally {
-        dispatch(setAuthLoading(false));
+        // dispatch(setAuthLoading(false));
       }
     };
 

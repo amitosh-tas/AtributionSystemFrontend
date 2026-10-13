@@ -24,7 +24,9 @@ function InviteCard() {
     { id: "2", name: "Company Two" },
   ];
 
-  const allowedRoles: Role[] = ["company_admin", "company_viewer"];
+  const allowedRoles: Role[] = isSuperAdmin
+    ? ["platform_admin", "company_admin", "company_viewer"]
+    : ["company_admin", "company_viewer"];
 
   function handleSubmit(e:  React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -34,7 +36,9 @@ function InviteCard() {
       email,
       password,
       role,
-      ...(isSuperAdmin ? { companyId: company } : {}),
+      ...(isSuperAdmin && role !== "platform_admin"
+        ? { companyId: company }
+        : {}),
     };
 
     // Connect your create-user API here.
@@ -124,11 +128,12 @@ function InviteCard() {
           </select>
         </div>
 
-        {isSuperAdmin && (
+        {isSuperAdmin && role !== "platform_admin" && (
           <div className="flex flex-col gap-2 sm:col-span-2 xl:col-span-1">
             <label className="text-xs font-medium uppercase tracking-wide text-gray-500">
               Company
             </label>
+
             <select
               required
               value={company}

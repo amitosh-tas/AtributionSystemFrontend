@@ -1,9 +1,18 @@
+import PageLayout from "@/components/layout/PageLayout"
+import InviteCard from "@/components/ui/InviteCard"
 
 
 
 function Members() {
   return (
-    <div>Members</div>
+    <>
+    <PageLayout
+    title="Members"
+    headTitle="Invite and manage members"
+    >
+      <InviteCard/>
+    </PageLayout>
+    </>
   )
 }
 

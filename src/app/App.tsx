@@ -60,7 +60,6 @@ function App() {
             <Route path="customers" element={<Customers />} />
             <Route path="transactions" element={<Transactions />} />
             <Route path="upcoming" element={<Upcoming />} />
-            <Route path="settings" element={<A_Settings />}/>
           </Route>
         </Route>
 
@@ -68,8 +67,9 @@ function App() {
         <Route
           element={<ProtectedRoute allowedRoles={["company_admin"]} />}
         >
-          <Route path="/team" element={<DashboardLayout />}>
-            <Route index element={<Team />} />
+          <Route path="/" element={<DashboardLayout />}>
+            <Route path="team" element={<Team />} />
+            <Route path="settings" element={<A_Settings />}/>
           </Route>
         </Route>
 

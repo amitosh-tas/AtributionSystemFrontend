@@ -15,85 +15,119 @@ function Sidebar({
   items,
 }: SidebarProps) {
   const location = useLocation();
-  const [isActive, setActive] = useState<Boolean>(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-  function handleClick(){
-    setActive( !isActive )
-  }
-
-  useEffect(()=>{
-    setActive( false )
-  }, [location])
+  // Close the mobile drawer whenever the route changes.
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
-    <div
-    className="min-h-dvh relative z-10">
-          
-      <div
-      onClick={handleClick}
-      className={`
-        md:hidden
-        bg-sidebar text-text-muted fixed top-2.5 left-2.5 z-10 p-2 rounded-sm
-        duration-400 cursor-pointer
-        ${isActive? "translate-x-48 ": ""}
+    <>
+      {/* Mobile menu button */}
+      <button
+        type="button"
+        aria-label={isOpen ? "Close navigation" : "Open navigation"}
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((prev) => !prev)}
+        className={`
+          fixed left-3 top-3 z-50
+          flex h-10 w-10 items-center justify-center
+          rounded-lg border border-white/10
+          bg-sidebar text-sidebar-text shadow-md
+          transition-transform duration-300
+          md:hidden
+          ${isOpen ? "translate-x-60" : "translate-x-0"}
         `}
       >
-        <i className={`flex items-center text-xs duration-300
-          ${isActive ? "fi fi-br-cross" : " fi fi-bs-menu-dots "}
-          `}></i>
-      </div>
+        <i
+          className={
+            isOpen ? "fi fi-br-cross" : "fi fi-bs-menu-dots"
+          }
+        />
+      </button>
 
-      <aside className={`relative bg-sidebar text-sidebar-text duration-300 h-full`}>
-        <div className={`fixed top-0 flex h-full bg-sidebar w-60 flex-col gap-2 duration-300
-        justify-between
-        md:translate-x-0 md:sticky md:h-dvh p-5
-          ${isActive ? "" : "-translate-x-full" }  
-          `}>
+      {/* Mobile backdrop */}
+      {isOpen && (
+        <button
+          type="button"
+          aria-label="Close navigation backdrop"
+          onClick={() => setIsOpen(false)}
+          className="fixed inset-0 z-30 bg-black/40 md:hidden"
+        />
+      )}
 
-          <div
-          className="flex flex-col">
-            <div>
-              <h1 className="font-heading text-lg uppercase text-primary">
-                Ledger
-              </h1>
+      {/* Sidebar wrapper reserves desktop width */}
+      <aside className="relative z-40 w-0 shrink-0 md:w-60">
+        <div
+          className={`
+            fixed inset-y-0 left-0 z-40
+            flex h-dvh w-60 flex-col
+            overflow-hidden bg-sidebar text-sidebar-text
+            transition-transform duration-300 ease-in-out
+            md:sticky md:top-0 md:translate-x-0
+            ${isOpen ? "translate-x-0" : "-translate-x-full"}
+          `}
+        >
+          {/* Header: never scrolls */}
+          <div className="shrink-0 px-5 pb-4 pt-6">
+            <h1 className="font-heading text-lg uppercase text-primary">
+              Ledger
+            </h1>
 
-              <p className="text-[10px]">{companyName}</p>
+            <p className="mt-1 truncate text-[10px]">
+              {companyName}
+            </p>
 
-              <div className="mt-5 h-px w-full bg-gray-400/20" />
-            </div>
+            <div className="mt-5 h-px w-full bg-gray-400/20" />
+          </div>
 
-            <nav className="flex flex-col gap-0.5">
+          {/* Navigation: scrolls independently */}
+          <nav
+            aria-label="Main navigation"
+            className="
+              min-h-0 flex-1 overflow-y-auto overscroll-contain
+              px-5 pb-4
+              [scrollbar-width:thin]
+              [scrollbar-color:rgba(148,163,184,0.35)_transparent]
+            "
+          >
+            <div className="flex flex-col gap-1">
               {items.map((item) => (
                 <NavLink
                   key={item.path}
                   to={item.path}
                   end={item.path === "/" || item.path === "/super"}
                   className={({ isActive }) =>
-                    `rounded-md py-1.5 transition-all duration-300 ${
-                      isActive
-                        ? "translate-x-2 text-primary"
-                        : "hover:text-primary"
-                    }`
+                    `
+                      rounded-md px-3 py-2 text-sm
+                      transition-colors duration-200
+                      ${
+                        isActive
+                          ? "bg-primary/10 font-medium text-primary"
+                          : "text-sidebar-text hover:bg-white/5 hover:text-primary"
+                      }
+                    `
                   }
                 >
                   {item.label}
                 </NavLink>
               ))}
-            </nav>
+            </div>
+          </nav>
+
+          {/* Account section: stays at the bottom */}
+          <div className="shrink-0 border-t border-white/10 p-5">
+            <AccountComponent />
           </div>
-          <AccountComponent />
         </div>
-
       </aside>
-
-
-    </div>
+    </>
   );
 }
 
-function AccountComponent(){
-  
-  const user = useAppSelector( state => state.auth.user )
+function AccountComponent() {
+  const user = useAppSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -109,35 +143,38 @@ function AccountComponent(){
   };
 
   return (
-    <div
-    className="border-t-2 border-text-muted/20 pt-2.5 text-sm
-    flex flex-col gap-1
-    ">
-      
-      <p
-      className="font-medium">
+    <div className="flex flex-col gap-1.5">
+      <p className="truncate text-sm font-medium">
         {user?.name}
       </p>
-      <p
-      className="text-[10px]">
+
+      <p className="truncate text-[10px] text-sidebar-text/70">
         {user?.email}
       </p>
 
-      <div
-      className="text-[9px] font-medium uppercase p-0.5 px-1.5 bg-amber-950/70 text-amber-700 rounded-sm 
-      w-max
-      ">
+      <span
+        className="
+          mt-1 w-max max-w-full truncate rounded-sm
+          bg-amber-500/10 px-2 py-1
+          text-[9px] font-medium uppercase text-amber-400
+        "
+      >
         {user?.role}
-      </div>
+      </span>
 
       <button
-      onClick={handleLogout}
-      className="px-3 py-1.5 border border-gray-400/20 rounded-sm text-xs cursor-pointer">
+        type="button"
+        onClick={handleLogout}
+        className="
+          mt-2 rounded-md border border-white/10 px-3 py-2
+          text-xs transition-colors
+          hover:bg-white/5 hover:text-primary
+        "
+      >
         Sign out
       </button>
-
     </div>
-  )
+  );
 }
 
 export default Sidebar;

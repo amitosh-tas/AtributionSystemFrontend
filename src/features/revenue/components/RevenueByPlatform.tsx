@@ -15,8 +15,6 @@ interface PlatformRevenue {
   revenue: number;
 }
 
-// Keep your existing platformData and columns here.
-
 const platformData: PlatformRevenue[] = [
   {
     id: "direct",

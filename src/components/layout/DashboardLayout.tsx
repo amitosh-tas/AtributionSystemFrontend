@@ -2,7 +2,6 @@
 
 import { Outlet } from "react-router-dom"
 import Sidebar from "./Sidebar"
-// import RoleSwitcher from "@/components/dev/RoleSwitcher";
 import { useAppSelector } from "@/app/hooks";
 import { getCompanyNavigation } from "@/config/navigation";
 
@@ -23,8 +22,6 @@ function DashboardLayout() {
 
       <div
       className="flex-1 bg-page-background p-2.5 pt-10 md:p-10 w-full">
-        {/* Remove RoleSwitcher after testing */}
-        {/* <RoleSwitcher /> */}
         <Outlet />
       </div>
 

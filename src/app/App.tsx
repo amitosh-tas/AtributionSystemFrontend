@@ -27,7 +27,6 @@ import {
   logout,
   setAuthLoading,
   setCredentials,
-  // type UserRole,
 } from "@/store/slices/authSlice";
 import { useEffect } from "react";
 import { getMe } from "@/services/authService";
@@ -54,17 +53,6 @@ function App() {
     restoreSession();
   }, [dispatch]);
 
-  // useEffect(()=>{
-  //   dispatch(setCredentials({
-  //     id: "test-admin",
-  //     name: "Test Admin",
-  //     email: "admin@test.local",
-  //     role: "company_admin",
-  //   }))
-
-  //   dispatch(setAuthLoading(false))
-  // },[])
-
   return (
     <>
       <ScrollToTop />
@@ -83,7 +71,6 @@ function App() {
             <Route path="customers" element={<Customers />} />
             <Route path="transactions" element={<Transactions />} />
             <Route path="upcoming" element={<Upcoming />} />
-            {/* <Route path="team" element={<Team />} /> */}
           </Route>
         </Route>
 

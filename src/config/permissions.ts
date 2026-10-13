@@ -1,4 +1,4 @@
-export type UserRole = "hplatform_admin" | "company_admin" | "company_viewer";
+export type UserRole = "platform_admin" | "company_admin" | "company_viewer";
 
 export type Permission =
   | "dashboard:view"
@@ -10,7 +10,7 @@ export type Permission =
   | "roles:manage";
 
 const rolePermissions: Record<UserRole, Permission[]> = {
-  hplatform_admin: [
+  platform_admin: [
     "dashboard:view",
     "revenue:view",
     "teams:view",

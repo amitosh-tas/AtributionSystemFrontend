@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
+import Card from "@/components/ui/Card";
 import {
   useCompanyApiKeys,
   ApiKeyTable,
@@ -113,19 +114,22 @@ function Settings() {
 
         {/* Summary cards */}
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <SummaryCard
-            label="Total keys"
-            value={loading ? "—" : keys.length}
+          <Card
+            title="Total keys"
+            value={loading ? "—" : String(keys.length)}
+            description="All API keys"
           />
 
-          <SummaryCard
-            label="Active keys"
-            value={loading ? "—" : activeKeys}
+          <Card
+            title="Active keys"
+            value={loading ? "—" : String(activeKeys)}
+            description="Currently usable"
           />
 
-          <SummaryCard
-            label="Revoked keys"
-            value={loading ? "—" : revokedKeys}
+          <Card
+            title="Revoked keys"
+            value={loading ? "—" : String(revokedKeys)}
+            description="No longer active"
           />
         </div>
 
@@ -211,20 +215,6 @@ function Settings() {
         />
       </div>
     </PageLayout>
-  );
-}
-
-interface SummaryCardProps {
-  label: string;
-  value: string | number;
-}
-
-function SummaryCard({ label, value }: SummaryCardProps) {
-  return (
-    <div className="rounded-xl border border-border bg-card p-5">
-      <p className="text-xs text-text-muted">{label}</p>
-      <p className="mt-2 text-2xl font-semibold">{value}</p>
-    </div>
   );
 }
 

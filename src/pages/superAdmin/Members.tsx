@@ -1,5 +1,5 @@
 import PageLayout from "@/components/layout/PageLayout"
-import DataTable from "@/components/ui/DataTable"
+// import DataTable from "@/components/ui/DataTable"
 import InviteCard from "@/components/ui/InviteCard"
 
 

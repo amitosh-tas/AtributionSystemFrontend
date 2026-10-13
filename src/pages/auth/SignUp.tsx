@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import bg from "@/assets/bg1.png";
-import { getMe, registerCompany } from "@/services/authService";
+import { registerCompany } from "@/services/authService";
 import { restoreSession } from "@/services/restoreSession";
 import { useAppDispatch } from "@/app/hooks";
 

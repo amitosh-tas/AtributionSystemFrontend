@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import bg from "@/assets/bg1.png";
+import { registerCompany } from "@/services/authService";
 
 const INDUSTRIES = [
   "E-commerce & Retail",
@@ -90,11 +91,11 @@ const TIMEZONES = [
 ];
 
 interface SignUpForm {
-  name: string;
+  adminName: string;
   email: string;
   password: string;
   confirmPassword: string;
-  companyName: string;
+  name: string;
   country: string;
   industry: string;
   timezone: string;
@@ -104,11 +105,11 @@ interface SignUpForm {
 }
 
 const initialForm: SignUpForm = {
-  name: "",
+  adminName: "",
   email: "",
   password: "",
   confirmPassword: "",
-  companyName: "",
+  name: "",
   country: "IN",
   industry: "",
   timezone: "Asia/Kolkata",
@@ -184,17 +185,21 @@ function SignUp() {
         name: form.name.trim(),
         email: form.email.trim(),
         password: form.password,
-        companyName: form.companyName.trim(),
+        adminName: form.adminName.trim(),
         country: form.country,
-        industry: form.industry,
         timezone: form.timezone,
-        dataRegion: form.dataRegion,
         currency: form.currency,
+        industry: form.industry,
+        dataRegion: form.dataRegion,
         paymentMethod: form.paymentMethod.trim(),
       };
 
       console.log("Signup payload:", payload);
-      setError("Signup API is not connected yet.");
+
+      const result = await registerCompany(payload);
+
+      console.log("Company registered successfully:", result);
+
     } catch {
       setError("Something went wrong. Please try again.");
     } finally {
@@ -245,14 +250,14 @@ function SignUp() {
                       Full name *
                     </label>
                     <input
-                      id="name"
-                      name="name"
+                      id="adminName"
+                      name="adminName"
                       type="text"
-                      autoComplete="name"
+                      autoComplete="adminName"
                       placeholder="Your full name"
                       required
-                      value={form.name}
-                      onChange={(e) => updateField("name", e.target.value)}
+                      value={form.adminName}
+                      onChange={(e) => updateField("adminName", e.target.value)}
                       className={inputClass}
                     />
                   </div>
@@ -330,15 +335,15 @@ function SignUp() {
                     Company name *
                   </label>
                   <input
-                    id="companyName"
-                    name="companyName"
+                    id="name"
+                    name="name"
                     type="text"
                     autoComplete="organization"
                     placeholder="Your company name"
                     required
-                    value={form.companyName}
+                    value={form.name}
                     onChange={(e) =>
-                      updateField("companyName", e.target.value)
+                      updateField("name", e.target.value)
                     }
                     className={inputClass}
                   />

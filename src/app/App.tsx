@@ -23,36 +23,23 @@ import SignUp from "@/pages/auth/SignUp";
 import GuestRoute from "@/components/auth/GuestRoute";
 
 import { useAppDispatch } from "@/app/hooks";
-import {
-  logout,
-  setAuthLoading,
-  setCredentials,
-} from "@/store/slices/authSlice";
 import { useEffect } from "react";
-import { getMe } from "@/services/authService";
 import Companies from "@/pages/superAdmin/Companies";
 import Members from "@/pages/superAdmin/Members";
 import Settings from "@/pages/superAdmin/Settings";
 import ApiKeys from "@/pages/superAdmin/ApiKeys";
 import A_Settings from "@/pages/company/Settings";
+import { restoreSession } from "@/services/restoreSession";
 
 function App() {
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    const restoreSession = async () => {
-      try {
-        const user = await getMe();
-        dispatch(setCredentials(user));
-      } catch {
-        dispatch(logout());
-      } finally {
-        dispatch(setAuthLoading(false));
-      }
-    };
-
-    restoreSession();
+    const rs = async ()=> {
+      await restoreSession(dispatch);
+    }
+    rs();
   }, [dispatch]);
 
   return (

@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import bg from "@/assets/bg1.png";
-import { registerCompany } from "@/services/authService";
+import { getMe, registerCompany } from "@/services/authService";
+import { restoreSession } from "@/services/restoreSession";
+import { useAppDispatch } from "@/app/hooks";
 
 const INDUSTRIES = [
   "E-commerce & Retail",
@@ -137,6 +139,7 @@ const sectionTitleClass = "text-base font-semibold tracking-tight text-black";
 const sectionDescriptionClass = "mt-1 text-sm leading-6 text-gray-500";
 
 function SignUp() {
+  const dispatch = useAppDispatch();
   const [form, setForm] = useState<SignUpForm>(initialForm);
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -197,6 +200,8 @@ function SignUp() {
       console.log("Signup payload:", payload);
 
       const result = await registerCompany(payload);
+
+      await restoreSession(dispatch);
 
       console.log("Company registered successfully:", result);
 

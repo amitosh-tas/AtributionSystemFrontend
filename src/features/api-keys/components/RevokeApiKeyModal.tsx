@@ -24,7 +24,7 @@ export default function RevokeApiKeyModal({
         className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl"
       >
         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-red-100 text-red-700">
-          <i className="fi fi-rr-ban text-lg" aria-hidden="true" />
+          <i className="fi fi-rr-ban text-lg flex items-center" aria-hidden="true" />
         </div>
         <h3
           id="revoke-api-key-title"

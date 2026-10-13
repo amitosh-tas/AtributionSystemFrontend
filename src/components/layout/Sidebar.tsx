@@ -33,16 +33,18 @@ function Sidebar({
         className={`
           fixed left-3 top-3 z-50
           flex h-10 w-10 items-center justify-center
-          rounded-lg border border-white/10
+          rounded-lg 
           bg-sidebar text-sidebar-text shadow-md
           transition-transform duration-300
           md:hidden
-          ${isOpen ? "translate-x-60" : "translate-x-0"}
+          ${isOpen ? "translate-x-45" : "translate-x-0"}
         `}
       >
         <i
-          className={
-            isOpen ? "fi fi-br-cross" : "fi fi-bs-menu-dots"
+          className={`
+            flex items-center text-sm
+            ${isOpen ? "fi fi-br-cross" : "fi fi-bs-menu-dots"}
+            `
           }
         />
       </button>

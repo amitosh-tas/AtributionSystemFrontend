@@ -33,6 +33,7 @@ import { getMe } from "@/services/authService";
 import Companies from "@/pages/superAdmin/Companies";
 import Members from "@/pages/superAdmin/Members";
 import Settings from "@/pages/superAdmin/Settings";
+import ApiKeys from "@/pages/superAdmin/ApiKeys";
 
 function App() {
 
@@ -94,6 +95,7 @@ function App() {
             <Route path="companies" element={<Companies/>} />
             <Route path="members" element={<Members />} />
             <Route path="settings" element={<Settings />}/>
+            <Route path="api-keys" element={<ApiKeys />}/>
           </Route>
         </Route>
 

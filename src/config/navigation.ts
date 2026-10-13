@@ -20,6 +20,7 @@ export const superAdminNavigation: SidebarItem[] = [
   { label: "Companies", path: "/super/companies" },
   { label: "Members", path: "/super/members" },
   { label: "Settings", path: "/super/settings" },
+  { label: "Api Keys", path: "/super/api-keys" }
 ];
 
 export function getCompanyNavigation(role: UserRole) {

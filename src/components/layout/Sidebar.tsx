@@ -34,8 +34,8 @@ function Sidebar({
       className={`
         md:hidden
         bg-sidebar text-text-muted fixed top-2.5 left-2.5 z-10 p-2 rounded-sm
-        duration-300 cursor-pointer
-        ${isActive? "translate-x-39": ""}
+        duration-400 cursor-pointer
+        ${isActive? "translate-x-48 ": ""}
         `}
       >
         <i className={`flex items-center text-xs duration-300
@@ -44,7 +44,7 @@ function Sidebar({
       </div>
 
       <aside className={`relative bg-sidebar text-sidebar-text duration-300 h-full`}>
-        <div className={`fixed top-0 flex h-full bg-sidebar w-50 flex-col gap-2 duration-300
+        <div className={`fixed top-0 flex h-full bg-sidebar w-60 flex-col gap-2 duration-300
         justify-between
         md:translate-x-0 md:sticky md:h-dvh p-5
           ${isActive ? "" : "-translate-x-full" }  

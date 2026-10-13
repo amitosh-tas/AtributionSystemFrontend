@@ -7,15 +7,19 @@ import type { CompanyApiKey } from "../types/apiKey.types";
 interface ApiKeyTableProps {
   keys: CompanyApiKey[];
   loading: boolean;
-  rotating: boolean;
+  busy: boolean;
   onRotate: (key: CompanyApiKey) => void;
+  onEdit: (key: CompanyApiKey) => void;
+  onRevoke: (key: CompanyApiKey) => void;
 }
 
 export default function ApiKeyTable({
   keys,
   loading,
-  rotating,
+  busy,
   onRotate,
+  onEdit,
+  onRevoke,
 }: ApiKeyTableProps) {
   const columns: DataTableColumn<CompanyApiKey>[] = [
     {
@@ -86,14 +90,41 @@ export default function ApiKeyTable({
       header: "Actions",
       align: "right",
       render: (key) => (
-        <button
-          type="button"
-          disabled={Boolean(key.revokedAt) || rotating}
-          onClick={() => onRotate(key)}
-          className="whitespace-nowrap rounded-md border border-border px-3 py-1.5 text-xs font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-40"
-        >
-          Rotate key
-        </button>
+        <div className="flex justify-end gap-2">
+          <button
+            type="button"
+            disabled={Boolean(key.revokedAt) || busy}
+            onClick={() => onEdit(key)}
+            aria-label={`Edit ${key.name}`}
+            title="Edit key"
+            className="flex items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <i className="fi fi-rr-edit" aria-hidden="true" />
+            Edit
+          </button>
+          <button
+            type="button"
+            disabled={Boolean(key.revokedAt) || busy}
+            onClick={() => onRotate(key)}
+            aria-label={`Rotate ${key.name}`}
+            title="Rotate key"
+            className="flex items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <i className="fi fi-rr-refresh" aria-hidden="true" />
+            Rotate
+          </button>
+          <button
+            type="button"
+            disabled={Boolean(key.revokedAt) || busy}
+            onClick={() => onRevoke(key)}
+            aria-label={`Revoke ${key.name}`}
+            title="Revoke key"
+            className="flex items-center gap-1.5 whitespace-nowrap rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <i className="fi fi-rr-ban" aria-hidden="true" />
+            Revoke
+          </button>
+        </div>
       ),
     },
   ];

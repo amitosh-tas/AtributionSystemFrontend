@@ -1,17 +1,26 @@
+import { useMemo, useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
 import {
   useCompanyApiKeys,
   ApiKeyTable,
   RotateKeyModal,
   NewSecretModal,
+  CreateApiKeyModal,
+  EditApiKeyModal,
+  RevokeApiKeyModal,
 } from "@/features/api-keys";
+import { normalizeAllowedOrigin } from "@/features/api-keys/utils/origins";
 
 function Settings() {
   const {
     keys,
     loading,
     rotating,
+    creating,
+    updating,
+    revoking,
     error,
+    createError,
     selectedKey,
     setSelectedKey,
     newSecret,
@@ -19,9 +28,50 @@ function Settings() {
     copyError,
     fetchKeys,
     rotateKey,
+    createKey,
+    updateKey,
+    revokeKey,
     copySecret,
     closeSecretModal,
   } = useCompanyApiKeys();
+  const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [keyToEdit, setKeyToEdit] = useState<(typeof keys)[number] | null>(null);
+  const [keyToRevoke, setKeyToRevoke] = useState<(typeof keys)[number] | null>(
+    null,
+  );
+
+  const existingOrigins = useMemo(
+    () =>
+      [...new Set(
+        keys
+          .flatMap((key) => key.allowedOrigins ?? [])
+          .map(
+            (origin) =>
+              normalizeAllowedOrigin(origin.trim()) ?? origin.trim().toLowerCase(),
+          )
+          .filter(Boolean),
+      )],
+    [keys],
+  );
+  const editOrigins = useMemo(
+    () =>
+      keyToEdit
+        ? [
+            ...new Set(
+              keys
+                .filter((key) => key.id !== keyToEdit.id)
+                .flatMap((key) => key.allowedOrigins ?? [])
+                .map(
+                  (origin) =>
+                    normalizeAllowedOrigin(origin.trim()) ??
+                    origin.trim().toLowerCase(),
+                )
+                .filter(Boolean),
+            ),
+          ]
+        : [],
+    [keys, keyToEdit],
+  );
 
   const activeKeys = keys.filter((key) => !key.revokedAt).length;
   const revokedKeys = keys.filter((key) => Boolean(key.revokedAt)).length;
@@ -42,9 +92,20 @@ function Settings() {
             </p>
           </div>
 
-          <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-xs text-text-muted">
-            <i className="fi fi-rr-shield-check" />
-            Keys are sensitive credentials
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 text-xs text-text-muted">
+              <i className="fi fi-rr-shield-check" />
+              Keys are sensitive credentials
+            </div>
+            <button
+              type="button"
+              onClick={() => setCreateModalOpen(true)}
+              disabled={loading}
+              className="flex items-center gap-2 rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <i className="fi fi-rr-plus" />
+              Generate API key
+            </button>
           </div>
         </div>
 
@@ -88,8 +149,10 @@ function Settings() {
         <ApiKeyTable
           keys={keys}
           loading={loading}
-          rotating={rotating}
+          busy={rotating || updating || revoking}
           onRotate={setSelectedKey}
+          onEdit={setKeyToEdit}
+          onRevoke={setKeyToRevoke}
         />
 
         {/* Modals */}
@@ -98,6 +161,43 @@ function Settings() {
           rotating={rotating}
           onCancel={() => setSelectedKey(null)}
           onConfirm={() => void rotateKey()}
+        />
+
+        {keyToEdit && (
+          <EditApiKeyModal
+            key={keyToEdit.id}
+            apiKey={keyToEdit}
+            existingOrigins={editOrigins}
+            saving={updating}
+            onCancel={() => setKeyToEdit(null)}
+            onSubmit={async (id, credentials) => {
+              const updated = await updateKey(id, credentials);
+              if (updated) setKeyToEdit(null);
+              return updated;
+            }}
+          />
+        )}
+
+        <RevokeApiKeyModal
+          apiKey={keyToRevoke}
+          revoking={revoking}
+          onCancel={() => setKeyToRevoke(null)}
+          onConfirm={() => {
+            if (keyToRevoke) {
+              void revokeKey(keyToRevoke.id).then((revoked) => {
+                if (revoked) setKeyToRevoke(null);
+              });
+            }
+          }}
+        />
+
+        <CreateApiKeyModal
+          open={createModalOpen}
+          creating={creating}
+          error={createError}
+          existingOrigins={existingOrigins}
+          onCancel={() => setCreateModalOpen(false)}
+          onSubmit={createKey}
         />
 
         <NewSecretModal

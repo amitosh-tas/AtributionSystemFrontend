@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  generateKey,
   getCompanyKey,
+  revokeCompanyKey,
   rotateCompanyKey,
+  updateCompanyKey,
+  type KeyCredentials,
 } from "@/services/apiService";
 import type { CompanyApiKey } from "../types/apiKey.types";
 
@@ -9,7 +13,11 @@ export function useCompanyApiKeys() {
   const [keys, setKeys] = useState<CompanyApiKey[]>([]);
   const [loading, setLoading] = useState(true);
   const [rotating, setRotating] = useState(false);
+  const [creating, setCreating] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [revoking, setRevoking] = useState(false);
   const [error, setError] = useState("");
+  const [createError, setCreateError] = useState("");
 
   const [selectedKey, setSelectedKey] =
     useState<CompanyApiKey | null>(null);
@@ -82,6 +90,76 @@ export function useCompanyApiKeys() {
     }
   };
 
+  const createKey = async (credentials: KeyCredentials) => {
+    if (creating) return false;
+
+    setCreating(true);
+    setCreateError("");
+
+    try {
+      const response = await generateKey(credentials);
+      const key: string | undefined =
+        response.data?.data?.key ?? response.data?.key;
+
+      if (!key) {
+        throw new Error("The server did not return the new API key.");
+      }
+
+      setNewSecret(key);
+      setSecretCopied(false);
+      setCopyError("");
+      await fetchKeys();
+      return true;
+    } catch (err) {
+      console.error("Failed to create API key:", err);
+      setCreateError("Unable to create the API key. Please try again.");
+      return false;
+    } finally {
+      setCreating(false);
+    }
+  };
+
+  const updateKey = async (
+    id: string,
+    credentials: KeyCredentials,
+  ) => {
+    if (updating || rotating || revoking) return false;
+
+    setUpdating(true);
+    setError("");
+
+    try {
+      await updateCompanyKey(id, credentials);
+      await fetchKeys();
+      return true;
+    } catch (err) {
+      console.error("Failed to update API key:", err);
+      setError("Unable to update the API key. Please try again.");
+      return false;
+    } finally {
+      setUpdating(false);
+    }
+  };
+
+  const revokeKey = async (id: string) => {
+    if (revoking || rotating || updating) return false;
+
+    setRevoking(true);
+    setError("");
+
+    try {
+      await revokeCompanyKey(id);
+      await fetchKeys();
+      return true;
+    } catch (err) {
+      console.error("Failed to revoke API key:", err);
+      setError("Unable to revoke the API key. Please try again.");
+      return false;
+    } finally {
+      setRevoking(false);
+    }
+  };
+
   const copySecret = async () => {
     if (!newSecret) return;
 
@@ -109,7 +187,11 @@ export function useCompanyApiKeys() {
     keys,
     loading,
     rotating,
+    creating,
+    updating,
+    revoking,
     error,
+    createError,
     selectedKey,
     setSelectedKey,
     newSecret,
@@ -117,6 +199,9 @@ export function useCompanyApiKeys() {
     copyError,
     fetchKeys,
     rotateKey,
+    createKey,
+    updateKey,
+    revokeKey,
     copySecret,
     closeSecretModal,
   };

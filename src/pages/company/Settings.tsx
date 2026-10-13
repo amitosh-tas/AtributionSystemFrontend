@@ -97,15 +97,17 @@ function Settings() {
               <i className="fi fi-rr-shield-check" />
               Keys are sensitive credentials
             </div>
-            <button
-              type="button"
-              onClick={() => setCreateModalOpen(true)}
-              disabled={loading}
-              className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              <i className="fi fi-rr-plus" />
-              Generate API key
-            </button>
+            {activeKeys === 0 && (
+              <button
+                type="button"
+                onClick={() => setCreateModalOpen(true)}
+                disabled={loading}
+                className="flex cursor-pointer items-center gap-2 rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <i className="fi fi-rr-plus" />
+                Generate API key
+              </button>
+            )}
           </div>
         </div>
 

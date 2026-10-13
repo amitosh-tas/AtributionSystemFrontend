@@ -82,13 +82,13 @@ function Sidebar({
             <div className="mt-5 h-px w-full bg-gray-400/20" />
           </div>
 
-          {/* Navigation: scrolls independently */}
+          {/* Navigation: scrolls independently */} 
           <nav
             aria-label="Main navigation"
             className="
               min-h-0 flex-1 overflow-y-auto overscroll-contain
               px-5 pb-4
-              [scrollbar-width:thin]
+              scrollbar-thin
               [scrollbar-color:rgba(148,163,184,0.35)_transparent]
             "
           >

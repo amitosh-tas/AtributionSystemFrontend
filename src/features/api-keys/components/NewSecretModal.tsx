@@ -1,0 +1,102 @@
+interface NewSecretModalProps {
+  secret: string | null;
+  copied: boolean;
+  copyError: string;
+  onCopy: () => void;
+  onClose: () => void;
+}
+
+export default function NewSecretModal({
+  secret,
+  copied,
+  copyError,
+  onCopy,
+  onClose,
+}: NewSecretModalProps) {
+  if (!secret) return null;
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="new-secret-title"
+        className="w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl"
+      >
+        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-700">
+          <i className="fi fi-rr-shield-check text-xl" />
+        </div>
+
+        <h3
+          id="new-secret-title"
+          className="font-heading text-xl font-semibold"
+        >
+          Your new API key is ready
+        </h3>
+
+        <p className="mt-2 text-sm leading-6 text-text-muted">
+          Copy and securely save this key now. The full key won't be
+          available from the key list after you close this window.
+        </p>
+
+        <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+          <i className="fi fi-rr-triangle-warning mr-2" />
+          Never share this key publicly or commit it to source control.
+        </div>
+
+        <label
+          htmlFor="new-api-secret"
+          className="mt-5 block text-xs font-medium text-text-muted"
+        >
+          Your new secret key
+        </label>
+
+        <div className="mt-2 flex items-start gap-2">
+          <textarea
+            id="new-api-secret"
+            readOnly
+            value={secret}
+            rows={3}
+            onFocus={(event) => event.currentTarget.select()}
+            className="min-w-0 flex-1 resize-none break-all rounded-lg border border-border bg-surface-muted p-3 font-mono text-sm outline-none"
+          />
+
+          <button
+            type="button"
+            onClick={onCopy}
+            className="flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface-muted"
+          >
+            <i
+              className={
+                copied
+                  ? "fi fi-rr-check text-green-600"
+                  : "fi fi-rr-copy-alt"
+              }
+            />
+            {copied ? "Copied" : "Copy"}
+          </button>
+        </div>
+
+        {copyError && (
+          <p role="alert" className="mt-2 text-xs text-red-600">
+            {copyError}
+          </p>
+        )}
+
+        <p className="mt-3 text-xs text-text-muted">
+          Save this key in your password manager or secure secrets storage.
+        </p>
+
+        <div className="mt-6 flex justify-end">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white"
+          >
+            I've saved my key
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}

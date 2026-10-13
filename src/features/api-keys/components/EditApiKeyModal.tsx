@@ -149,7 +149,7 @@ export default function EditApiKeyModal({
             type="button"
             onClick={addOrigin}
             disabled={!originInput.trim()}
-            className="rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-50"
           >
             Add origin
           </button>
@@ -170,7 +170,7 @@ export default function EditApiKeyModal({
                       current.filter((item) => item !== origin),
                     )
                   }
-                  className="text-text-muted hover:text-red-600"
+                  className="cursor-pointer text-text-muted hover:text-red-600"
                 >
                   <i className="fi fi-rr-cross-small" aria-hidden="true" />
                 </button>
@@ -190,14 +190,14 @@ export default function EditApiKeyModal({
             type="button"
             onClick={onCancel}
             disabled={saving}
-            className="rounded-lg border border-border px-4 py-2.5 text-sm font-medium transition hover:bg-surface-muted disabled:opacity-50"
+            className="cursor-pointer rounded-lg border border-border px-4 py-2.5 text-sm font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-50"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={saving || !name.trim() || origins.length === 0}
-            className="rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? "Saving…" : "Save changes"}
           </button>

@@ -24,7 +24,7 @@ export default function NewSecretModal({
         className="w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl"
       >
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-700">
-          <i className="fi fi-rr-shield-check text-xl" />
+          <i className="fi fi-rr-shield-check text-xl flex items-center" />
         </div>
 
         <h3
@@ -39,8 +39,10 @@ export default function NewSecretModal({
           available from the key list after you close this window.
         </p>
 
-        <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
-          <i className="fi fi-rr-triangle-warning mr-2" />
+        <div className="
+        flex gap-1.5
+        mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+          <i className="fi fi-rr-triangle-warning mr-2 flex items-center " />
           Never share this key publicly or commit it to source control.
         </div>
 
@@ -64,7 +66,7 @@ export default function NewSecretModal({
           <button
             type="button"
             onClick={onCopy}
-            className="flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface-muted"
+            className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface-muted"
           >
             <i
               className={
@@ -91,7 +93,7 @@ export default function NewSecretModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white"
+            className="cursor-pointer rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white"
           >
             I've saved my key
           </button>

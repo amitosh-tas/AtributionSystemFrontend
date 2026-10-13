@@ -24,7 +24,7 @@ export default function RotateKeyModal({
         className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl"
       >
         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-amber-100 text-amber-700">
-          <i className="fi fi-rr-refresh text-lg" />
+          <i className="fi fi-rr-refresh text-lg flex items-center" />
         </div>
 
         <h3 id="rotate-title" className="font-heading text-lg font-medium">
@@ -45,7 +45,7 @@ export default function RotateKeyModal({
             type="button"
             disabled={rotating}
             onClick={onCancel}
-            className="rounded-lg border border-border px-4 py-2 text-sm disabled:opacity-50"
+            className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
           >
             Cancel
           </button>
@@ -54,7 +54,7 @@ export default function RotateKeyModal({
             type="button"
             disabled={rotating}
             onClick={onConfirm}
-            className="rounded-lg bg-gray-950 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-gray-950 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             {rotating ? "Rotating…" : "Confirm rotation"}
           </button>

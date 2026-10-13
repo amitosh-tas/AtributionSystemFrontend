@@ -43,7 +43,7 @@ export default function RevokeApiKeyModal({
             type="button"
             disabled={revoking}
             onClick={onCancel}
-            className="rounded-lg border border-border px-4 py-2 text-sm disabled:opacity-50"
+            className="cursor-pointer rounded-lg border border-border px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50"
           >
             Cancel
           </button>
@@ -51,7 +51,7 @@ export default function RevokeApiKeyModal({
             type="button"
             disabled={revoking}
             onClick={onConfirm}
-            className="rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
           >
             {revoking ? "Revoking…" : "Revoke key"}
           </button>

@@ -34,6 +34,7 @@ import Companies from "@/pages/superAdmin/Companies";
 import Members from "@/pages/superAdmin/Members";
 import Settings from "@/pages/superAdmin/Settings";
 import ApiKeys from "@/pages/superAdmin/ApiKeys";
+import A_Settings from "@/pages/company/Settings";
 
 function App() {
 
@@ -72,6 +73,7 @@ function App() {
             <Route path="customers" element={<Customers />} />
             <Route path="transactions" element={<Transactions />} />
             <Route path="upcoming" element={<Upcoming />} />
+            <Route path="settings" element={<A_Settings />}/>
           </Route>
         </Route>
 

@@ -38,7 +38,7 @@ export default function DataTable<T>({
   };
 
   return (
-    <div className="w-full overflow-x-auto bg-card rounded-xl border-2 border-border shadow">
+    <div className="w-full overflow-x-auto bg-card rounded-xl border-2 border-border shadow scrollbar-thin">
       {/* Table header */}
       {(tableHead || tableSubHead) && (
         <div className="flex justify-between items-end px-6 pt-5">

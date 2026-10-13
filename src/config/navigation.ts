@@ -13,6 +13,7 @@ export const companyNavigation: SidebarItem[] = [
   { label: "Transactions", path: "/transactions" },
   { label: "Upcoming", path: "/upcoming" },
   { label: "Team", path: "/team" },
+  { label: "Settings", path: "/settings"}
 ];
 
 export const superAdminNavigation: SidebarItem[] = [

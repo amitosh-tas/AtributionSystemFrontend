@@ -32,6 +32,8 @@ function RevenueLedgerChart() {
         ))}
       </div>
 
+      <div className="my-5 h-px w-full bg-border" />
+
       <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
         {data.map((item) => (
           <div

@@ -22,8 +22,7 @@ function RevenueLedger({ children }: RevenueLedgerProps) {
       <div className="my-5 h-px w-full bg-border" />
 
       {children}
-
-      <div className="my-5 h-px w-full bg-border" />
+      
     </div>
   );
 }

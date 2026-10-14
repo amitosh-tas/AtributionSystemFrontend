@@ -16,3 +16,13 @@ export async function getWorkspaces( page = 1){
   })
   return res;
 }
+
+export async function getWorkspaceById(id: string){
+  const res = await api.get(`/platform-admin/workspaces/${id}`,{
+    params: {
+      reason: "Mai admin hu ngga",
+    }
+  }
+  );
+  return res;
+}

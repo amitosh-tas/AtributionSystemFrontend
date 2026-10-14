@@ -71,7 +71,7 @@ function SignIn() {
 
           {/* Form */}
           <form onSubmit={handleSignIn} className="flex flex-col gap-7">
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               <label htmlFor="email" className={labelClass}>
                 Api Url
               </label>
@@ -92,7 +92,7 @@ function SignIn() {
                 }
                 className={inputClass}
               />
-            </div>
+            </div> */}
 
             <div className="flex flex-col gap-2">
               <label htmlFor="email" className={labelClass}>

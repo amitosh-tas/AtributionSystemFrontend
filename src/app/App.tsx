@@ -30,6 +30,7 @@ import A_Settings from "@/pages/company/Settings";
 import { restoreSession } from "@/services/restoreSession";
 import { Toaster } from "react-hot-toast";
 import Workspaces from "@/pages/superAdmin/Workspaces";
+import WorkspaceById from "@/pages/superAdmin/WorkspaceById";
 
 function App() {
 
@@ -82,6 +83,7 @@ function App() {
           <Route path="/super" element={<SuperAdminLayout />}>
             <Route index element={<Dashboard />} />
             <Route path="workspaces" element={<Workspaces/>} />
+            <Route path="workspaces/:id" element={<WorkspaceById />}/>
             <Route path="members" element={<Members />} />
             <Route path="settings" element={<Settings />}/>
           </Route>

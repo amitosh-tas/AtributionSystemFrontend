@@ -11,7 +11,6 @@ function Dashboard() {
     description="Manage Ledger workspaces, members, and platform access."
     >
       <EmptyState
-        icon="fi-rr-chart-pie"
         title="Platform overview is not connected yet"
         description="Platform-wide metrics will appear here once they are provided by the service."
       />

@@ -51,10 +51,10 @@ export default function RoleSwitcher() {
   }
 
   return (
-    <div className="flex items-center gap-3 rounded-xl border border-gray-200 bg-white p-3 shadow-sm">
+    <div className="flex flex-wrap items-center gap-3 rounded-xl border border-border bg-white p-3">
       <div>
-        <p className="text-xs text-gray-500">DEV MODE · TEST USER</p>
-        <p className="text-sm font-medium text-gray-900">
+        <p className="text-xs text-text-muted">DEV MODE · TEST USER</p>
+        <p className="text-sm font-medium text-text">
           {testUsers[currentRole].name}
         </p>
       </div>
@@ -64,7 +64,7 @@ export default function RoleSwitcher() {
         onChange={(event) =>
           switchRole(event.target.value as UserRole)
         }
-        className="rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:ring-2 focus:ring-indigo-500"
+        className="rounded-lg border border-border bg-white px-3 py-2 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
         aria-label="Switch test role"
       >
         <option value="platform_admin">Super Admin</option>

@@ -11,7 +11,6 @@ function Upcoming() {
       description="Keep track of expected bookings and upcoming revenue."
       >
         <EmptyState
-          icon="fi-rr-calendar"
           title="No booking data available"
           description="Upcoming bookings will appear here when booking data is connected to this workspace."
         />

@@ -20,7 +20,6 @@ function ApiKeys() {
     description="Review API access for platform integrations."
     >
       <EmptyState
-        icon="fi-rr-key"
         title="Platform API key management is not available yet"
         description="Platform API keys will appear here when platform-level key management is connected."
       />

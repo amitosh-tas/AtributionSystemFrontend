@@ -5,10 +5,7 @@ function Unauthorized() {
   return (
     <div className="flex min-h-dvh items-center justify-center bg-page-background px-5 py-12">
       <main className="w-full max-w-lg rounded-2xl border border-border bg-card px-6 py-10 text-center sm:px-10">
-        <span className="mx-auto flex size-11 items-center justify-center rounded-xl bg-amber-50 text-amber-700">
-          <i aria-hidden="true" className="fi fi-rr-lock" />
-        </span>
-        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">
+        <p className="text-xs font-medium text-text-muted">
           Access restricted
         </p>
         <h1 className="mt-2 font-heading text-2xl font-semibold tracking-tight text-text">
@@ -20,7 +17,7 @@ function Unauthorized() {
         </p>
         <Link
           to="/"
-          className="mt-7 inline-flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-white transition hover:bg-indigo-700"
+          className="mt-7 inline-flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-white transition hover:bg-neutral-800"
         >
           Back to dashboard
         </Link>

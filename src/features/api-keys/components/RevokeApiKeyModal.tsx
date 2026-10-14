@@ -23,9 +23,6 @@ export default function RevokeApiKeyModal({
         aria-labelledby="revoke-api-key-title"
         className="max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
       >
-        <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-red-100 text-red-700">
-          <i className="fi fi-rr-ban text-lg flex items-center" aria-hidden="true" />
-        </div>
         <h3
           id="revoke-api-key-title"
           className="font-heading text-lg font-medium"
@@ -51,7 +48,7 @@ export default function RevokeApiKeyModal({
             type="button"
             disabled={revoking}
             onClick={onConfirm}
-            className="cursor-pointer rounded-lg bg-red-700 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {revoking ? "Revoking…" : "Revoke key"}
           </button>

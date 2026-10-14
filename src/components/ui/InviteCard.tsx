@@ -153,7 +153,7 @@ function InviteCard() {
         <div className="sm:col-span-2 xl:col-span-full">
           <button
             type="submit"
-            className="h-10 rounded-lg bg-primary px-5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="h-10 rounded-lg bg-primary px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Create user
           </button>

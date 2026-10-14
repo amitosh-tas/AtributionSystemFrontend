@@ -17,7 +17,7 @@ export default function AvgOrderValueTrend() {
       subtitle="by day"
       data={orderValueData}
       type="line"
-      color="#4F46E5"
+      color="#525252"
       valuePrefix="$"
       actionLabel="‹ Prev wk"
       onAction={() => console.log("Load previous week")}

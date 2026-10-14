@@ -23,10 +23,6 @@ export default function RotateKeyModal({
         aria-labelledby="rotate-title"
         className="max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
       >
-        <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-amber-100 text-amber-700">
-          <i className="fi fi-rr-refresh text-lg flex items-center" />
-        </div>
-
         <h3 id="rotate-title" className="font-heading text-lg font-medium">
           Rotate API key?
         </h3>
@@ -54,7 +50,7 @@ export default function RotateKeyModal({
             type="button"
             disabled={rotating}
             onClick={onConfirm}
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {rotating ? "Rotating…" : "Confirm rotation"}
           </button>

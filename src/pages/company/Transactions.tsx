@@ -13,7 +13,6 @@ function Transactions() {
       description="Browse payment activity and transaction details."
       >
         <EmptyState
-          icon="fi-rr-receipt"
           title="Transaction data is not connected yet"
           description="Transactions will be listed here when transaction records are available for this workspace."
         />

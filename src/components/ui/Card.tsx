@@ -18,7 +18,7 @@ function Card({
     <div
       className="flex min-h-32 min-w-0 flex-col gap-2 rounded-xl border border-border bg-card p-5 text-text transition-colors hover:border-slate-300"
     >
-      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-muted">
+      <p className="text-sm font-medium text-text-muted">
         {title}
       </p>
 
@@ -30,7 +30,7 @@ function Card({
         <p
           className={`text-xs font-medium ${
             trend.direction === "down"
-              ? "text-red-600"
+              ? "text-red-700"
               : "text-emerald-700"
           }`}
         >

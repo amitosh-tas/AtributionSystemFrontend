@@ -24,7 +24,7 @@ export default function PageLayout({
         <header className="mb-8 flex flex-wrap items-start justify-between gap-5 border-b border-border pb-6">
           <div className="flex min-w-0 flex-col gap-2">
             <p
-            className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
+            className="text-xs font-medium text-text-muted">
               {headTitle}
             </p>
             {title && 

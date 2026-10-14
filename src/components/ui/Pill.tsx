@@ -1,32 +1,23 @@
+import { revenueSourceColors } from "@/config/revenue";
+
 interface IPill {
   name: string;
 }
 
-const platformColors: Record<string, { backgroundColor: string; textColor: string; dotColor: string }> = {
-  google: { backgroundColor: "#f8e9eb", textColor: "#7f3039", dotColor: "#a13d48" },
-  direct: { backgroundColor: "#e8f0f7", textColor: "#214f78", dotColor: "#28649b" },
-  meta: { backgroundColor: "#e8f2ec", textColor: "#205b3b", dotColor: "#28734b" },
-};
-
 function getPlatformColors(name: string) {
-  const knownColors = platformColors[name];
-  if (knownColors) return knownColors;
-
-  // Generate a consistent hash from the platform name
-  let hash = 0;
-
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    hash |= 0;
+  const knownColors = revenueSourceColors[name];
+  if (knownColors) {
+    return {
+      backgroundColor: knownColors.backgroundColor,
+      textColor: knownColors.textColor,
+      dotColor: knownColors.color,
+    };
   }
 
-  // Generate a pleasant, muted color
-  const hue = Math.abs(hash) % 360;
-
   return {
-    backgroundColor: `hsl(${hue}, 45%, 92%)`,
-    textColor: `hsl(${hue}, 45%, 30%)`,
-    dotColor: `hsl(${hue}, 50%, 42%)`,
+    backgroundColor: "#F3F3F3",
+    textColor: "#404040",
+    dotColor: "#737373",
   };
 }
 

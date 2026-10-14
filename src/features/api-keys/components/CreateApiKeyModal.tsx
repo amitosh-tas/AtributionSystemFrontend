@@ -140,7 +140,7 @@ function CreateApiKeyModal({
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="e.g. Production website"
-          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus:border-primary"
+          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
         />
 
         <div className="mt-5 flex items-center justify-between gap-3">
@@ -167,7 +167,7 @@ function CreateApiKeyModal({
               }
             }}
             placeholder="https://example.com"
-            className="min-w-0 flex-1 rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus:border-primary"
+            className="min-w-0 flex-1 rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
           />
           <button
             type="button"
@@ -221,7 +221,7 @@ function CreateApiKeyModal({
           <button
             type="submit"
             disabled={creating || !name.trim() || origins.length === 0}
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {creating ? "Generating…" : "Generate key"}
           </button>

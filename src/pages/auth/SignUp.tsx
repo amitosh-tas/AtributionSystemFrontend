@@ -214,7 +214,7 @@ function SignUp() {
                 to="/signin"
                 className="font-heading text-2xl font-bold tracking-tight"
               >
-                Ledger<span className="text-primary">.</span>
+                Ledger<span className="text-text-muted">.</span>
               </Link>
             </div>
 
@@ -503,7 +503,7 @@ function SignUp() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-1 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-1 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? "Creating account..." : "Create account"}
               </button>
@@ -515,7 +515,7 @@ function SignUp() {
                 Already have an account?{" "}
                 <Link
                   to="/signin"
-                  className="font-semibold text-primary underline underline-offset-4 decoration-indigo-200 hover:decoration-primary"
+                  className="font-semibold text-text underline underline-offset-4 decoration-neutral-300 hover:decoration-text"
                 >
                   Sign in
                 </Link>

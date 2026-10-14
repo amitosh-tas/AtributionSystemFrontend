@@ -54,7 +54,7 @@ function SignIn() {
           {/* Brand */}
           <div className="mb-12">
             <h1 className="font-heading text-2xl font-bold tracking-tight">
-              Ledger<span className="text-primary">.</span>
+              Ledger<span className="text-text-muted">.</span>
             </h1>
           </div>
 
@@ -164,7 +164,7 @@ function SignIn() {
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-2 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </button>
@@ -176,7 +176,7 @@ function SignIn() {
               Don't have an account?{" "}
               <Link
                 to="/signup"
-                className="font-semibold text-primary underline underline-offset-4 decoration-indigo-200 hover:decoration-primary"
+                className="font-semibold text-text underline underline-offset-4 decoration-neutral-300 hover:decoration-text"
               >
                 Create account
               </Link>

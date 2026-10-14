@@ -23,10 +23,6 @@ export default function NewSecretModal({
         aria-labelledby="new-secret-title"
         className="max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
       >
-        <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-700">
-          <i className="fi fi-rr-shield-check text-xl flex items-center" />
-        </div>
-
         <h3
           id="new-secret-title"
           className="font-heading text-xl font-semibold"
@@ -39,10 +35,7 @@ export default function NewSecretModal({
           available from the key list after you close this window.
         </p>
 
-        <div className="
-        flex gap-1.5
-        mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
-          <i className="fi fi-rr-triangle-warning mr-2 flex items-center " />
+        <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
           Never share this key publicly or commit it to source control.
         </div>
 
@@ -93,7 +86,7 @@ export default function NewSecretModal({
           <button
             type="button"
             onClick={onClose}
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2"
           >
             I've saved my key
           </button>

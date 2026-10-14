@@ -33,7 +33,7 @@ function DataChart({
   subtitle,
   data,
   type = "line",
-  color = "#5B60B8",
+  color = "#525252",
   valuePrefix = "",
   valueSuffix = "",
   actionLabel,
@@ -62,7 +62,7 @@ function DataChart({
             <button
             type="button"
             onClick={onAction}
-            className="cursor-pointer rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition hover:bg-slate-50 hover:text-primary"
+            className="cursor-pointer rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text transition hover:bg-hover"
             >
               {actionLabel}
             </button>
@@ -80,12 +80,12 @@ function DataChart({
             >
               <CartesianGrid
                 vertical={false}
-                stroke="#E2E8F0"
+                stroke="#E5E5E5"
               />
 
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 10, fill: "#64748B" }}
+                tick={{ fontSize: 11, fill: "#666666" }}
                 tickLine={false}
                 axisLine={false}
                 minTickGap={24}
@@ -97,9 +97,9 @@ function DataChart({
                 formatter={(value) => formatValue(Number(value))}
                 contentStyle={{
                   borderRadius: 8,
-                  border: "1px solid #E2E8F0",
+                  border: "1px solid #E5E5E5",
                   fontSize: 12,
-                  boxShadow: "0 4px 12px rgba(15, 23, 42, 0.08)",
+                  color: "#171717",
                 }}
               />
 
@@ -117,12 +117,12 @@ function DataChart({
             >
               <CartesianGrid
                 vertical={false}
-                stroke="#E2E8F0"
+                stroke="#E5E5E5"
               />
 
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 10, fill: "#64748B" }}
+                tick={{ fontSize: 11, fill: "#666666" }}
                 tickLine={false}
                 axisLine={false}
                 minTickGap={24}
@@ -134,9 +134,9 @@ function DataChart({
                 formatter={(value) => formatValue(Number(value))}
                 contentStyle={{
                   borderRadius: 8,
-                  border: "1px solid #E2E8F0",
+                  border: "1px solid #E5E5E5",
                   fontSize: 12,
-                  boxShadow: "0 4px 12px rgba(15, 23, 42, 0.08)",
+                  color: "#171717",
                 }}
               />
 
@@ -145,6 +145,7 @@ function DataChart({
                 dataKey="value"
                 stroke={color}
                 strokeWidth={2}
+                strokeDasharray="0"
                 dot={{
                   r: 2.5,
                   fill: color,

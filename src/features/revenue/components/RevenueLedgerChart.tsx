@@ -1,3 +1,5 @@
+import { revenueSourceColors } from "@/config/revenue";
+
 const data = [
   {
     name: "Google",
@@ -13,12 +15,6 @@ const data = [
   },
 ];
 
-const colors: Record<string, string> = {
-  Google: "#A13D48",
-  Direct: "#28649B",
-  Meta: "#28734B",
-};
-
 function RevenueLedgerChart() {
   return (
     <div className="w-full">
@@ -29,7 +25,7 @@ function RevenueLedgerChart() {
             className="h-7 transition-colors duration-200 first:rounded-l-md last:rounded-r-md"
             style={{
               width: `${item.perc}%`,
-              backgroundColor: colors[item.name],
+              backgroundColor: revenueSourceColors[item.name.toLowerCase()].color,
             }}
             title={`${item.name}: ${item.perc}%`}
           />
@@ -45,7 +41,7 @@ function RevenueLedgerChart() {
             <span
               className="size-2.5 shrink-0 rounded-sm"
               style={{
-                backgroundColor: colors[item.name],
+                backgroundColor: revenueSourceColors[item.name.toLowerCase()].color,
               }}
             />
 

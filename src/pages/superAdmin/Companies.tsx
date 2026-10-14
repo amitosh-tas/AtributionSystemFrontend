@@ -12,7 +12,6 @@ function Companies() {
       description="Manage company workspaces across Ledger."
       >
         <EmptyState
-          icon="fi-rr-building"
           title="Company data is not connected yet"
           description="Company workspaces will be listed here when platform data is available."
         />

@@ -14,9 +14,9 @@ const data = [
 ];
 
 const colors = [
-  "#B45F3C",
-  "#46777D",
-  "#71896A",
+  "#8B3A3A", // Deep crimson
+  "#245B8F", // Dark sapphire blue
+  "#356B46", // Deep forest green
 ];
 
 function RevenueLedgerChart() {

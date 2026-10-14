@@ -10,13 +10,14 @@ function RevenueLedger({ children }: RevenueLedgerProps) {
     <GlassSurface
       width="100%"
       height="100%"
-      borderRadius={26}
-      borderWidth={0.8}
-      displace={0.2}
-      backgroundOpacity={0.12}
-      opacity={0.96}
+      borderRadius={20}
+      borderWidth={0.05}
+      distortionScale={-120}
+      displace={0.18}
+      backgroundOpacity={0.04}
+      opacity={0.94}
       blur={14}
-      saturation={1.1}
+      saturation={1.15}
       redOffset={0}
       greenOffset={4}
       blueOffset={8}

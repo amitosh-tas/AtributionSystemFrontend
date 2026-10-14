@@ -48,13 +48,13 @@ function Sidebar({ companyName = "COMPANY NAME", items }: SidebarProps) {
             <GlassSurface
               width="100%"
               height="100%"
-              borderRadius={0}
-              borderWidth={0.8}
+              borderRadius={20}
+              borderWidth={0.05}
               distortionScale={-120}
               displace={0.18}
-              backgroundOpacity={0.14}
+              backgroundOpacity={0.04}
               opacity={0.94}
-              blur={16}
+              blur={14}
               saturation={1.15}
               redOffset={0}
               greenOffset={4}

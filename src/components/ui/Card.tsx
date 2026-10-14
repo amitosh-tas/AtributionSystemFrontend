@@ -15,19 +15,20 @@ function Card({ title, value, description, trend }: ICard) {
     <GlassSurface
       width="100%"
       height="100%"
-      borderRadius={24}
-      borderWidth={0.8}
-      displace={0.15}
-      backgroundOpacity={0.12}
-      opacity={0.92}
-      blur={12}
-      saturation={1.2}
+      borderRadius={20}
+      borderWidth={0.05}
+      distortionScale={-120}
+      displace={0.18}
+      backgroundOpacity={0.04}
+      opacity={0.94}
+      blur={14}
+      saturation={1.15}
       redOffset={0}
-      greenOffset={2}
-      blueOffset={6}
+      greenOffset={4}
+      blueOffset={8}
       refraction
       renderer="auto"
-      className="min-h-[150px]"
+      className="h-full w-full"
     >
       <div className="flex h-full w-full flex-col justify-between rounded-[inherit] bg-slate-950/10 p-5">
         <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400">{title}</p>

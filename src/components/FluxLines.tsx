@@ -1,11 +1,67 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import './FluxLines.css';
+import { useEffect, useRef, type CSSProperties, type HTMLAttributes } from 'react';
+
+export type FluxLinesFlow = 'up' | 'down' | 'left' | 'right';
+
+export interface FluxLinesProps extends HTMLAttributes<HTMLDivElement> {
+  colors?: string[];
+  speed?: number;
+  scale?: number;
+  turbulence?: number;
+  fluidity?: number;
+  rimWidth?: number;
+  sharpness?: number;
+  shimmer?: number;
+  glow?: number;
+  lineWidth?: number;
+  flowDirection?: FluxLinesFlow;
+  opacity?: number;
+  mouseInteraction?: boolean;
+  mouseStrength?: number;
+  mouseRadius?: number;
+  mouseDampening?: number;
+  clickSwirl?: boolean;
+  intro?: boolean;
+  lightMode?: boolean;
+  transparent?: boolean;
+  backgroundColor?: string;
+  paused?: boolean;
+  dpr?: number;
+  mixBlendMode?: CSSProperties['mixBlendMode'];
+}
+
+type Settings = {
+  colors: string[];
+  speed: number;
+  scale: number;
+  turbulence: number;
+  fluidity: number;
+  rimWidth: number;
+  sharpness: number;
+  shimmer: number;
+  glow: number;
+  lineWidth: number;
+  flow: number[];
+  opacity: number;
+  mouseInteraction: boolean;
+  mouseStrength: number;
+  mouseRadius: number;
+  mouseDampening: number;
+  clickSwirl: boolean;
+  intro: boolean;
+  lightMode: boolean;
+  transparent: boolean;
+  backgroundColor?: string;
+  paused: boolean;
+  dpr?: number;
+};
+
+type Program = { program: WebGLProgram; uniforms: Record<string, WebGLUniformLocation | null> };
 
 const MAX_COLORS = 8;
 const INTRO_SECONDS = 1.8;
-const FLOW = { up: [0, 1], down: [0, -1], left: [-1, 0], right: [1, 0] };
+const FLOW: Record<string, number[]> = { up: [0, 1], down: [0, -1], left: [-1, 0], right: [1, 0] };
 
 const VERTEX = `#version 300 es
 in vec2 aPosition;
@@ -147,9 +203,9 @@ void main() {
   outColor = uOpaque > 0.5 ? vec4(uBackground + light, 1.0) : vec4(light, max(light.r, max(light.g, light.b)));
 }`;
 
-const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
-const compile = (gl, type, source) => {
+const compile = (gl: WebGL2RenderingContext, type: number, source: string) => {
   const shader = gl.createShader(type);
   if (!shader) return null;
   gl.shaderSource(shader, source);
@@ -159,7 +215,7 @@ const compile = (gl, type, source) => {
   return null;
 };
 
-const link = gl => {
+const link = (gl: WebGL2RenderingContext): Program | null => {
   const vertex = compile(gl, gl.VERTEX_SHADER, VERTEX);
   const fragment = compile(gl, gl.FRAGMENT_SHADER, FRAGMENT);
   const program = gl.createProgram();
@@ -174,7 +230,7 @@ const link = gl => {
     gl.deleteProgram(program);
     return null;
   }
-  const uniforms = {};
+  const uniforms: Record<string, WebGLUniformLocation | null> = {};
   const count = gl.getProgramParameter(program, gl.ACTIVE_UNIFORMS);
   for (let i = 0; i < count; i++) {
     const info = gl.getActiveUniform(program, i);
@@ -211,11 +267,11 @@ const FluxLines = ({
   className = '',
   style,
   ...rest
-}) => {
-  const containerRef = useRef(null);
-  const canvasRef = useRef(null);
-  const wakeRef = useRef(null);
-  const settings = {
+}: FluxLinesProps) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const wakeRef = useRef<(() => void) | null>(null);
+  const settings: Settings = {
     colors: Array.isArray(colors) && colors.length ? colors.slice(0, MAX_COLORS) : ['#ffffff'],
     speed,
     scale: Math.max(0.05, scale),
@@ -268,11 +324,12 @@ const FluxLines = ({
     gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
     const probe = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
-    const cache = new Map();
-    const parse = (value, fallback) => {
+    const cache = new Map<string, number[]>();
+    const parse = (value: string | undefined, fallback: number[]): number[] => {
       if (!value) return fallback;
       const key = String(value);
-      if (cache.has(key)) return cache.get(key);
+      const cached = cache.get(key);
+      if (cached) return cached;
       let rgb = fallback;
       if (probe) {
         probe.clearRect(0, 0, 1, 1);
@@ -332,7 +389,7 @@ const FluxLines = ({
       gl.drawArrays(gl.TRIANGLES, 0, 3);
     };
 
-    const frame = now => {
+    const frame = (now: number) => {
       raf = 0;
       if (!visible || document.hidden) return;
       const s = settingsRef.current;
@@ -375,7 +432,7 @@ const FluxLines = ({
       wake();
     };
 
-    const locate = event => {
+    const locate = (event: PointerEvent) => {
       const rect = container.getBoundingClientRect();
       const x = event.clientX - rect.left;
       const y = event.clientY - rect.top;
@@ -385,7 +442,7 @@ const FluxLines = ({
       pointer.y = (rect.height - y) * ratio;
     };
 
-    const onPointerMove = event => {
+    const onPointerMove = (event: PointerEvent) => {
       const wasInside = pointer.inside;
       locate(event);
       if (pointer.inside && !wasInside && magnet.active < 0.05) {
@@ -395,7 +452,7 @@ const FluxLines = ({
       wake();
     };
 
-    const onPointerDown = event => {
+    const onPointerDown = (event: PointerEvent) => {
       onPointerMove(event);
       if (!pointer.inside || !settingsRef.current.clickSwirl || reduce) return;
       swirl.x = pointer.x;
@@ -404,7 +461,7 @@ const FluxLines = ({
       wake();
     };
 
-    const onPointerUp = event => {
+    const onPointerUp = (event: PointerEvent) => {
       if (event.pointerType !== 'mouse') pointer.inside = false;
     };
 
@@ -461,7 +518,7 @@ const FluxLines = ({
       gl.deleteProgram(program.program);
       gl.deleteBuffer(buffer);
       gl.deleteVertexArray(vao);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      // gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
   }, []);
 
@@ -472,11 +529,11 @@ const FluxLines = ({
   return (
     <div
       ref={containerRef}
-      className={`flux-lines-container${className ? ` ${className}` : ''}`}
+      className={['relative h-full w-full overflow-hidden', className].filter(Boolean).join(' ')}
       style={mixBlendMode ? { ...style, mixBlendMode } : style}
       {...rest}
     >
-      <canvas ref={canvasRef} className="flux-lines-canvas" aria-hidden="true" />
+      <canvas ref={canvasRef} className="absolute inset-0 block h-full w-full" aria-hidden="true" />
     </div>
   );
 };

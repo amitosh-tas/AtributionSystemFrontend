@@ -17,38 +17,37 @@ export default function PageLayout({
   title,
   description,
   actions
-} : IPageLayout) {
+}: IPageLayout) {
   return (
-    <>
-
+    <div className="mx-auto w-full max-w-[1440px]">
       {(title || description || actions) && (
-        <header className="mb-6 flex items-start justify-between">
-          <div className="flex flex-col gap-2.5">
+        <header className="mb-8 flex flex-wrap items-start justify-between gap-5 border-b border-border pb-6">
+          <div className="flex min-w-0 flex-col gap-2">
             <p
-            className="text-xs uppercase text-text-muted">
+            className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
               {headTitle}
             </p>
             {title && 
               <h1
-              className="text-3xl font-medium font-heading">
+              className="font-heading text-2xl font-semibold tracking-tight text-text sm:text-[28px]">
                 {title}
               </h1>
             }
             {description && 
-            <p className="text-text-muted text-xs">
+            <p className="max-w-2xl text-sm leading-6 text-text-muted">
               {description}
             </p>
             }
           </div>
 
-          {actions && <div>{actions}</div>}
+          {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
         </header>
       )}
     
       <div
-      className="flex flex-col gap-7.5">
+      className="flex min-w-0 flex-col gap-6">
         {children}
       </div>
-    </>
+    </div>
   )
 }

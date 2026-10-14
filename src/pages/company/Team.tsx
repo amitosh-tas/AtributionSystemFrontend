@@ -9,6 +9,7 @@ function Team() {
       <PageLayout
       headTitle="access"
       title="Team"
+      description="Invite teammates and manage access to this workspace."
       >
         <InviteCard/>
       </PageLayout>

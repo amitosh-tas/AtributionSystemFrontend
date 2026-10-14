@@ -8,25 +8,22 @@ function RevenueLedger({ children }: RevenueLedgerProps) {
   return (
     <div
       className="
-        p-5
-        bg-card
-        border-2 border-border
-        text-text-muted
-        rounded-xl
-        shadow
+        rounded-xl border border-border bg-card p-5 text-text-muted sm:p-6
       "
     >
-      <div className="text-[10px] uppercase flex justify-between">
-        <p>Revenue Ledger - By Source</p>
+      <div className="flex items-center justify-between gap-3">
+        <h2 className="font-heading text-base font-semibold tracking-tight text-text">
+          Revenue by source
+        </h2>
 
-        <p>Rs Total</p>
+        <span className="text-xs font-medium text-text-muted">Revenue share</span>
       </div>
 
-      <div className="bg-black/15 w-full h-px my-2.5" />
+      <div className="my-5 h-px w-full bg-border" />
 
       {children}
 
-      <div className="bg-black/15 w-full h-px my-2.5" />
+      <div className="my-5 h-px w-full bg-border" />
     </div>
   );
 }

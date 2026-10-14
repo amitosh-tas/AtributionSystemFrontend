@@ -91,7 +91,7 @@ export default function EditApiKeyModal({
         aria-modal="true"
         aria-labelledby="edit-api-key-title"
         onSubmit={(event) => void submit(event)}
-        className="w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl"
+        className="max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
       >
         <h3
           id="edit-api-key-title"
@@ -116,7 +116,7 @@ export default function EditApiKeyModal({
           maxLength={100}
           value={name}
           onChange={(event) => setName(event.target.value)}
-          className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm outline-none focus:border-gray-500"
+          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus:border-primary"
         />
 
         <div className="mt-5 flex items-center justify-between gap-3">
@@ -143,7 +143,7 @@ export default function EditApiKeyModal({
               }
             }}
             placeholder="https://example.com"
-            className="min-w-0 flex-1 rounded-lg border border-border bg-card px-3 py-2.5 text-sm outline-none focus:border-gray-500"
+            className="min-w-0 flex-1 rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus:border-primary"
           />
           <button
             type="button"
@@ -197,7 +197,7 @@ export default function EditApiKeyModal({
           <button
             type="submit"
             disabled={saving || !name.trim() || origins.length === 0}
-            className="cursor-pointer rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? "Saving…" : "Save changes"}
           </button>

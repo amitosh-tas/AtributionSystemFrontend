@@ -13,43 +13,43 @@ const data = [
   },
 ];
 
-const colors = [
-  "#B45F3C",
-  "#46777D",
-  "#71896A",
-];
+const colors: Record<string, string> = {
+  Google: "#A13D48",
+  Direct: "#28649B",
+  Meta: "#28734B",
+};
 
 function RevenueLedgerChart() {
   return (
     <div className="w-full">
-      <div className="w-full h-10 flex overflow-hidden rounded-md">
-        {data.map((item, index) => (
+      <div className="flex h-7 w-full overflow-hidden rounded-md">
+        {data.map((item) => (
           <div
             key={item.name}
-            className="h-full transition-all duration-300"
+            className="h-7 transition-colors duration-200 first:rounded-l-md last:rounded-r-md"
             style={{
               width: `${item.perc}%`,
-              backgroundColor: colors[index],
+              backgroundColor: colors[item.name],
             }}
             title={`${item.name}: ${item.perc}%`}
           />
         ))}
       </div>
 
-      <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-4">
-        {data.map((item, index) => (
+      <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+        {data.map((item) => (
           <div
             key={item.name}
             className="flex items-center gap-2 text-xs"
           >
             <span
-              className="w-2.5 h-2.5 rounded-sm shrink-0"
+              className="size-2.5 shrink-0 rounded-sm"
               style={{
-                backgroundColor: colors[index],
+                backgroundColor: colors[item.name],
               }}
             />
 
-            <span className="text-text">
+            <span className="text-sm text-text">
               {item.name}
             </span>
 

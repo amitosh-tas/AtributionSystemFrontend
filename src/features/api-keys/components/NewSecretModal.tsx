@@ -21,7 +21,7 @@ export default function NewSecretModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="new-secret-title"
-        className="w-full max-w-lg rounded-xl border border-border bg-card p-6 shadow-xl"
+        className="max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
       >
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-green-700">
           <i className="fi fi-rr-shield-check text-xl flex items-center" />
@@ -60,7 +60,7 @@ export default function NewSecretModal({
             value={secret}
             rows={3}
             onFocus={(event) => event.currentTarget.select()}
-            className="min-w-0 flex-1 resize-none break-all rounded-lg border border-border bg-surface-muted p-3 font-mono text-sm outline-none"
+            className="min-w-0 flex-1 resize-none break-all rounded-lg border border-border bg-surface-muted p-3 font-mono text-sm focus-visible:ring-2 focus-visible:ring-primary"
           />
 
           <button
@@ -93,7 +93,7 @@ export default function NewSecretModal({
           <button
             type="button"
             onClick={onClose}
-            className="cursor-pointer rounded-lg bg-gray-950 px-4 py-2.5 text-sm font-medium text-white"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             I've saved my key
           </button>

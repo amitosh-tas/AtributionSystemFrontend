@@ -38,14 +38,14 @@ export default function DataTable<T>({
   };
 
   return (
-    <div className="w-full overflow-x-auto bg-card rounded-xl border-2 border-border shadow scrollbar-thin">
+    <section className="w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card">
       {/* Table header */}
       {(tableHead || tableSubHead) && (
-        <div className="flex justify-between items-end px-6 pt-5">
+        <div className="flex flex-wrap items-end justify-between gap-2 px-5 pt-5 sm:px-6">
           {tableHead && (
-            <p className="font-heading font-medium">
+            <h2 className="font-heading text-base font-semibold tracking-tight text-text">
               {tableHead}
-            </p>
+            </h2>
           )}
 
           {tableSubHead && (
@@ -58,22 +58,23 @@ export default function DataTable<T>({
 
       {/* Optional filters / toolbar */}
       {filters && (
-        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-4 sm:px-6">
           {filters}
         </div>
       )}
 
       {/* Table */}
-      <table className="w-full min-w-150 border-collapse text-sm">
+      <div className="w-full overflow-x-auto">
+      <table className="w-full min-w-140 border-collapse text-sm">
         <thead>
-          <tr className="border-b border-border">
+          <tr className="border-y border-border bg-slate-50/70">
             {columns.map((column) => (
               <th
                 key={column.key}
                 scope="col"
                 className={[
                   "px-4 py-3 text-[10px] font-semibold uppercase",
-                  "tracking-wide text-text-muted",
+                  "tracking-[0.08em] text-text-muted",
                   alignment[column.align ?? "left"],
                   column.className ?? "",
                 ].join(" ")}
@@ -105,7 +106,7 @@ export default function DataTable<T>({
                 }
                 className={[
                   "border-b border-border last:border-b-0",
-                  "transition-colors hover:bg-surface-muted/50",
+                  "transition-colors hover:bg-slate-50/70",
                   onRowClick ? "cursor-pointer" : "",
                 ].join(" ")}
               >
@@ -113,7 +114,7 @@ export default function DataTable<T>({
                   <td
                     key={column.key}
                     className={[
-                      "px-4 py-3.5 align-middle",
+                      "px-4 py-3.5 align-middle text-text",
                       alignment[column.align ?? "left"],
                       column.className ?? "",
                     ].join(" ")}
@@ -126,6 +127,7 @@ export default function DataTable<T>({
           )}
         </tbody>
       </table>
-    </div>
+      </div>
+    </section>
   );
 }

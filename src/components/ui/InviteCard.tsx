@@ -48,13 +48,13 @@ function InviteCard() {
   if (!canInvite) return null;
 
   return (
-    <section className="w-full rounded-xl border border-gray-200 bg-card p-6 shadow-sm">
+    <section className="w-full rounded-xl border border-border bg-card p-5 sm:p-6">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
-        <h2 className=" font-medium font-heading text-gray-900">
+        <h2 className="font-heading text-base font-semibold tracking-tight text-text">
           Invite a teammate
         </h2>
 
-        <p className="text-[10px] text-gray-500">
+        <p className="text-xs text-text-muted">
           {isSuperAdmin
             ? "Manage users across companies"
             : "Admins manage users · Viewers see the dashboard only"}
@@ -66,7 +66,7 @@ function InviteCard() {
         className="grid grid-cols-1 items-end gap-4 sm:grid-cols-2 xl:grid-cols-4"
       >
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-medium uppercase tracking-wide text-gray-500">
+          <label className="text-xs font-medium text-text-muted">
             Name
           </label>
           <input
@@ -74,12 +74,12 @@ function InviteCard() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Full name"
-            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary"
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-medium uppercase tracking-wide text-gray-500">
+          <label className="text-xs font-medium text-text-muted">
             Email
           </label>
           <input
@@ -88,12 +88,12 @@ function InviteCard() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="teammate@company.com"
-            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary"
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-medium uppercase tracking-wide text-gray-500">
+          <label className="text-xs font-medium text-text-muted">
             Password
           </label>
           <input
@@ -103,18 +103,18 @@ function InviteCard() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="At least 8 characters"
-            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary"
           />
         </div>
 
         <div className="flex flex-col gap-2">
-          <label className="text-xs font-medium uppercase tracking-wide text-gray-500">
+          <label className="text-xs font-medium text-text-muted">
             Role
           </label>
           <select
             value={role}
             onChange={(e) => setRole(e.target.value as Role)}
-            className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary"
           >
             {allowedRoles.map((item) => (
               <option key={item} value={item}>
@@ -130,7 +130,7 @@ function InviteCard() {
 
         {isSuperAdmin && role !== "platform_admin" && (
           <div className="flex flex-col gap-2 sm:col-span-2 xl:col-span-1">
-            <label className="text-xs font-medium uppercase tracking-wide text-gray-500">
+            <label className="text-xs font-medium text-text-muted">
               Company
             </label>
 
@@ -138,7 +138,7 @@ function InviteCard() {
               required
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              className="h-10 min-w-0 rounded-lg border border-gray-300 bg-transparent px-4 text-sm outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
+              className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary"
             >
               <option value="">Select company</option>
               {companies.map((item) => (
@@ -153,7 +153,7 @@ function InviteCard() {
         <div className="sm:col-span-2 xl:col-span-full">
           <button
             type="submit"
-            className="h-10 rounded-lg bg-gray-950 px-6 text-sm font-semibold text-white transition hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            className="h-10 rounded-lg bg-primary px-5 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Create user
           </button>

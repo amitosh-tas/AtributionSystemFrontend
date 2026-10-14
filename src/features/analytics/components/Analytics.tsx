@@ -21,21 +21,21 @@ function Analytics({
   });
 
   return (
-    <div className="flex flex-col lg:flex-row items-baseline gap-5">
-      <div>
-        <p className="text-6xl font-heading">
+    <div className="flex flex-col gap-5 rounded-xl border border-border bg-card p-5 sm:p-6 lg:flex-row lg:items-end lg:justify-between">
+      <div className="min-w-0">
+        <p className="font-heading text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
           {currency.format(revenue)}
         </p>
 
-        <p className="text-text-muted text-xs">
+        <p className="mt-2 text-sm text-text-muted">
           {currency.format(revenueAfterTax)} excl tax ·{" "}
           {currency.format(taxed)} tax
         </p>
       </div>
 
-      <div className="text-text-muted text-xs max-w-75">
+      <div className="max-w-64 text-sm leading-6 text-text-muted">
         Company-wide revenue, all locations combined, across{" "}
-        {invoices} invoices.
+        <span className="font-medium tabular-nums text-text">{invoices} invoices</span>.
       </div>
     </div>
   );

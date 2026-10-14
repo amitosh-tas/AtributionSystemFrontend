@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import bg from "@/assets/bg1.png";
 import { registerCompany } from "@/services/authService";
 import { restoreSession } from "@/services/restoreSession";
 import { useAppDispatch } from "@/app/hooks";
@@ -121,22 +120,15 @@ const initialForm: SignUpForm = {
 };
 
 const inputClass = `
-  w-full min-w-0 bg-transparent py-3
-  border-0 border-b border-gray-300
-  rounded-none
-  text-sm text-black
-  placeholder:text-gray-400
-  outline-none
-  transition-colors duration-200
-  focus:border-black
-  focus:ring-0
+  h-11 w-full min-w-0 rounded-lg border border-border
+  bg-white px-3 text-sm text-text placeholder:text-slate-400
 `;
 
-const labelClass = "text-sm font-medium text-gray-800";
+const labelClass = "text-sm font-medium text-text";
 
-const sectionTitleClass = "text-base font-semibold tracking-tight text-black";
+const sectionTitleClass = "font-heading text-base font-semibold tracking-tight text-text";
 
-const sectionDescriptionClass = "mt-1 text-sm leading-6 text-gray-500";
+const sectionDescriptionClass = "mt-1 text-sm leading-6 text-text-muted";
 
 function SignUp() {
   const dispatch = useAppDispatch();
@@ -213,28 +205,26 @@ function SignUp() {
   }
 
   return (
-    <div className="min-h-dvh w-full bg-page-background text-black">
-      <div className="flex min-h-dvh w-full">
-        {/* Form panel */}
-        <main className="flex w-full justify-center px-6 py-12 sm:px-10 lg:w-[55%] lg:px-12 xl:px-20">
-          <div className="w-full max-w-xl">
+    <div className="min-h-dvh w-full bg-page-background px-4 py-8 text-text sm:px-6 sm:py-12">
+      <main className="mx-auto w-full max-w-3xl rounded-2xl border border-border bg-card px-5 py-8 sm:px-10 sm:py-10">
+          <div className="w-full">
             {/* Brand */}
             <div className="mb-10">
               <Link
                 to="/signin"
-                className="font-heading text-2xl font-semibold tracking-tight"
+                className="font-heading text-2xl font-bold tracking-tight"
               >
-                Ledger<span className="text-gray-400">.</span>
+                Ledger<span className="text-primary">.</span>
               </Link>
             </div>
 
             {/* Heading */}
             <div className="mb-10">
-              <h1 className="text-3xl font-semibold tracking-tight">
+              <h1 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
                 Create your account
               </h1>
 
-              <p className="mt-3 text-sm leading-6 text-gray-500">
+              <p className="mt-3 text-sm leading-6 text-text-muted">
                 Set up your company workspace and start tracking revenue.
               </p>
             </div>
@@ -324,7 +314,7 @@ function SignUp() {
                 </div>
               </section>
 
-              <div className="h-px bg-gray-200" />
+              <div className="h-px bg-border" />
 
               {/* Company details */}
               <section className="flex flex-col gap-5">
@@ -400,7 +390,7 @@ function SignUp() {
                 </div>
               </section>
 
-              <div className="h-px bg-gray-200" />
+              <div className="h-px bg-border" />
 
               {/* Regional configuration */}
               <section className="flex flex-col gap-5">
@@ -454,7 +444,7 @@ function SignUp() {
                         </option>
                       ))}
                     </select>
-                    <p className="text-xs leading-5 text-gray-400">
+                    <p className="text-xs leading-5 text-text-muted">
                       Availability depends on your backend infrastructure.
                     </p>
                   </div>
@@ -503,7 +493,7 @@ function SignUp() {
               {error && (
                 <p
                   role="alert"
-                  className="border-l-2 border-red-600 pl-3 text-sm text-red-600"
+                  className="border-l-2 border-red-600 pl-3 text-sm text-red-700"
                 >
                   {error}
                 </p>
@@ -513,16 +503,7 @@ function SignUp() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="
-                  mt-1 h-12 w-full
-                  bg-black text-white
-                  text-sm font-medium
-                  transition-colors duration-200
-                  hover:bg-gray-800
-                  active:scale-[0.99]
-                  disabled:cursor-not-allowed
-                  disabled:opacity-60
-                "
+                className="mt-1 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? "Creating account..." : "Create account"}
               </button>
@@ -530,34 +511,24 @@ function SignUp() {
 
             {/* Footer */}
             <div className="mt-8 text-center">
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-text-muted">
                 Already have an account?{" "}
                 <Link
                   to="/signin"
-                  className="font-medium text-black underline underline-offset-4 decoration-gray-300 hover:decoration-black"
+                  className="font-semibold text-primary underline underline-offset-4 decoration-indigo-200 hover:decoration-primary"
                 >
                   Sign in
                 </Link>
               </p>
             </div>
 
-            <div className="mt-8 border-t border-gray-100 pt-5">
-              <p className="text-center text-xs text-gray-400">
+            <div className="mt-8 border-t border-border pt-5">
+              <p className="text-center text-xs text-text-muted">
                 Revenue management &amp; analytics
               </p>
             </div>
           </div>
-        </main>
-
-        {/* Image panel */}
-        <aside className="hidden sticky top-0 h-full overflow-hidden lg:block lg:w-[70%]">
-          <img
-            src={bg}
-            alt=""
-            className=" h-dvh w-full object-cover sticky top-0"
-          />
-        </aside>
-      </div>
+      </main>
     </div>
   );
 }

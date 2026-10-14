@@ -21,7 +21,7 @@ export default function RevokeApiKeyModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="revoke-api-key-title"
-        className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl"
+        className="max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
       >
         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-red-100 text-red-700">
           <i className="fi fi-rr-ban text-lg flex items-center" aria-hidden="true" />
@@ -34,7 +34,7 @@ export default function RevokeApiKeyModal({
         </h3>
         <p className="mt-2 text-sm leading-6 text-text-muted">
           Revoking{" "}
-          <span className="font-medium text-text-main">{apiKey.name}</span>{" "}
+          <span className="font-medium text-text">{apiKey.name}</span>{" "}
           will stop integrations using it from authenticating. This action
           cannot be undone.
         </p>

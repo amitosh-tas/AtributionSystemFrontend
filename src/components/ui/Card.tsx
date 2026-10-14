@@ -16,30 +16,28 @@ function Card({
 }: ICard) {
   return (
     <div
-      className="text-text bg-card border-2 border-border
-      p-5 h-35 rounded-xl shadow
-      flex flex-col gap-1.5"
+      className="flex min-h-32 min-w-0 flex-col gap-2 rounded-xl border border-border bg-card p-5 text-text transition-colors hover:border-slate-300"
     >
-      <p className="uppercase text-[10px] tracking-widest text-text-muted">
+      <p className="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-muted">
         {title}
       </p>
 
-      <p className="font-heading text-xl font-medium">
+      <p className="mt-1 wrap-break-word font-heading text-2xl font-semibold tracking-tight tabular-nums">
         {value}
       </p>
 
       {trend ? (
         <p
-          className={`text-xs ${
+          className={`text-xs font-medium ${
             trend.direction === "down"
-              ? "text-red-500"
-              : "text-emerald-500"
+              ? "text-red-600"
+              : "text-emerald-700"
           }`}
         >
           {trend.direction === "down" ? "▼" : "▲"} {trend.value}
         </p>
       ) : (
-        <p className="text-xs text-text-muted">
+        <p className="text-xs leading-5 text-text-muted">
           {description}
         </p>
       )}

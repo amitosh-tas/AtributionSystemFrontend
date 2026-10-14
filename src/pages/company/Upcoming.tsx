@@ -1,4 +1,5 @@
 import PageLayout from "@/components/layout/PageLayout"
+import EmptyState from "@/components/ui/EmptyState"
 
 
 function Upcoming() {
@@ -7,8 +8,13 @@ function Upcoming() {
       <PageLayout
       headTitle="pipeline"
       title="Upcoming Bookings"
+      description="Keep track of expected bookings and upcoming revenue."
       >
-        <p>upcoming</p>
+        <EmptyState
+          icon="fi-rr-calendar"
+          title="No booking data available"
+          description="Upcoming bookings will appear here when booking data is connected to this workspace."
+        />
       </PageLayout>
     </>
   )

@@ -17,7 +17,7 @@ export default function NewCustomersTrend() {
       subtitle="by day · company-wide"
       data={customerData}
       type="bar"
-      color="#87957D"
+      color="#4F46E5"
       actionLabel="‹ Prev wk"
       onAction={() => console.log("Load previous week")}
     />

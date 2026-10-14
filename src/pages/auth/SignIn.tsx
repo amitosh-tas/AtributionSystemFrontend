@@ -2,7 +2,6 @@ import { getMe, loginUser } from "@/services/authService";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import bg from "@/assets/bg1.png";
 import { useAppDispatch } from "@/app/hooks";
 import { setCredentials } from "@/store/slices/authSlice";
 
@@ -45,39 +44,27 @@ function SignIn() {
     }
   }
 
-  const inputClass = `
-    w-full bg-transparent py-3
-    border-0 border-b border-gray-300
-    rounded-none
-    text-sm text-black
-    placeholder:text-gray-400
-    outline-none
-    transition-colors duration-200
-    focus:border-black
-    focus:ring-0
-  `;
-
-  const labelClass = "text-sm font-medium text-gray-800";
+  const inputClass = "h-11 w-full rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary";
+  const labelClass = "text-sm font-medium text-text";
 
   return (
-    <div className="flex min-h-dvh w-full bg-page-background text-black">
-      {/* Sign-in form */}
-      <main className="flex w-full items-center justify-center px-7 py-12 sm:px-12 lg:w-[30%]">
-        <div className="w-full max-w-sm">
+    <div className="flex min-h-dvh w-full items-center justify-center bg-page-background px-4 py-10 text-text sm:px-6">
+      <main className="w-full max-w-md rounded-2xl border border-border bg-card px-6 py-9 sm:px-10 sm:py-10">
+        <div className="w-full">
           {/* Brand */}
           <div className="mb-12">
-            <h1 className="font-heading text-2xl font-semibold tracking-tight">
-              Ledger<span className="text-gray-400">.</span>
+            <h1 className="font-heading text-2xl font-bold tracking-tight">
+              Ledger<span className="text-primary">.</span>
             </h1>
           </div>
 
           {/* Heading */}
           <div className="mb-10">
-            <h2 className="text-3xl font-semibold tracking-tight">
+            <h2 className="font-heading text-2xl font-semibold tracking-tight sm:text-3xl">
               Welcome back
             </h2>
 
-            <p className="mt-3 text-sm leading-6 text-gray-500">
+            <p className="mt-3 text-sm leading-6 text-text-muted">
               Sign in to access your revenue dashboard.
             </p>
           </div>
@@ -141,7 +128,7 @@ function SignIn() {
                   onClick={() => {
                     // Connect your forgot-password flow here.
                   }}
-                  className="text-xs text-gray-500 transition hover:text-black"
+                  className="text-xs font-medium text-text-muted transition hover:text-primary"
                 >
                   Forgot password?
                 </button>
@@ -168,7 +155,7 @@ function SignIn() {
             {error && (
               <p
                 role="alert"
-                className="text-sm text-red-600"
+                className="text-sm text-red-700"
               >
                 {error}
               </p>
@@ -177,16 +164,7 @@ function SignIn() {
             <button
               type="submit"
               disabled={isLoading}
-              className="
-                mt-2 h-12 w-full
-                bg-black text-white
-                text-sm font-medium
-                transition-colors duration-200
-                hover:bg-gray-800
-                active:scale-[0.99]
-                disabled:cursor-not-allowed
-                disabled:opacity-60
-              "
+              className="mt-2 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </button>
@@ -194,19 +172,19 @@ function SignIn() {
 
           {/* Footer */}
           <div className="mt-8 text-center">
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-text-muted">
               Don't have an account?{" "}
               <Link
                 to="/signup"
-                className="font-medium text-black underline underline-offset-4 decoration-gray-300 hover:decoration-black"
+                className="font-semibold text-primary underline underline-offset-4 decoration-indigo-200 hover:decoration-primary"
               >
                 Create account
               </Link>
             </p>
           </div>
 
-          <div className="mt-12 border-t border-gray-100 pt-5">
-            <p className="text-center text-xs text-gray-400">
+          <div className="mt-10 border-t border-border pt-5">
+            <p className="text-center text-xs text-text-muted">
               Revenue management & analytics
             </p>
           </div>
@@ -216,22 +194,13 @@ function SignIn() {
             <button
               type="button"
               onClick={() => void getMe()}
-              className="mt-5 text-xs text-gray-400 underline hover:text-black"
+              className="mt-5 text-xs text-text-muted underline hover:text-primary"
             >
               Test session
             </button>
           )}
         </div>
       </main>
-
-      {/* Image panel */}
-      <aside className="sticky top-0 h-dvh hidden overflow-hidden lg:block lg:flex-1">
-        <img
-          src={bg}
-          alt=""
-          className="h-full w-full object-cover"
-        />
-      </aside>
     </div>
   );
 }

@@ -44,25 +44,25 @@ function DataChart({
     `${valuePrefix}${value.toLocaleString()}${valueSuffix}`;
 
   return (
-    <section className="w-full min-w-0 rounded-2xl border border-border bg-white p-5 shadow-sm">
-      {/* Header */}
-      <div className="mb-5 flex items-center justify-between gap-4">
-        <h2 className="font-serif font-medium text-gray-900">
+    <section className="w-full min-w-0 rounded-xl border border-border bg-card p-5 sm:p-6">
+      <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
+        <div className="min-w-0">
+        <h2 className="font-heading text-base font-semibold tracking-tight text-text">
           {title}
         </h2>
+        {subtitle && (
+          <p className="mt-1 text-xs text-text-muted">
+            {subtitle}
+          </p>
+        )}
+        </div>
 
-        <div className="flex items-center gap-2.5">
-          {subtitle && (
-            <p className="mt-1 text-[10px] text-text-muted">
-              {subtitle}
-            </p>
-          )}
-
+        <div className="flex shrink-0 items-center gap-2">
           {actionLabel && (
             <button
             type="button"
             onClick={onAction}
-            className="shrink-0 rounded-lg border border-border cursor-pointer px-2.5 font-semibold py-1 text-[10px] text-text-muted hover:text-primary hover:bg-gray-50 duration-300"
+            className="cursor-pointer rounded-lg border border-border px-3 py-1.5 text-xs font-medium text-text-muted transition hover:bg-slate-50 hover:text-primary"
             >
               {actionLabel}
             </button>
@@ -80,12 +80,12 @@ function DataChart({
             >
               <CartesianGrid
                 vertical={false}
-                stroke="#EAEAEA"
+                stroke="#E2E8F0"
               />
 
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 10, fill: "#8A8A8A" }}
+                tick={{ fontSize: 10, fill: "#64748B" }}
                 tickLine={false}
                 axisLine={false}
                 minTickGap={24}
@@ -96,9 +96,10 @@ function DataChart({
               <Tooltip
                 formatter={(value) => formatValue(Number(value))}
                 contentStyle={{
-                  borderRadius: 10,
-                  border: "1px solid #E5E5E5",
+                  borderRadius: 8,
+                  border: "1px solid #E2E8F0",
                   fontSize: 12,
+                  boxShadow: "0 4px 12px rgba(15, 23, 42, 0.08)",
                 }}
               />
 
@@ -116,12 +117,12 @@ function DataChart({
             >
               <CartesianGrid
                 vertical={false}
-                stroke="#EAEAEA"
+                stroke="#E2E8F0"
               />
 
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 10, fill: "#8A8A8A" }}
+                tick={{ fontSize: 10, fill: "#64748B" }}
                 tickLine={false}
                 axisLine={false}
                 minTickGap={24}
@@ -132,9 +133,10 @@ function DataChart({
               <Tooltip
                 formatter={(value) => formatValue(Number(value))}
                 contentStyle={{
-                  borderRadius: 10,
-                  border: "1px solid #E5E5E5",
+                  borderRadius: 8,
+                  border: "1px solid #E2E8F0",
                   fontSize: 12,
+                  boxShadow: "0 4px 12px rgba(15, 23, 42, 0.08)",
                 }}
               />
 

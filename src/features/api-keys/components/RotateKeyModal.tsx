@@ -21,7 +21,7 @@ export default function RotateKeyModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="rotate-title"
-        className="w-full max-w-md rounded-xl border border-border bg-card p-6 shadow-xl"
+        className="max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
       >
         <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-full bg-amber-100 text-amber-700">
           <i className="fi fi-rr-refresh text-lg flex items-center" />
@@ -33,7 +33,7 @@ export default function RotateKeyModal({
 
         <p className="mt-2 text-sm leading-6 text-text-muted">
           You're about to rotate{" "}
-          <span className="font-medium text-text-main">
+          <span className="font-medium text-text">
             {apiKey.name}
           </span>
           . Your integration may need the new key. Make sure you save it
@@ -54,7 +54,7 @@ export default function RotateKeyModal({
             type="button"
             disabled={rotating}
             onClick={onConfirm}
-            className="cursor-pointer rounded-lg bg-gray-950 px-4 py-2 text-sm font-medium text-white disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-indigo-700 focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {rotating ? "Rotating…" : "Confirm rotation"}
           </button>

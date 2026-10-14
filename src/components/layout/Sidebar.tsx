@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { logout } from "@/store/slices/authSlice";
 import { logoutUser } from "@/services/authService";
+import toast from "react-hot-toast";
 
 interface SidebarProps {
   companyName?: string;
@@ -117,8 +118,10 @@ function AccountComponent() {
   const handleLogout = async () => {
     try {
       await logoutUser();
+      toast.success("Signed out successfully.");
     } catch (error) {
       console.error("Logout API failed:", error);
+      toast.error("Unable to reach the server. You were signed out locally.");
     } finally {
       dispatch(logout());
       navigate("/signin", { replace: true });

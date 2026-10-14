@@ -3,6 +3,7 @@ import Card from "@/components/ui/Card";
 import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid";
 import { getPlatformDashboard } from "@/services/platfromAdmin";
 import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 export interface PlatformAdminDashboard {
   workspaces: {
@@ -52,6 +53,7 @@ function Dashboard() {
         setDashboardData(res?.data?.data);
       } catch (error) {
         console.error("Failed to fetch platform dashboard:", error);
+        toast.error("Unable to load the platform dashboard.");
       }
     };
 

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { useAppDispatch } from "@/app/hooks";
 import { setCredentials } from "@/store/slices/authSlice";
+import toast from "react-hot-toast";
 
 interface ISignInData {
   api?: string,
@@ -30,11 +31,10 @@ function SignIn() {
     setIsLoading(true);
 
     try {
-      const result = await loginUser(formData);
-      console.log(result)
+      await loginUser(formData);
       const user = await getMe();
       dispatch(setCredentials(user))
-      
+      toast.success("Signed in successfully.");
     } catch (e) {
       setError(
         e instanceof Error ? e.message : "Unable to sign in. Please try again."

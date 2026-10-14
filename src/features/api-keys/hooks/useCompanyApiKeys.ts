@@ -8,6 +8,7 @@ import {
   type KeyCredentials,
 } from "@/services/apiService";
 import type { CompanyApiKey } from "../types/apiKey.types";
+import toast from "react-hot-toast";
 
 export function useCompanyApiKeys() {
   const [keys, setKeys] = useState<CompanyApiKey[]>([]);
@@ -80,6 +81,7 @@ export function useCompanyApiKeys() {
       setSelectedKey(null);
 
       await fetchKeys();
+      toast.success("API key rotated successfully.");
     } catch (err) {
       console.error("Failed to rotate API key:", err);
       setError(
@@ -109,6 +111,7 @@ export function useCompanyApiKeys() {
       setSecretCopied(false);
       setCopyError("");
       await fetchKeys();
+      toast.success("API key generated successfully.");
       return true;
     } catch (err) {
       console.error("Failed to create API key:", err);
@@ -131,6 +134,7 @@ export function useCompanyApiKeys() {
     try {
       await updateCompanyKey(id, credentials);
       await fetchKeys();
+      toast.success("API key updated successfully.");
       return true;
     } catch (err) {
       console.error("Failed to update API key:", err);
@@ -150,6 +154,7 @@ export function useCompanyApiKeys() {
     try {
       await revokeCompanyKey(id);
       await fetchKeys();
+      toast.success("API key revoked successfully.");
       return true;
     } catch (err) {
       console.error("Failed to revoke API key:", err);
@@ -168,6 +173,7 @@ export function useCompanyApiKeys() {
     try {
       await navigator.clipboard.writeText(newSecret);
       setSecretCopied(true);
+      toast.success("API key copied to clipboard.");
     } catch (err) {
       console.error("Unable to copy API key:", err);
       setSecretCopied(false);

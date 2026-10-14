@@ -5,6 +5,7 @@ export interface DataTablePagination {
   limit: number;
   total: number;
   pages: number;
+  isLoading?: boolean;
   onPageChange: (page: number) => void;
 }
 
@@ -154,7 +155,7 @@ export default function DataTable<T>({
           <div className="flex items-center gap-2">
             <button
               type="button"
-              disabled={pagination.page <= 1}
+              disabled={pagination.isLoading || pagination.page <= 1}
               onClick={() => pagination.onPageChange(pagination.page - 1)}
               className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
             >
@@ -167,7 +168,10 @@ export default function DataTable<T>({
 
             <button
               type="button"
-              disabled={pagination.page >= pagination.pages}
+              disabled={
+                pagination.isLoading ||
+                pagination.page >= pagination.pages
+              }
               onClick={() => pagination.onPageChange(pagination.page + 1)}
               className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
             >

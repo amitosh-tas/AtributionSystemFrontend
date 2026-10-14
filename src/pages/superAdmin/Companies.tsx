@@ -165,6 +165,7 @@ function Companies() {
           emptyMessage={loading ? "Loading workspaces..." : "No workspaces found."}
           pagination={{
             ...pagination,
+            isLoading: loading,
             onPageChange: setPage,
           }}
         />

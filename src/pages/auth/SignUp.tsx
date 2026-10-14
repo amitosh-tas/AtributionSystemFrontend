@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { registerCompany } from "@/services/authService";
 import { restoreSession } from "@/services/restoreSession";
 import { useAppDispatch } from "@/app/hooks";
+import toast from "react-hot-toast";
 
 const INDUSTRIES = [
   "E-commerce & Retail",
@@ -189,13 +190,10 @@ function SignUp() {
         paymentMethod: form.paymentMethod.trim(),
       };
 
-      console.log("Signup payload:", payload);
-
-      const result = await registerCompany(payload);
+      await registerCompany(payload);
 
       await restoreSession(dispatch);
-
-      console.log("Company registered successfully:", result);
+      toast.success("Your company account has been created.");
 
     } catch {
       setError("Something went wrong. Please try again.");

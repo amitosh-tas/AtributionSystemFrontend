@@ -54,7 +54,7 @@ export function ChartSkeleton() {
     >
       <Skeleton className="h-5 w-36" />
       <Skeleton className="mt-2 h-3 w-48 max-w-full" />
-      <div className="mt-5 flex h-[260px] items-end gap-3 border-b border-border px-3">
+      <div className="mt-5 flex h-65 items-end gap-3 border-b border-border px-3">
         {[42, 66, 50, 82, 58, 74, 46, 68, 54, 88, 62, 76].map(
           (height, index) => (
             <Skeleton

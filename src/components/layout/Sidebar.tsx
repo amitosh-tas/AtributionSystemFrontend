@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { logout } from "@/store/slices/authSlice";
 import { logoutUser } from "@/services/authService";
+import GlassSurface from "@/components/GlassSurface";
 
 interface SidebarProps {
   companyName?: string;
@@ -64,44 +65,66 @@ function Sidebar({
         <div
           className={`
             fixed inset-y-0 left-0 z-40
-            flex h-dvh w-60 flex-col
-            overflow-hidden bg-sidebar text-sidebar-text
+            h-dvh w-60
+            overflow-hidden
+            bg-transparent text-sidebar-text
             transition-transform duration-300 ease-in-out
             md:sticky md:top-0 md:translate-x-0
             ${isOpen ? "translate-x-0" : "-translate-x-full"}
           `}
         >
-          {/* Header: never scrolls */}
-          <div className="shrink-0 px-5 pb-4 pt-6">
-            <h1 className="font-heading text-lg uppercase text-primary">
-              Ledger
-            </h1>
-
-            <p className="mt-1 truncate text-[10px]">
-              {companyName}
-            </p>
-
-            <div className="mt-5 h-px w-full bg-gray-400/20" />
+          {/* Glass background layer */}
+          <div className="pointer-events-none absolute inset-0">
+            <GlassSurface
+              width={240}
+              height="100%"
+              borderRadius={38}
+              borderWidth={0.08}
+              distortionScale={-120}
+              displace={0.15}
+              backgroundOpacity={0.08}
+              opacity={0.95}
+              blur={12}
+              saturation={1.1}
+              redOffset={0}
+              greenOffset={4}
+              blueOffset={8}
+              refraction
+              renderer="auto"
+            />
           </div>
 
-          {/* Navigation: scrolls independently */} 
-          <nav
-            aria-label="Main navigation"
-            className="
-              min-h-0 flex-1 overflow-y-auto overscroll-contain
-              px-5 pb-4
-              scrollbar-thin
-              [scrollbar-color:rgba(148,163,184,0.35)_transparent]
-            "
-          >
-            <div className="flex flex-col gap-1">
-              {items.map((item) => (
-                <NavLink
-                  key={item.path}
-                  to={item.path}
-                  end={item.path === "/" || item.path === "/super"}
-                  className={({ isActive }) =>
-                    `
+          {/* Sidebar content */}
+          <div className="relative z-10 flex h-full flex-col">
+            {/* Header */}
+            <div className="shrink-0 px-5 pb-4 pt-6">
+              <h1 className="font-heading text-lg uppercase text-primary">
+                Ledger
+              </h1>
+
+              <p className="mt-1 truncate text-[10px]">
+                {companyName}
+              </p>
+
+              <div className="mt-5 h-px w-full bg-gray-400/20" />
+            </div>
+
+            {/* Scrollable navigation */}
+            <nav
+              aria-label="Main navigation"
+              className="
+                min-h-0 flex-1 overflow-y-auto overscroll-contain
+                px-5 pb-4 scrollbar-thin
+                [scrollbar-color:rgba(148,163,184,0.35)_transparent]
+              "
+            >
+              <div className="flex flex-col gap-1">
+                {items.map((item) => (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    end={item.path === "/" || item.path === "/super"}
+                    className={({ isActive }) => `
                       rounded-md px-3 py-2 text-sm
                       transition-colors duration-200
                       ${
@@ -109,18 +132,18 @@ function Sidebar({
                           ? "bg-primary/10 font-medium text-primary"
                           : "text-sidebar-text hover:bg-white/5 hover:text-primary"
                       }
-                    `
-                  }
-                >
-                  {item.label}
-                </NavLink>
-              ))}
-            </div>
-          </nav>
+                    `}
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
+              </div>
+            </nav>
 
-          {/* Account section: stays at the bottom */}
-          <div className="shrink-0 border-t border-white/10 p-5">
-            <AccountComponent />
+            {/* Account section */}
+            <div className="shrink-0 border-t border-white/10 p-5">
+              <AccountComponent />
+            </div>
           </div>
         </div>
       </aside>

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import GlassSurface from "@/components/GlassSurface";
 
 export interface DataTableColumn<T> {
   key: string;
@@ -16,8 +17,6 @@ interface DataTableProps<T> {
   getRowKey: (row: T) => string | number;
   emptyMessage?: string;
   onRowClick?: (row: T) => void;
-
-  // Optional toolbar / filter controls
   filters?: ReactNode;
 }
 
@@ -38,94 +37,90 @@ export default function DataTable<T>({
   };
 
   return (
-    <div className="w-full overflow-x-auto bg-card rounded-xl border-2 border-border shadow scrollbar-thin">
-      {/* Table header */}
-      {(tableHead || tableSubHead) && (
-        <div className="flex justify-between items-end px-6 pt-5">
-          {tableHead && (
-            <p className="font-heading font-medium">
-              {tableHead}
-            </p>
-          )}
+    <GlassSurface
+      width="100%"
+      height="100%"
+      borderRadius={26}
+      borderWidth={0.8}
+      displace={0.2}
+      backgroundOpacity={0.12}
+      opacity={0.96}
+      blur={14}
+      saturation={1.1}
+      redOffset={0}
+      greenOffset={4}
+      blueOffset={8}
+      refraction
+      renderer="auto"
+      className="w-full overflow-hidden"
+    >
+      <div className="w-full overflow-hidden rounded-[inherit] bg-slate-950/15">
+        {(tableHead || tableSubHead) && (
+          <div className="flex flex-col gap-2 px-6 pb-4 pt-5 sm:flex-row sm:items-end sm:justify-between">
+            {tableHead && <p className="font-heading text-xl font-medium tracking-tight text-slate-50">{tableHead}</p>}
+            {tableSubHead && <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-slate-400">{tableSubHead}</p>}
+          </div>
+        )}
 
-          {tableSubHead && (
-            <p className="text-xs text-text-muted">
-              {tableSubHead}
-            </p>
-          )}
-        </div>
-      )}
+        {filters && <div className="px-6 pb-4">{filters}</div>}
 
-      {/* Optional filters / toolbar */}
-      {filters && (
-        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
-          {filters}
-        </div>
-      )}
-
-      {/* Table */}
-      <table className="w-full min-w-150 border-collapse text-sm">
-        <thead>
-          <tr className="border-b border-border">
-            {columns.map((column) => (
-              <th
-                key={column.key}
-                scope="col"
-                className={[
-                  "px-4 py-3 text-[10px] font-semibold uppercase",
-                  "tracking-wide text-text-muted",
-                  alignment[column.align ?? "left"],
-                  column.className ?? "",
-                ].join(" ")}
-              >
-                {column.header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-
-        <tbody>
-          {data.length === 0 ? (
-            <tr>
-              <td
-                colSpan={columns.length}
-                className="px-4 py-10 text-center text-text-muted"
-              >
-                {emptyMessage}
-              </td>
-            </tr>
-          ) : (
-            data.map((row) => (
-              <tr
-                key={getRowKey(row)}
-                onClick={
-                  onRowClick
-                    ? () => onRowClick(row)
-                    : undefined
-                }
-                className={[
-                  "border-b border-border last:border-b-0",
-                  "transition-colors hover:bg-surface-muted/50",
-                  onRowClick ? "cursor-pointer" : "",
-                ].join(" ")}
-              >
+        <div className="w-full overflow-x-auto">
+          <table className="w-full min-w-[640px] border-collapse text-sm text-slate-200">
+            <thead>
+              <tr className="border-b border-white/10">
                 {columns.map((column) => (
-                  <td
+                  <th
                     key={column.key}
+                    scope="col"
                     className={[
-                      "px-4 py-3.5 align-middle",
+                      "px-4 py-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-400",
                       alignment[column.align ?? "left"],
                       column.className ?? "",
                     ].join(" ")}
                   >
-                    {column.render(row)}
-                  </td>
+                    {column.header}
+                  </th>
                 ))}
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+            </thead>
+
+            <tbody>
+              {data.length === 0 ? (
+                <tr>
+                  <td colSpan={columns.length} className="px-4 py-10 text-center text-slate-400">
+                    {emptyMessage}
+                  </td>
+                </tr>
+              ) : (
+                data.map((row) => (
+                  <tr
+                    key={getRowKey(row)}
+                    onClick={onRowClick ? () => onRowClick(row) : undefined}
+                    className={[
+                      "border-b border-white/5 last:border-b-0",
+                      "transition-colors duration-200 hover:bg-white/5",
+                      onRowClick ? "cursor-pointer" : "",
+                    ].join(" ")}
+                  >
+                    {columns.map((column) => (
+                      <td
+                        key={column.key}
+                        className={[
+                          "px-4 py-3.5 align-middle text-slate-200",
+                          alignment[column.align ?? "left"],
+                          column.className ?? "",
+                        ].join(" ")}
+                      >
+                        {column.render(row)}
+                      </td>
+                    ))}
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </GlassSurface>
   );
 }

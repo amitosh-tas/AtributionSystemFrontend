@@ -3,7 +3,6 @@ interface IPill {
 }
 
 function getPlatformColors(name: string) {
-  // Generate a consistent hash from the platform name
   let hash = 0;
 
   for (let i = 0; i < name.length; i++) {
@@ -11,13 +10,12 @@ function getPlatformColors(name: string) {
     hash |= 0;
   }
 
-  // Generate a pleasant, muted color
   const hue = Math.abs(hash) % 360;
 
   return {
-    backgroundColor: `hsl(${hue}, 45%, 92%)`,
-    textColor: `hsl(${hue}, 45%, 30%)`,
-    dotColor: `hsl(${hue}, 50%, 42%)`,
+    backgroundColor: `hsla(${hue}, 70%, 18%, 0.8)`,
+    textColor: `hsl(${hue}, 70%, 88%)`,
+    dotColor: `hsl(${hue}, 80%, 70%)`,
   };
 }
 
@@ -26,17 +24,13 @@ function Pill({ name }: IPill) {
 
   return (
     <span
-      className="inline-flex w-fit items-center gap-2 rounded-full px-3 py-1 text-xs font-medium whitespace-nowrap"
+      className="inline-flex w-fit items-center gap-2 rounded-full border border-white/10 px-3 py-1 text-xs font-medium whitespace-nowrap"
       style={{
         backgroundColor: colors.backgroundColor,
         color: colors.textColor,
       }}
     >
-      <span
-        aria-hidden="true"
-        className="size-1.5 shrink-0 rounded-full"
-        style={{ backgroundColor: colors.dotColor }}
-      />
+      <span aria-hidden="true" className="size-1.5 shrink-0 rounded-full" style={{ backgroundColor: colors.dotColor }} />
       {name}
     </span>
   );

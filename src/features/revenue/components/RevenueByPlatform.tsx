@@ -1,7 +1,5 @@
 import { useMemo, useState } from "react";
-import DataTable, {
-  type DataTableColumn,
-} from "@/components/ui/DataTable";
+import DataTable, { type DataTableColumn } from "@/components/ui/DataTable";
 import Pill from "@/components/ui/Pill";
 
 interface PlatformRevenue {
@@ -79,24 +77,16 @@ const columns: DataTableColumn<PlatformRevenue>[] = [
     key: "revenue",
     header: "Revenue",
     align: "right",
-    render: (row) => (
-      <span className="tabular-nums">
-        {currency.format(row.revenue)}
-      </span>
-    ),
+    render: (row) => <span className="tabular-nums">{currency.format(row.revenue)}</span>,
   },
 ];
-
 
 export default function RevenueByPlatform() {
   const [category, setCategory] = useState("all");
 
   const filteredData = useMemo(() => {
     if (category === "all") return platformData;
-
-    return platformData.filter(
-      (row) => row.platform.category === category
-    );
+    return platformData.filter((row) => row.platform.category === category);
   }, [category]);
 
   return (
@@ -109,14 +99,11 @@ export default function RevenueByPlatform() {
       emptyMessage="No platform revenue found."
       filters={
         <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-text-muted">
-            Category
-          </span>
-
+          <span className="text-xs text-slate-400">Category</span>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-text"
+            className="rounded-xl border border-white/10 bg-slate-900/50 px-3 py-2 text-sm text-slate-100 outline-none ring-0 focus:border-sky-400/40"
           >
             <option value="all">All categories</option>
             <option value="direct">Direct</option>

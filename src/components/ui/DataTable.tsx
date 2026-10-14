@@ -1,5 +1,13 @@
 import type { ReactNode } from "react";
 
+export interface DataTablePagination {
+  page: number;
+  limit: number;
+  total: number;
+  pages: number;
+  onPageChange: (page: number) => void;
+}
+
 export interface DataTableColumn<T> {
   key: string;
   header: string;
@@ -19,6 +27,7 @@ interface DataTableProps<T> {
 
   // Optional toolbar / filter controls
   filters?: ReactNode;
+  pagination?: DataTablePagination;
 }
 
 export default function DataTable<T>({
@@ -30,6 +39,7 @@ export default function DataTable<T>({
   emptyMessage = "No data available.",
   onRowClick,
   filters,
+  pagination,
 }: DataTableProps<T>) {
   const alignment = {
     left: "text-left",
@@ -41,7 +51,7 @@ export default function DataTable<T>({
     <section className="w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card">
       {/* Table header */}
       {(tableHead || tableSubHead) && (
-        <div className="flex flex-wrap items-end justify-between gap-2 px-5 pt-5 sm:px-6">
+        <div className="flex flex-wrap items-end justify-between gap-2 px-5 py-5 sm:px-6">
           {tableHead && (
             <h2 className="font-heading text-base font-semibold tracking-tight text-text">
               {tableHead}
@@ -128,6 +138,44 @@ export default function DataTable<T>({
         </tbody>
       </table>
       </div>
+      {pagination && (
+        <div className="flex flex-col gap-3 border-t border-border px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
+          <p className="text-xs text-text-muted">
+            {pagination.total === 0
+              ? "No results"
+              : `Showing ${
+                  (pagination.page - 1) * pagination.limit + 1
+                }–${Math.min(
+                  pagination.page * pagination.limit,
+                  pagination.total
+                )} of ${pagination.total} workspaces`}
+          </p>
+
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              disabled={pagination.page <= 1}
+              onClick={() => pagination.onPageChange(pagination.page - 1)}
+              className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Previous
+            </button>
+
+            <span className="px-2 text-xs text-text-muted">
+              Page {pagination.page} of {Math.max(pagination.pages, 1)}
+            </span>
+
+            <button
+              type="button"
+              disabled={pagination.page >= pagination.pages}
+              onClick={() => pagination.onPageChange(pagination.page + 1)}
+              className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Next
+            </button>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

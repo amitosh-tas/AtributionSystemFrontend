@@ -32,11 +32,11 @@ function Pill({ name }: IPill) {
         color: colors.textColor,
       }}
     >
-      <span
+      {/* <span
         aria-hidden="true"
         className="size-1.5 shrink-0 rounded-full"
         style={{ backgroundColor: colors.dotColor }}
-      />
+      /> */}
       {name}
     </span>
   );

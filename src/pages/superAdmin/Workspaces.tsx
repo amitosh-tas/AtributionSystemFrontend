@@ -50,7 +50,7 @@ function formatDate(value: string) {
   }).format(date);
 }
 
-function Companies() {
+function Workspaces() {
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [page, setPage] = useState(1);
 
@@ -175,4 +175,4 @@ function Companies() {
   );
 }
 
-export default Companies;
+export default Workspaces;

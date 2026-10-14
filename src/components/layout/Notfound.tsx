@@ -5,7 +5,7 @@ function Notfound() {
     <div className="flex min-h-dvh items-center justify-center bg-page-background px-5 py-12">
       <main className="w-full max-w-lg rounded-2xl border border-border bg-card px-6 py-10 text-center sm:px-10">
         <p className="font-heading text-lg font-bold tracking-tight text-text">
-          Ledger
+          Elysium
         </p>
         <p className="mt-8 font-heading text-7xl font-semibold tracking-tight text-slate-200 sm:text-8xl">
           404

@@ -18,10 +18,10 @@ export const companyNavigation: SidebarItem[] = [
 
 export const superAdminNavigation: SidebarItem[] = [
   { label: "Dashboard", path: "/super" },
-  { label: "Companies", path: "/super/companies" },
+  { label: "Workspaces", path: "/super/workspaces" },
   { label: "Members", path: "/super/members" },
   { label: "Settings", path: "/super/settings" },
-  { label: "Api Keys", path: "/super/api-keys" }
+  // { label: "Api Keys", path: "/super/api-keys" }
 ];
 
 export function getCompanyNavigation(role: UserRole) {

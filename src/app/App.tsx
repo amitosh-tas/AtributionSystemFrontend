@@ -24,13 +24,12 @@ import GuestRoute from "@/components/auth/GuestRoute";
 
 import { useAppDispatch } from "@/app/hooks";
 import { useEffect } from "react";
-import Companies from "@/pages/superAdmin/Companies";
 import Members from "@/pages/superAdmin/Members";
 import Settings from "@/pages/superAdmin/Settings";
-import ApiKeys from "@/pages/superAdmin/ApiKeys";
 import A_Settings from "@/pages/company/Settings";
 import { restoreSession } from "@/services/restoreSession";
 import { Toaster } from "react-hot-toast";
+import Workspaces from "@/pages/superAdmin/Workspaces";
 
 function App() {
 
@@ -82,10 +81,9 @@ function App() {
         >
           <Route path="/super" element={<SuperAdminLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="companies" element={<Companies/>} />
+            <Route path="workspaces" element={<Workspaces/>} />
             <Route path="members" element={<Members />} />
             <Route path="settings" element={<Settings />}/>
-            <Route path="api-keys" element={<ApiKeys />}/>
           </Route>
         </Route>
 

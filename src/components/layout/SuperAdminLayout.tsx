@@ -4,7 +4,7 @@ import { superAdminNavigation } from "@/config/navigation";
 
 function SuperAdminLayout() {
   return (
-    <div className="flex min-h-dvh bg-page-background font-body">
+    <div className="flex min-h-dvh bg-page-background font-body cursor-default">
       <Sidebar
         companyName="PLATFORM ADMIN"
         items={superAdminNavigation}

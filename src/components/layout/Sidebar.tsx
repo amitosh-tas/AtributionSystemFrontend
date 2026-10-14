@@ -148,7 +148,7 @@ function AccountComponent() {
       <button
         type="button"
         onClick={handleLogout}
-        className="mt-3 rounded-lg border border-border px-3 py-2 text-left text-xs font-medium text-text transition-colors hover:bg-hover"
+        className="mt-3 rounded-lg border cursor-pointer border-border px-3 py-2 text-left text-xs font-medium text-text transition-colors hover:bg-hover"
       >
         Sign out
       </button>

@@ -164,7 +164,7 @@ function SignIn() {
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-2 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 h-11 w-full rounded-lg cursor-pointer bg-primary text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </button>

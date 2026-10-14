@@ -503,7 +503,7 @@ function SignUp() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="mt-1 h-11 w-full rounded-lg bg-primary text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+                className="mt-1 h-11 w-full rounded-lg cursor-pointer bg-primary text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 {isSubmitting ? "Creating account..." : "Create account"}
               </button>

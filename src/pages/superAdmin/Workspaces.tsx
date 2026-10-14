@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import PageLayout from "@/components/layout/PageLayout";
 import DataTable from "@/components/ui/DataTable";
@@ -51,6 +52,7 @@ function formatDate(value: string) {
 }
 
 function Workspaces() {
+  const navigate = useNavigate();
   const [workspaces, setWorkspaces] = useState<Workspace[]>([]);
   const [page, setPage] = useState(1);
 
@@ -63,6 +65,10 @@ function Workspaces() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const handleWorkspaceClick = (workspace: Workspace) => {
+    navigate(`/super/workspaces/${workspace.id}`);
+  };
 
   useEffect(() => {
     let cancelled = false;
@@ -163,6 +169,7 @@ function Workspaces() {
           columns={columns}
           data={workspaces}
           getRowKey={(row) => row.id}
+          onRowClick={handleWorkspaceClick}
           emptyMessage={loading ? "Loading workspaces..." : "No workspaces found."}
           pagination={{
             ...pagination,

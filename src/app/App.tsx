@@ -30,6 +30,7 @@ import Settings from "@/pages/superAdmin/Settings";
 import ApiKeys from "@/pages/superAdmin/ApiKeys";
 import A_Settings from "@/pages/company/Settings";
 import { restoreSession } from "@/services/restoreSession";
+import { Toaster } from "react-hot-toast";
 
 function App() {
 
@@ -100,6 +101,11 @@ function App() {
         {/* Fallback */}
         <Route path="*" element={<Notfound />} />
       </Routes>
+
+      <Toaster
+        position="top-right"
+        reverseOrder={true}
+      />
     </>
   );
 }

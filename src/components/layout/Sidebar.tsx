@@ -30,11 +30,11 @@ function Sidebar({
         aria-expanded={isOpen}
         onClick={() => setIsOpen((prev) => !prev)}
         className={`
-          fixed left-4 top-4 z-50 flex h-10 items-center justify-center
+          fixed left-4 top-4 z-0 flex h-10 items-center justify-center
           rounded-lg border border-border bg-white px-3 text-xs font-medium text-text
           transition-colors duration-150 hover:bg-hover
           md:hidden
-          ${isOpen ? "translate-x-52" : "translate-x-0"}
+          ${isOpen ? "" : "translate-x-0"}
         `}
       >
         {isOpen ? "Close" : "Menu"}
@@ -60,8 +60,8 @@ function Sidebar({
           `}
         >
           <div className="shrink-0 border-b border-border px-5 pb-5 pt-6">
-            <p className="font-heading text-lg font-bold tracking-tight text-text">
-              Ledger
+            <p className="font-Cinzel text-3xl font-medium tracking-tight text-text">
+              Elysium
             </p>
             {companyName && (
               <p className="mt-5 truncate text-xs font-medium text-text-muted">

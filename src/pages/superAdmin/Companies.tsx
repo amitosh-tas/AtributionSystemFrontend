@@ -74,10 +74,11 @@ function Companies() {
 
         const response = await getWorkspaces(page);
 
-        if (cancelled) return;
+        const result: WorkspacesResponse = response.data;
 
-        setWorkspaces(response.data.data);
-        setPagination(response.data.pagination);
+        setWorkspaces(result.data);
+        setPagination(result.pagination);
+        
       } catch (error) {
         if (cancelled) return;
 

@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 export interface DataTablePagination {
   page: number;
@@ -25,6 +26,7 @@ interface DataTableProps<T> {
   getRowKey: (row: T) => string | number;
   emptyMessage?: string;
   onRowClick?: (row: T) => void;
+  loading?: boolean;
 
   // Optional toolbar / filter controls
   filters?: ReactNode;
@@ -39,6 +41,7 @@ export default function DataTable<T>({
   getRowKey,
   emptyMessage = "No data available.",
   onRowClick,
+  loading = false,
   filters,
   pagination,
 }: DataTableProps<T>) {
@@ -49,7 +52,15 @@ export default function DataTable<T>({
   };
 
   return (
-    <section className="w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card">
+    <section
+      aria-busy={loading}
+      className="w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card"
+    >
+      {loading && (
+        <span role="status" className="sr-only">
+          Loading table data…
+        </span>
+      )}
       {/* Table header */}
       {(tableHead || tableSubHead) && (
         <div className="flex flex-wrap items-end justify-between gap-2 px-5 py-5 sm:px-6">
@@ -97,7 +108,31 @@ export default function DataTable<T>({
         </thead>
 
         <tbody>
-          {data.length === 0 ? (
+          {loading ? (
+            Array.from({ length: 5 }, (_, rowIndex) => (
+              <tr
+                key={`skeleton-${rowIndex}`}
+                aria-hidden="true"
+                className="border-b border-border last:border-b-0"
+              >
+                {columns.map((column, columnIndex) => (
+                  <td
+                    key={column.key}
+                    className={[
+                      "px-4 py-4 align-middle",
+                      alignment[column.align ?? "left"],
+                    ].join(" ")}
+                  >
+                    <Skeleton
+                      className={`h-4 ${
+                        columnIndex === 0 ? "w-3/4" : "w-2/3"
+                      }`}
+                    />
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : data.length === 0 ? (
             <tr>
               <td
                 colSpan={columns.length}

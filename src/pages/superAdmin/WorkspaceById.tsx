@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import PageLayout from "@/components/layout/PageLayout";
 import EmptyState from "@/components/ui/EmptyState";
+import { WorkspaceDetailsSkeleton } from "@/components/ui/Skeleton";
 import { getWorkspaceById } from "@/services/platfromAdmin";
 
 interface Workspace {
@@ -98,9 +99,7 @@ function WorkspaceById() {
       description="Manage client workspace, edit, and monitor their status."
     >
       {loading ? (
-        <p className="text-sm text-gray-500">
-          Loading workspace details...
-        </p>
+        <WorkspaceDetailsSkeleton />
       ) : error ? (
         <EmptyState
           title="Unable to Load Workspace"

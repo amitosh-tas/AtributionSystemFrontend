@@ -170,7 +170,8 @@ function Workspaces() {
           data={workspaces}
           getRowKey={(row) => row.id}
           onRowClick={handleWorkspaceClick}
-          emptyMessage={loading ? "Loading workspaces..." : "No workspaces found."}
+          loading={loading}
+          emptyMessage="No workspaces found."
           pagination={{
             ...pagination,
             isLoading: loading,

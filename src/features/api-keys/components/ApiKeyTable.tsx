@@ -129,14 +129,6 @@ export default function ApiKeyTable({
     },
   ];
 
-  if (loading) {
-    return (
-      <div className="rounded-xl border border-border bg-card p-10 text-center text-sm text-text-muted">
-        Loading API keys…
-      </div>
-    );
-  }
-
   return (
     <DataTable
       tableHead="Your API keys"
@@ -145,6 +137,7 @@ export default function ApiKeyTable({
       data={keys}
       getRowKey={(key) => key.id}
       emptyMessage="No API keys found for this company."
+      loading={loading}
     />
   );
 }

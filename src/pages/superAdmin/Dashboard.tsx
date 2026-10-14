@@ -1,5 +1,7 @@
 import PageLayout from "@/components/layout/PageLayout";
 import Card from "@/components/ui/Card";
+import EmptyState from "@/components/ui/EmptyState";
+import { StatCardsSkeleton } from "@/components/ui/Skeleton";
 import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid";
 import { getPlatformDashboard } from "@/services/platfromAdmin";
 import { useEffect, useState } from "react";
@@ -45,20 +47,37 @@ type ActiveMetric = {
 function Dashboard() {
   const [dashboardData, setDashboardData] =
     useState<PlatformAdminDashboard | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [requestVersion, setRequestVersion] = useState(0);
 
   useEffect(() => {
+    let cancelled = false;
+
     const callApi = async () => {
       try {
         const res = await getPlatformDashboard();
-        setDashboardData(res?.data?.data);
+        if (!cancelled) {
+          setDashboardData(res?.data?.data ?? null);
+        }
       } catch (error) {
-        console.error("Failed to fetch platform dashboard:", error);
-        toast.error("Unable to load the platform dashboard.");
+        if (!cancelled) {
+          console.error("Failed to fetch platform dashboard:", error);
+          setDashboardData(null);
+          setError(true);
+          toast.error("Unable to load the platform dashboard.");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
       }
     };
 
-    callApi();
-  }, []);
+    void callApi();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [requestVersion]);
 
   const activeMetrics: ActiveMetric[] = dashboardData
     ? [
@@ -87,16 +106,44 @@ function Dashboard() {
       title="Super Admin"
       description="Manage Ledger workspaces, members, and platform access."
     >
-      <AnalyticsGrid>
-        {activeMetrics.map((item) => (
-          <Card
-            key={item.title}
-            title={item.title}
-            value={String(item.value)}
-            description="Currently active on the platform"
-          />
-        ))}
-      </AnalyticsGrid>
+      {loading ? (
+        <StatCardsSkeleton count={4} />
+      ) : error ? (
+        <div
+          role="alert"
+          className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-700"
+        >
+          <p>Unable to load the platform dashboard.</p>
+          <button
+            type="button"
+            className="mt-3 font-semibold underline"
+            onClick={() => {
+              setLoading(true);
+              setError(false);
+              setDashboardData(null);
+              setRequestVersion((version) => version + 1);
+            }}
+          >
+            Try again
+          </button>
+        </div>
+      ) : dashboardData ? (
+        <AnalyticsGrid>
+          {activeMetrics.map((item) => (
+            <Card
+              key={item.title}
+              title={item.title}
+              value={String(item.value)}
+              description="Currently active on the platform"
+            />
+          ))}
+        </AnalyticsGrid>
+      ) : (
+        <EmptyState
+          title="No dashboard data available"
+          description="There are no platform statistics to display right now."
+        />
+      )}
     </PageLayout>
   );
 }

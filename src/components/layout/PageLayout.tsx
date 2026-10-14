@@ -19,7 +19,7 @@ export default function PageLayout({
   actions
 }: IPageLayout) {
   return (
-    <div className="mx-auto w-full max-w-[1440px]">
+    <div className="mx-auto w-full max-w-360">
       {(title || description || actions) && (
         <header className="mb-8 flex flex-wrap items-start justify-between gap-5 border-b border-border pb-6">
           <div className="flex min-w-0 flex-col gap-2">
@@ -40,7 +40,11 @@ export default function PageLayout({
             }
           </div>
 
-          {actions && <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div>}
+          {actions && 
+          <div 
+          className="flex shrink-0 flex-wrap items-center gap-2
+          self-center
+          ">{actions}</div>}
         </header>
       )}
     

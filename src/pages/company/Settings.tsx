@@ -76,7 +76,7 @@ function Settings() {
   const activeKeys = keys.filter((key) => !key.revokedAt).length;
 
   return (
-    <PageLayout title="Secret Key" headTitle="Manage your Secret key">
+    <PageLayout title="Settings" headTitle="Manage your workflow">
       <div className="flex flex-col gap-6">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-3">

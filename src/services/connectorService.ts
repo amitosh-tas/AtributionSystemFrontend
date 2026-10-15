@@ -21,11 +21,11 @@ export async function updateConnector(
   credentials: ConnectorCredentials,
 ) {
   return api.patch(
-    `/workspace/connectors/${encodeURIComponent(id)}`,
+    `/api/workspace/connectors/${encodeURIComponent(id)}`,
     credentials,
   );
 }
 
 export async function deleteConnector(id: string) {
-  return api.delete(`/workspace/connectors/${encodeURIComponent(id)}`);
+  return api.delete(`/api/workspace/connectors/${encodeURIComponent(id)}`);
 }

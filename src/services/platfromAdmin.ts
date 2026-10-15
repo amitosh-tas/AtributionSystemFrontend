@@ -14,12 +14,12 @@ interface IUpdateUserProps {
 }
 
 export async function getPlatformDashboard(){
-  const res = await api.get("/platform-admin/dashboard")
+  const res = await api.get("/api/platform-admin/dashboard")
   return res;
 }
 
 export async function getWorkspaces( page = 1){
-  const res = await api.get("/platform-admin/workspaces", {
+  const res = await api.get("/api/platform-admin/workspaces", {
     params:{
       reason: "Mai admin huu ngga",
       page
@@ -29,7 +29,7 @@ export async function getWorkspaces( page = 1){
 }
 
 export async function getWorkspaceById(id: string){
-  const res = await api.get(`/platform-admin/workspaces/${id}`,{
+  const res = await api.get(`/api/platform-admin/workspaces/${id}`,{
     params: {
       reason: "Mai admin hu ngga",
     }
@@ -39,5 +39,5 @@ export async function getWorkspaceById(id: string){
 }
 
 export async function updateUser( {id, data}: IUpdateUserProps){
-  return await api.patch(`/platform-admin/users/${id}`, data)
+  return await api.patch(`/api/platform-admin/users/${id}`, data)
 }

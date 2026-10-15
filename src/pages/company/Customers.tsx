@@ -1,9 +1,20 @@
 import PageLayout from "@/components/layout/PageLayout"
 import EmptyState from "@/components/ui/EmptyState"
+import { getCustomers } from "@/services/companyServices"
+import { useEffect } from "react"
 
 
 
 function Customers() {
+
+  useEffect(()=>{
+    const api = async() => {
+      console.log(await getCustomers("pk_test_MFug-NcERchZ2cHupE8-EwwZpKDtWkPYaxZladwla1U"))
+    }
+
+    api();
+  }, [])
+
   return (
     <>
     <PageLayout

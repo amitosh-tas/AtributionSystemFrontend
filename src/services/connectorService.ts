@@ -11,3 +11,7 @@ export interface ConnectorCredentials {
 export async function sendConnectors(credentials: ConnectorCredentials) {
   return api.post("/workspace/connectors", credentials);
 }
+
+export async function getConnectors() {
+  return api.get("/workspace/connectors");
+}

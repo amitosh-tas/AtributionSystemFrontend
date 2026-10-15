@@ -4,21 +4,30 @@ import DataTable, {
 } from "@/components/ui/DataTable";
 
 const CONNECTOR_PROVIDERS = [
-  "Razorpay",
-  "Stripe",
-  "PayPal",
-  "Cashfree",
-  "Square",
-  "Other",
+  { type: "razorpay", label: "Razorpay" },
+  { type: "stripe", label: "Stripe" },
+  { type: "paypal", label: "PayPal" },
+  { type: "cashfree", label: "Cashfree" },
+  { type: "square", label: "Square" },
+  { type: "other", label: "Other" },
 ] as const;
 
-type ConnectorProvider = (typeof CONNECTOR_PROVIDERS)[number];
+type ConnectorType = (typeof CONNECTOR_PROVIDERS)[number]["type"];
 
 interface Connector {
   id: string;
-  provider: ConnectorProvider;
+  type: ConnectorType;
   name: string;
-  webhookUrl: string;
+  config: {
+    webhooksecret: string;
+  };
+}
+
+type ConnectorPayload = Omit<Connector, "id">;
+
+function getProviderLabel(type: ConnectorType) {
+  return CONNECTOR_PROVIDERS.find((provider) => provider.type === type)?.label ??
+    type;
 }
 
 type ConnectorDialog =
@@ -29,7 +38,7 @@ type ConnectorDialog =
 interface ConnectorFormProps {
   connector?: Connector;
   onCancel: () => void;
-  onSave: (values: Omit<Connector, "id">) => void;
+  onSave: (values: ConnectorPayload) => void;
 }
 
 function ConnectorForm({
@@ -37,15 +46,21 @@ function ConnectorForm({
   onCancel,
   onSave,
 }: ConnectorFormProps) {
-  const [provider, setProvider] = useState<ConnectorProvider>(
-    connector?.provider ?? CONNECTOR_PROVIDERS[0],
+  const [type, setType] = useState<ConnectorType>(
+    connector?.type ?? CONNECTOR_PROVIDERS[0].type,
   );
   const [name, setName] = useState(connector?.name ?? "");
-  const [webhookUrl, setWebhookUrl] = useState(connector?.webhookUrl ?? "");
+  const [webhookSecret, setWebhookSecret] = useState(
+    connector?.config.webhooksecret ?? "",
+  );
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSave({ provider, name: name.trim(), webhookUrl: webhookUrl.trim() });
+    onSave({
+      type,
+      name: name.trim(),
+      config: { webhooksecret: webhookSecret.trim() },
+    });
   };
 
   return (
@@ -64,30 +79,30 @@ function ConnectorForm({
           {connector ? "Edit connector" : "Generate a connector"}
         </h3>
         <p className="mt-2 text-sm leading-6 text-text-muted">
-          Add the payment provider and webhook endpoint for this connector.
+          Add the payment provider and webhook secret for this connector.
         </p>
 
         <label
           htmlFor="connector-provider"
           className="mt-5 block text-xs font-medium text-text-muted"
         >
-          Provider
+          Connector type
         </label>
         <select
           id="connector-provider"
           required
-          value={provider}
+          value={type}
           onChange={(event) => {
             const selectedProvider = CONNECTOR_PROVIDERS.find(
-              (option) => option === event.target.value,
+              (provider) => provider.type === event.target.value,
             );
-            if (selectedProvider) setProvider(selectedProvider);
+            if (selectedProvider) setType(selectedProvider.type);
           }}
           className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
         >
-          {CONNECTOR_PROVIDERS.map((option) => (
-            <option key={option} value={option}>
-              {option}
+          {CONNECTOR_PROVIDERS.map((provider) => (
+            <option key={provider.type} value={provider.type}>
+              {provider.label}
             </option>
           ))}
         </select>
@@ -109,18 +124,19 @@ function ConnectorForm({
         />
 
         <label
-          htmlFor="connector-webhook-url"
+          htmlFor="connector-webhook-secret"
           className="mt-5 block text-xs font-medium text-text-muted"
         >
-          Webhook URL
+          Webhook secret
         </label>
         <input
-          id="connector-webhook-url"
-          type="url"
+          id="connector-webhook-secret"
+          type="password"
           required
-          value={webhookUrl}
-          onChange={(event) => setWebhookUrl(event.target.value)}
-          placeholder="https://example.com/webhooks/payments"
+          autoComplete="new-password"
+          value={webhookSecret}
+          onChange={(event) => setWebhookSecret(event.target.value)}
+          placeholder="Enter webhook secret"
           className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
         />
 
@@ -134,7 +150,7 @@ function ConnectorForm({
           </button>
           <button
             type="submit"
-            disabled={!name.trim() || !webhookUrl.trim()}
+            disabled={!name.trim() || !webhookSecret.trim()}
             className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {connector ? "Save changes" : "Generate connector"}
@@ -151,7 +167,7 @@ function Connectors() {
   const [connectorToDelete, setConnectorToDelete] =
     useState<Connector | null>(null);
 
-  const saveConnector = (values: Omit<Connector, "id">) => {
+  const saveConnector = (values: ConnectorPayload) => {
     if (dialog?.mode === "edit") {
       setConnectors((current) =>
         current.map((connector) =>
@@ -171,10 +187,10 @@ function Connectors() {
 
   const columns: DataTableColumn<Connector>[] = [
     {
-      key: "provider",
-      header: "Provider",
+      key: "type",
+      header: "Connector type",
       render: (connector) => (
-        <span className="font-medium">{connector.provider}</span>
+        <span className="font-medium">{getProviderLabel(connector.type)}</span>
       ),
     },
     {
@@ -183,15 +199,12 @@ function Connectors() {
       render: (connector) => <span>{connector.name}</span>,
     },
     {
-      key: "webhookUrl",
-      header: "Webhook URL",
-      render: (connector) => (
-        <code
-          title={connector.webhookUrl}
-          className="block max-w-96 truncate text-xs text-text-muted"
-        >
-          {connector.webhookUrl}
-        </code>
+      key: "webhooksecret",
+      header: "Webhook secret",
+      render: () => (
+        <span aria-label="Webhook secret hidden" className="text-xs text-text-muted">
+          ••••••••
+        </span>
       ),
     },
     {

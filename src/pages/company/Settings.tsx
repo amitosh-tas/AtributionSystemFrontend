@@ -1,7 +1,5 @@
 import { useMemo, useState } from "react";
 import PageLayout from "@/components/layout/PageLayout";
-import Card from "@/components/ui/Card";
-import { StatCardsSkeleton } from "@/components/ui/Skeleton";
 import {
   useCompanyApiKeys,
   ApiKeyTable,
@@ -75,9 +73,7 @@ function Settings() {
         : [],
     [keys, keyToEdit],
   );
-
   const activeKeys = keys.filter((key) => !key.revokedAt).length;
-  const revokedKeys = keys.filter((key) => Boolean(key.revokedAt)).length;
 
   return (
     <PageLayout title="Secret Key" headTitle="Manage your Secret key">
@@ -113,34 +109,6 @@ function Settings() {
             )}
           </div>
         </div>
-
-        {/* Summary cards */}
-        {loading ? (
-          <StatCardsSkeleton
-            count={3}
-            className="grid grid-cols-1 gap-4 sm:grid-cols-3"
-          />
-        ) : error ? null : (
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-            <Card
-              title="Total keys"
-              value={String(keys.length)}
-              description="All API keys"
-            />
-
-            <Card
-              title="Active keys"
-              value={String(activeKeys)}
-              description="Currently usable"
-            />
-
-            <Card
-              title="Revoked keys"
-              value={String(revokedKeys)}
-              description="No longer active"
-            />
-          </div>
-        )}
 
         {/* Error */}
         {error && (

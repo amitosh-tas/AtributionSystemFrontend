@@ -12,6 +12,7 @@ import {
   RevokeApiKeyModal,
 } from "@/features/api-keys";
 import { normalizeAllowedOrigin } from "@/features/api-keys/utils/origins";
+import Connectors from "@/features/connectors/components/Connectors";
 
 function Settings() {
   const {
@@ -224,6 +225,9 @@ function Settings() {
           onClose={closeSecretModal}
         />
       </div>
+
+      <Connectors />
+
     </PageLayout>
   );
 }

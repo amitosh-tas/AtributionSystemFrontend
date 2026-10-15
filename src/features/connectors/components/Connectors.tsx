@@ -1,7 +1,9 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import DataTable, {
   type DataTableColumn,
 } from "@/components/ui/DataTable";
+import { sendConnectors } from "@/services/connectorService";
+import toast from "react-hot-toast";
 
 const CONNECTOR_PROVIDERS = [
   { type: "razorpay", label: "Razorpay" },
@@ -38,7 +40,7 @@ type ConnectorDialog =
 interface ConnectorFormProps {
   connector?: Connector;
   onCancel: () => void;
-  onSave: (values: ConnectorPayload) => void;
+  onSave: (values: ConnectorPayload) => Promise<boolean>;
 }
 
 function ConnectorForm({
@@ -53,14 +55,20 @@ function ConnectorForm({
   const [webhookSecret, setWebhookSecret] = useState(
     connector?.config.webhooksecret ?? "",
   );
+  const [saving, setSaving] = useState(false);
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSave({
-      type,
-      name: name.trim(),
-      config: { webhooksecret: webhookSecret.trim() },
-    });
+    setSaving(true);
+    try {
+      await onSave({
+        type,
+        name: name.trim(),
+        config: { webhooksecret: webhookSecret.trim() },
+      });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -114,6 +122,7 @@ function ConnectorForm({
           Name
         </label>
         <input
+          type="text"
           id="connector-name"
           required
           maxLength={100}
@@ -144,16 +153,21 @@ function ConnectorForm({
           <button
             type="button"
             onClick={onCancel}
+            disabled={saving}
             className="cursor-pointer rounded-lg border border-border px-4 py-2.5 text-sm font-medium transition hover:bg-surface-muted"
           >
             Cancel
           </button>
           <button
             type="submit"
-            disabled={!name.trim() || !webhookSecret.trim()}
+            disabled={saving || !name.trim() || !webhookSecret.trim()}
             className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {connector ? "Save changes" : "Generate connector"}
+            {saving
+              ? "Saving…"
+              : connector
+                ? "Save changes"
+                : "Generate connector"}
           </button>
         </div>
       </form>
@@ -167,7 +181,17 @@ function Connectors() {
   const [connectorToDelete, setConnectorToDelete] =
     useState<Connector | null>(null);
 
-  const saveConnector = (values: ConnectorPayload) => {
+  const saveConnector = async (values: ConnectorPayload) => {
+    if (dialog?.mode !== "edit") {
+      try {
+        await sendConnectors(values);
+      } catch (error) {
+        console.error("Failed to create connector:", error);
+        toast.error("Unable to create the connector. Please try again.");
+        return false;
+      }
+    }
+
     if (dialog?.mode === "edit") {
       setConnectors((current) =>
         current.map((connector) =>
@@ -183,6 +207,7 @@ function Connectors() {
       ]);
     }
     setDialog(null);
+    return true;
   };
 
   const columns: DataTableColumn<Connector>[] = [

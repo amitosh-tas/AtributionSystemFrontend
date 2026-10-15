@@ -45,18 +45,23 @@ function getProviderLabel(type: string) {
 
 interface ConnectorFormProps {
   connector?: Connector;
+  unavailableTypes: string[];
   onCancel: () => void;
   onSave: (values: ConnectorPayload) => Promise<boolean>;
 }
 
 function ConnectorForm({
   connector,
+  unavailableTypes,
   onCancel,
   onSave,
 }: ConnectorFormProps) {
-  const initialType = CONNECTOR_PROVIDERS.find(
-    (provider) => provider.type === connector?.type,
-  )?.type ?? CONNECTOR_PROVIDERS[0].type;
+  const initialType =
+    CONNECTOR_PROVIDERS.find(
+      (provider) =>
+        provider.type === connector?.type ||
+        (!connector && !unavailableTypes.includes(provider.type)),
+    )?.type ?? CONNECTOR_PROVIDERS[0].type;
   const [type, setType] = useState<ConnectorType>(initialType);
   const [name, setName] = useState(connector?.name ?? "");
   const [webhookSecret, setWebhookSecret] = useState(
@@ -109,6 +114,12 @@ function ConnectorForm({
         <select
           id="connector-provider"
           required
+          disabled={
+            !connector &&
+            CONNECTOR_PROVIDERS.every((provider) =>
+              unavailableTypes.includes(provider.type),
+            )
+          }
           value={type}
           onChange={(event) => {
             const selectedProvider = CONNECTOR_PROVIDERS.find(
@@ -119,11 +130,21 @@ function ConnectorForm({
           className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
         >
           {CONNECTOR_PROVIDERS.map((provider) => (
-            <option key={provider.type} value={provider.type}>
+            <option
+              key={provider.type}
+              value={provider.type}
+              disabled={
+                provider.type !== connector?.type &&
+                unavailableTypes.includes(provider.type)
+              }
+            >
               {provider.label}
             </option>
           ))}
         </select>
+        <p className="mt-2 text-xs text-text-muted">
+          Each connector type can only be added once.
+        </p>
 
         <label
           htmlFor="connector-name"
@@ -247,6 +268,15 @@ function Connectors() {
   };
 
   const saveConnector = async (values: ConnectorPayload) => {
+    const typeAlreadyExists = connectors.some(
+      (connector) =>
+        connector.type === values.type && connector.id !== connectorToEdit?.id,
+    );
+    if (typeAlreadyExists) {
+      toast.error("A connector of this type already exists.");
+      return false;
+    }
+
     if (!connectorToEdit) return createConnector(values);
 
     try {
@@ -341,7 +371,15 @@ function Connectors() {
         <button
           type="button"
           onClick={() => setCreateModalOpen(true)}
-          disabled={loading || Boolean(error)}
+            disabled={
+              loading ||
+              Boolean(error) ||
+              CONNECTOR_PROVIDERS.every((provider) =>
+                connectors.some(
+                  (connector) => connector.type === provider.type,
+                ),
+              )
+            }
           className="flex cursor-pointer items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800"
         >
           <i className="fi fi-rr-plus" aria-hidden="true" />
@@ -381,6 +419,9 @@ function Connectors() {
         <ConnectorForm
           key={connectorToEdit?.id ?? "new-connector"}
           connector={connectorToEdit ?? undefined}
+          unavailableTypes={connectors
+            .filter((connector) => connector.id !== connectorToEdit?.id)
+            .map((connector) => connector.type)}
           onCancel={() => {
             setCreateModalOpen(false);
             setConnectorToEdit(null);

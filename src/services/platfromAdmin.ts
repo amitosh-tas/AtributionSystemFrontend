@@ -1,6 +1,17 @@
 import { api } from "./api";
 
+type TStatus = "invited" | "active" | "deactivated";
 
+interface IUpdateUser {
+  role: string;
+  status: TStatus;
+  reason: string;
+}
+
+interface IUpdateUserProps {
+  id: string;
+  data: IUpdateUser;
+}
 
 export async function getPlatformDashboard(){
   const res = await api.get("/platform-admin/dashboard")
@@ -25,4 +36,8 @@ export async function getWorkspaceById(id: string){
   }
   );
   return res;
+}
+
+export async function updateUser( {id, data}: IUpdateUserProps){
+  return await api.patch(`/platform-admin/users/${id}`, data)
 }

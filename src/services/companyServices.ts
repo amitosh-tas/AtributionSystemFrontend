@@ -2,10 +2,11 @@ import { api } from "./api";
 
 
 
-export async function getCustomers( token: string){
-  return await api.get("/v1/customers",{
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  })
-}
+      export async function getCustomers(token: string, page = 1) {
+        return api.get("/v1/customers", {
+          params: { page },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }

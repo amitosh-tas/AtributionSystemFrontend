@@ -46,6 +46,23 @@ interface Workspace {
   plan: string | null;
 }
 
+const WORKSPACE_DETAIL_FIELDS: ReadonlyArray<{
+  key: keyof Workspace;
+  label: string;
+  suffix?: string;
+}> = [
+  { key: "country", label: "Country" },
+  { key: "dataRegion", label: "Data Region" },
+  { key: "reportingCurrency", label: "Reporting Currency" },
+  { key: "defaultModel", label: "Default Attribution Model" },
+  { key: "lookbackDays", label: "Lookback Window", suffix: "days" },
+  {
+    key: "rawRetentionMonths",
+    label: "Raw Data Retention",
+    suffix: "months",
+  },
+];
+
 interface WorkspaceResponse {
   workspace: Workspace;
   users: WorkspaceUser[];
@@ -289,47 +306,15 @@ function WorkspaceById() {
             </div>
 
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              <div>
-                <p className="text-sm text-gray-500">Country</p>
-                <p className="mt-1 font-medium">
-                  {workspaceData.workspace.country}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Data Region</p>
-                <p className="mt-1 font-medium">
-                  {workspaceData.workspace.dataRegion}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Reporting Currency</p>
-                <p className="mt-1 font-medium">
-                  {workspaceData.workspace.reportingCurrency}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Default Attribution Model</p>
-                <p className="mt-1 font-medium">
-                  {workspaceData.workspace.defaultModel}
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Lookback Window</p>
-                <p className="mt-1 font-medium">
-                  {workspaceData.workspace.lookbackDays} days
-                </p>
-              </div>
-
-              <div>
-                <p className="text-sm text-gray-500">Raw Data Retention</p>
-                <p className="mt-1 font-medium">
-                  {workspaceData.workspace.rawRetentionMonths} months
-                </p>
-              </div>
+              {WORKSPACE_DETAIL_FIELDS.map(({ key, label, suffix }) => (
+                <div key={key}>
+                  <p className="text-sm text-gray-500">{label}</p>
+                  <p className="mt-1 font-medium">
+                    {workspaceData.workspace[key]}
+                    {suffix ? ` ${suffix}` : ""}
+                  </p>
+                </div>
+              ))}
             </div>
           </section>
 

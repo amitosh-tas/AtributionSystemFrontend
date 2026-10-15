@@ -4,7 +4,7 @@ export interface ConnectorCredentials {
   type: string;
   name: string;
   config: {
-    webhooksecret: string;
+    webhookSecret: string;
   };
 }
 

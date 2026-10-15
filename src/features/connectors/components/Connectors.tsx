@@ -26,7 +26,7 @@ interface Connector {
   type: string;
   name: string;
   config?: {
-    webhooksecret?: string;
+    webhookSecret?: string;
   };
 }
 
@@ -34,7 +34,7 @@ interface ConnectorPayload {
   type: ConnectorType;
   name: string;
   config: {
-    webhooksecret: string;
+    webhookSecret: string;
   };
 }
 
@@ -65,7 +65,7 @@ function ConnectorForm({
   const [type, setType] = useState<ConnectorType>(initialType);
   const [name, setName] = useState(connector?.name ?? "");
   const [webhookSecret, setWebhookSecret] = useState(
-    connector?.config?.webhooksecret ?? "",
+    connector?.config?.webhookSecret ?? "",
   );
   const [saving, setSaving] = useState(false);
 
@@ -75,7 +75,7 @@ function ConnectorForm({
       const saved = await onSave({
         type,
         name: name.trim(),
-        config: { webhooksecret: webhookSecret.trim() },
+        config: { webhookSecret: webhookSecret.trim() },
       });
       if (saved) onCancel();
     } finally {
@@ -177,7 +177,7 @@ function ConnectorForm({
           value={webhookSecret}
           onChange={(event) => setWebhookSecret(event.target.value)}
           placeholder={
-            connector && !connector.config?.webhooksecret
+            connector && !connector.config?.webhookSecret
               ? "Enter a new webhook secret"
               : "Enter webhook secret"
           }
@@ -326,7 +326,7 @@ function Connectors() {
       header: "Webhook secret",
       render: () => (
         <span aria-label="Webhook secret hidden" className="text-xs text-text-muted">
-          ••••••••
+          **************
         </span>
       ),
     },

@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState, type FormEvent } from "react";
+import { useCallback, useEffect, useState } from "react";
 import DataTable, {
   type DataTableColumn,
 } from "@/components/ui/DataTable";
 import {
+  deleteConnector,
   getConnectors,
   sendConnectors,
+  updateConnector,
 } from "@/services/connectorService";
 import toast from "react-hot-toast";
 
@@ -42,21 +44,27 @@ function getProviderLabel(type: string) {
 }
 
 interface ConnectorFormProps {
+  connector?: Connector;
   onCancel: () => void;
   onSave: (values: ConnectorPayload) => Promise<boolean>;
 }
 
 function ConnectorForm({
+  connector,
   onCancel,
   onSave,
 }: ConnectorFormProps) {
-  const [type, setType] = useState<ConnectorType>(CONNECTOR_PROVIDERS[0].type);
-  const [name, setName] = useState("");
-  const [webhookSecret, setWebhookSecret] = useState("");
+  const initialType = CONNECTOR_PROVIDERS.find(
+    (provider) => provider.type === connector?.type,
+  )?.type ?? CONNECTOR_PROVIDERS[0].type;
+  const [type, setType] = useState<ConnectorType>(initialType);
+  const [name, setName] = useState(connector?.name ?? "");
+  const [webhookSecret, setWebhookSecret] = useState(
+    connector?.config?.webhooksecret ?? "",
+  );
   const [saving, setSaving] = useState(false);
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const submit = async () => {
     setSaving(true);
     try {
       const saved = await onSave({
@@ -76,14 +84,17 @@ function ConnectorForm({
         role="dialog"
         aria-modal="true"
         aria-labelledby="connector-dialog-title"
-        onSubmit={submit}
+        onSubmit={(event) => {
+          event.preventDefault();
+          void submit();
+        }}
         className="w-full max-w-lg rounded-xl border border-border bg-card p-5 sm:p-6"
       >
         <h3
           id="connector-dialog-title"
           className="font-heading text-xl font-semibold"
         >
-          Generate a connector
+          {connector ? "Edit connector" : "Generate a connector"}
         </h3>
         <p className="mt-2 text-sm leading-6 text-text-muted">
           Add the payment provider and webhook secret for this connector.
@@ -144,7 +155,11 @@ function ConnectorForm({
           autoComplete="new-password"
           value={webhookSecret}
           onChange={(event) => setWebhookSecret(event.target.value)}
-          placeholder="Enter webhook secret"
+          placeholder={
+            connector && !connector.config?.webhooksecret
+              ? "Enter a new webhook secret"
+              : "Enter webhook secret"
+          }
           className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
         />
 
@@ -162,7 +177,11 @@ function ConnectorForm({
             disabled={saving || !name.trim() || !webhookSecret.trim()}
             className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            {saving ? "Saving…" : "Generate connector"}
+            {saving
+              ? "Saving…"
+              : connector
+                ? "Save changes"
+                : "Generate connector"}
           </button>
         </div>
       </form>
@@ -173,6 +192,13 @@ function ConnectorForm({
 function Connectors() {
   const [connectors, setConnectors] = useState<Connector[]>([]);
   const [createModalOpen, setCreateModalOpen] = useState(false);
+  const [connectorToEdit, setConnectorToEdit] = useState<Connector | null>(
+    null,
+  );
+  const [connectorToDelete, setConnectorToDelete] = useState<Connector | null>(
+    null,
+  );
+  const [deleting, setDeleting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -220,6 +246,38 @@ function Connectors() {
     }
   };
 
+  const saveConnector = async (values: ConnectorPayload) => {
+    if (!connectorToEdit) return createConnector(values);
+
+    try {
+      await updateConnector(connectorToEdit.id, values);
+      toast.success("Connector updated successfully.");
+      await fetchConnectors();
+      return true;
+    } catch (updateError) {
+      console.error("Failed to update connector:", updateError);
+      toast.error("Unable to update the connector. Please try again.");
+      return false;
+    }
+  };
+
+  const removeConnector = async () => {
+    if (!connectorToDelete || deleting) return;
+
+    setDeleting(true);
+    try {
+      await deleteConnector(connectorToDelete.id);
+      toast.success("Connector deleted successfully.");
+      setConnectorToDelete(null);
+      await fetchConnectors();
+    } catch (deleteError) {
+      console.error("Failed to delete connector:", deleteError);
+      toast.error("Unable to delete the connector. Please try again.");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const columns: DataTableColumn<Connector>[] = [
     {
       key: "type",
@@ -240,6 +298,33 @@ function Connectors() {
         <span aria-label="Webhook secret hidden" className="text-xs text-text-muted">
           ••••••••
         </span>
+      ),
+    },
+    {
+      key: "actions",
+      header: "Actions",
+      align: "right",
+      render: (connector) => (
+        <div className="flex justify-end gap-2">
+          <button
+            type="button"
+            onClick={() => setConnectorToEdit(connector)}
+            aria-label={`Edit ${connector.name}`}
+            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-surface-muted"
+          >
+            <i className="fi fi-rr-edit" aria-hidden="true" />
+            Edit
+          </button>
+          <button
+            type="button"
+            onClick={() => setConnectorToDelete(connector)}
+            aria-label={`Delete ${connector.name}`}
+            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-50"
+          >
+            <i className="fi fi-rr-trash" aria-hidden="true" />
+            Delete
+          </button>
+        </div>
       ),
     },
   ];
@@ -292,11 +377,55 @@ function Connectors() {
         </div>
       )}
 
-      {createModalOpen && (
+      {(createModalOpen || connectorToEdit) && (
         <ConnectorForm
-          onCancel={() => setCreateModalOpen(false)}
-          onSave={createConnector}
+          key={connectorToEdit?.id ?? "new-connector"}
+          connector={connectorToEdit ?? undefined}
+          onCancel={() => {
+            setCreateModalOpen(false);
+            setConnectorToEdit(null);
+          }}
+          onSave={saveConnector}
         />
+      )}
+
+      {connectorToDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="delete-connector-title"
+            className="w-full max-w-md rounded-xl border border-border bg-card p-5 sm:p-6"
+          >
+            <h3
+              id="delete-connector-title"
+              className="font-heading text-lg font-semibold"
+            >
+              Delete connector?
+            </h3>
+            <p className="mt-2 text-sm leading-6 text-text-muted">
+              This will remove “{connectorToDelete.name}” from your connectors.
+            </p>
+            <div className="mt-6 flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={() => setConnectorToDelete(null)}
+                disabled={deleting}
+                className="cursor-pointer rounded-lg border border-border px-4 py-2.5 text-sm font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={() => void removeConnector()}
+                disabled={deleting}
+                className="cursor-pointer rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {deleting ? "Deleting…" : "Delete connector"}
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </section>
   );

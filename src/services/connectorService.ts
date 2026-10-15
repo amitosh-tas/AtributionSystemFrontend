@@ -9,11 +9,11 @@ export interface ConnectorCredentials {
 }
 
 export async function sendConnectors(credentials: ConnectorCredentials) {
-  return api.post("/workspace/connectors", credentials);
+  return api.post("/api/workspace/connectors", credentials);
 }
 
 export async function getConnectors() {
-  return api.get("/workspace/connectors");
+  return api.get("/api/workspace/connectors");
 }
 
 export async function updateConnector(

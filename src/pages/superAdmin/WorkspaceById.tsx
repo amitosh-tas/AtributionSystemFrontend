@@ -4,6 +4,8 @@ import { useParams } from "react-router-dom";
 import PageLayout from "@/components/layout/PageLayout";
 import EmptyState from "@/components/ui/EmptyState";
 import DataTable, { type DataTableColumn } from "@/components/ui/DataTable";
+import Pill from "@/components/ui/Pill";
+import StatusPill from "@/components/ui/StatusPill";
 import { WorkspaceDetailsSkeleton } from "@/components/ui/Skeleton";
 import { getWorkspaceById, updateUser } from "@/services/platfromAdmin";
 import toast from "react-hot-toast";
@@ -18,7 +20,7 @@ interface WorkspaceUser {
   status: string;
 }
 
-interface UserUpdate {
+interface WorkspaceUserUpdate {
   role: string;
   status: UserStatus;
   reason: string;
@@ -54,117 +56,27 @@ interface WorkspaceResponse {
   webhooks: unknown[];
 }
 
-interface EditUserDialogProps {
-  user: WorkspaceUser;
-  saving: boolean;
-  onCancel: () => void;
-  onSave: (data: UserUpdate) => Promise<boolean>;
-}
-
-function EditUserDialog({
-  user,
-  saving,
-  onCancel,
-  onSave,
-}: EditUserDialogProps) {
-  const [role, setRole] = useState(user.role);
-  const [status, setStatus] = useState<UserStatus>(
-    user.status === "invited" || user.status === "deactivated"
-      ? user.status
-      : "active",
-  );
-  const [reason, setReason] = useState("");
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-      <form
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="edit-workspace-user-title"
-        onSubmit={(event) => {
-          event.preventDefault();
-          void onSave({ role, status, reason: reason.trim() });
-        }}
-        className="w-full max-w-lg rounded-xl border border-border bg-card p-5 sm:p-6"
-      >
-        <h2
-          id="edit-workspace-user-title"
-          className="font-heading text-xl font-semibold"
-        >
-          Edit workspace user
-        </h2>
-        <p className="mt-2 text-sm text-text-muted">{user.email}</p>
-
-        <label
-          htmlFor="workspace-user-role"
-          className="mt-5 block text-xs font-medium text-text-muted"
-        >
-          Role
-        </label>
-        <select
-          id="workspace-user-role"
-          value={role}
-          onChange={(event) => setRole(event.target.value)}
-          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
-        >
-          <option value="company_admin">Admin</option>
-          <option value="company_viewer">Viewer</option>
-          <option value="platform_admin">Platform admin</option>
-        </select>
-
-        <label
-          htmlFor="workspace-user-status"
-          className="mt-5 block text-xs font-medium text-text-muted"
-        >
-          Status
-        </label>
-        <select
-          id="workspace-user-status"
-          value={status}
-          onChange={(event) => setStatus(event.target.value as UserStatus)}
-          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm capitalize text-text"
-        >
-          <option value="invited">Invited</option>
-          <option value="active">Active</option>
-          <option value="deactivated">Deactivated</option>
-        </select>
-
-        <label
-          htmlFor="workspace-user-reason"
-          className="mt-5 block text-xs font-medium text-text-muted"
-        >
-          Reason
-        </label>
-        <textarea
-          id="workspace-user-reason"
-          required
-          value={reason}
-          onChange={(event) => setReason(event.target.value)}
-          placeholder="Reason for this change"
-          rows={3}
-          className="mt-2 w-full resize-y rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
-        />
-
-        <div className="mt-6 flex justify-end gap-2">
-          <button
-            type="button"
-            onClick={onCancel}
-            disabled={saving}
-            className="cursor-pointer rounded-lg border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface-muted disabled:opacity-50"
-          >
-            Cancel
-          </button>
-          <button
-            type="submit"
-            disabled={saving || !reason.trim()}
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
-          >
-            {saving ? "Saving…" : "Save changes"}
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+function getStatusPillStatus(status: string) {
+  switch (status.toLowerCase()) {
+    case "active":
+      return "ACTIVE";
+    case "invited":
+    case "pending":
+      return "PENDING";
+    case "deactivated":
+    case "inactive":
+      return "DEACTIVE";
+    case "suspended":
+      return "SUSPENDED";
+    case "ongoing":
+      return "ONGOING";
+    case "closed":
+      return "CLOSED";
+    case "open":
+      return "OPEN";
+    default:
+      return null;
+  }
 }
 
 function WorkspaceById() {
@@ -175,10 +87,11 @@ function WorkspaceById() {
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [userToEdit, setUserToEdit] = useState<WorkspaceUser | null>(null);
-  const [userToDelete, setUserToDelete] = useState<WorkspaceUser | null>(null);
-  const [deleteReason, setDeleteReason] = useState("");
   const [savingUser, setSavingUser] = useState(false);
+  const [userToEdit, setUserToEdit] = useState<WorkspaceUser | null>(null);
+  const [userToDeactivate, setUserToDeactivate] =
+    useState<WorkspaceUser | null>(null);
+  const [deactivationReason, setDeactivationReason] = useState("");
 
   useEffect(() => {
     if (!id) {
@@ -235,13 +148,15 @@ function WorkspaceById() {
     }
   };
 
-  const saveUser = async (user: WorkspaceUser, data: UserUpdate) => {
+  const saveUser = async (
+    user: WorkspaceUser,
+    data: WorkspaceUserUpdate,
+  ) => {
     if (savingUser) return false;
     setSavingUser(true);
     try {
       await updateUser({ id: user.id, data });
       toast.success("User updated successfully.");
-      setUserToEdit(null);
       await refreshWorkspaceUsers();
       return true;
     } catch (updateError) {
@@ -253,25 +168,25 @@ function WorkspaceById() {
     }
   };
 
-  const deactivateUser = async () => {
-    if (!userToDelete || savingUser || !deleteReason.trim()) return;
+  const deactivateUser = async (user: WorkspaceUser, reason: string) => {
+    if (savingUser || !reason.trim()) return false;
     setSavingUser(true);
     try {
       await updateUser({
-        id: userToDelete.id,
+        id: user.id,
         data: {
-          role: userToDelete.role,
+          role: user.role,
           status: "deactivated",
-          reason: deleteReason.trim(),
+          reason: reason.trim(),
         },
       });
       toast.success("User deactivated successfully.");
-      setUserToDelete(null);
-      setDeleteReason("");
       await refreshWorkspaceUsers();
+      return true;
     } catch (deactivateError) {
       console.error("Failed to deactivate workspace user:", deactivateError);
       toast.error("Unable to deactivate this user. Please try again.");
+      return false;
     } finally {
       setSavingUser(false);
     }
@@ -291,14 +206,19 @@ function WorkspaceById() {
     {
       key: "role",
       header: "Role",
-      render: (user) => (
-        <span className="capitalize">{user.role.replaceAll("_", " ")}</span>
-      ),
+      render: (user) => <Pill name={user.role.replaceAll("_", " ")} />,
     },
     {
       key: "status",
       header: "Status",
-      render: (user) => <span className="capitalize">{user.status}</span>,
+      render: (user) => {
+        const status = getStatusPillStatus(user.status);
+        return status ? (
+          <StatusPill status={status} />
+        ) : (
+          <Pill name={user.status} />
+        );
+      },
     },
     {
       key: "actions",
@@ -317,14 +237,14 @@ function WorkspaceById() {
           <button
             type="button"
             onClick={() => {
-              setUserToDelete(user);
-              setDeleteReason("");
+              setUserToDeactivate(user);
+              setDeactivationReason("");
             }}
-            disabled={user.status === "deactivated"}
-            aria-label={`Delete ${user.name}`}
+            disabled={user.status.toLowerCase() === "deactivated"}
+            aria-label={`Deactivate ${user.name}`}
             className="rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            Delete
+            Deactivate
           </button>
         </div>
       ),
@@ -359,9 +279,13 @@ function WorkspaceById() {
                 </p>
               </div>
 
-              <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-medium capitalize text-amber-800">
-                {workspaceData.workspace.status}
-              </span>
+              {getStatusPillStatus(workspaceData.workspace.status) ? (
+                <StatusPill
+                  status={getStatusPillStatus(workspaceData.workspace.status)!}
+                />
+              ) : (
+                <Pill name={workspaceData.workspace.status} />
+              )}
             </div>
 
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -409,45 +333,126 @@ function WorkspaceById() {
             </div>
           </section>
 
-          {/* Workspace users */}
-          <section className="rounded-xl border border-gray-200 bg-white p-6">
-            <DataTable
-              tableHead="Workspace Users"
-              tableSubHead={`${workspaceData.users.length} user${workspaceData.users.length === 1 ? "" : "s"}`}
-              columns={userColumns}
-              data={workspaceData.users}
-              getRowKey={(user) => user.id}
-              emptyMessage="No users found in this workspace."
-            />
-          </section>
+          <DataTable
+            tableHead="Workspace Users"
+            tableSubHead={`${workspaceData.users.length} user${workspaceData.users.length === 1 ? "" : "s"}`}
+            columns={userColumns}
+            data={workspaceData.users}
+            getRowKey={(user) => user.id}
+            emptyMessage="No users found in this workspace."
+          />
 
           {userToEdit && (
-            <EditUserDialog
-              key={userToEdit.id}
-              user={userToEdit}
-              saving={savingUser}
-              onCancel={() => setUserToEdit(null)}
-              onSave={(data) => saveUser(userToEdit, data)}
-            />
+            <form
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="edit-workspace-user-title"
+              onSubmit={(event) => {
+                event.preventDefault();
+                const formData = new FormData(event.currentTarget);
+                const update: WorkspaceUserUpdate = {
+                  role: String(formData.get("role")),
+                  status: String(formData.get("status")) as UserStatus,
+                  reason: String(formData.get("reason")).trim(),
+                };
+                void saveUser(userToEdit, update).then((saved) => {
+                  if (saved) setUserToEdit(null);
+                });
+              }}
+              className="fixed inset-0 z-50 m-auto h-fit max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
+            >
+              <h2
+                id="edit-workspace-user-title"
+                className="font-heading text-xl font-semibold"
+              >
+                Edit workspace user
+              </h2>
+              <p className="mt-2 text-sm text-text-muted">
+                {userToEdit.email}
+              </p>
+              <label
+                htmlFor="workspace-user-role"
+                className="mt-5 block text-xs font-medium text-text-muted"
+              >
+                Role
+              </label>
+              <select
+                id="workspace-user-role"
+                name="role"
+                defaultValue={userToEdit.role}
+                className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
+              >
+                <option value="company_admin">Admin</option>
+                <option value="company_viewer">Viewer</option>
+                <option value="platform_admin">Platform admin</option>
+              </select>
+              <label
+                htmlFor="workspace-user-status"
+                className="mt-5 block text-xs font-medium text-text-muted"
+              >
+                Status
+              </label>
+              <select
+                id="workspace-user-status"
+                name="status"
+                defaultValue={userToEdit.status}
+                className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm capitalize text-text"
+              >
+                <option value="invited">Invited</option>
+                <option value="active">Active</option>
+                <option value="deactivated">Deactivated</option>
+              </select>
+              <label
+                htmlFor="workspace-user-reason"
+                className="mt-5 block text-xs font-medium text-text-muted"
+              >
+                Reason
+              </label>
+              <textarea
+                id="workspace-user-reason"
+                name="reason"
+                required
+                rows={3}
+                placeholder="Reason for this change"
+                className="mt-2 w-full resize-y rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
+              />
+              <div className="mt-6 flex justify-end gap-2">
+                <button
+                  type="button"
+                  onClick={() => setUserToEdit(null)}
+                  disabled={savingUser}
+                  className="rounded-lg border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface-muted disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={savingUser}
+                  className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {savingUser ? "Saving…" : "Save changes"}
+                </button>
+              </div>
+            </form>
           )}
 
-          {userToDelete && (
+          {userToDeactivate && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
               <div
                 role="alertdialog"
                 aria-modal="true"
-                aria-labelledby="delete-workspace-user-title"
+                aria-labelledby="deactivate-workspace-user-title"
                 className="w-full max-w-md rounded-xl border border-border bg-card p-5 sm:p-6"
               >
                 <h2
-                  id="delete-workspace-user-title"
+                  id="deactivate-workspace-user-title"
                   className="font-heading text-lg font-semibold"
                 >
                   Deactivate user?
                 </h2>
                 <p className="mt-2 text-sm leading-6 text-text-muted">
-                  This will deactivate {userToDelete.name}. The user will remain
-                  in the workspace with a deactivated status.
+                  {userToDeactivate.name} will remain in this workspace with a
+                  deactivated status.
                 </p>
                 <label
                   htmlFor="deactivate-user-reason"
@@ -458,8 +463,10 @@ function WorkspaceById() {
                 <textarea
                   id="deactivate-user-reason"
                   required
-                  value={deleteReason}
-                  onChange={(event) => setDeleteReason(event.target.value)}
+                  value={deactivationReason}
+                  onChange={(event) =>
+                    setDeactivationReason(event.target.value)
+                  }
                   placeholder="Reason for deactivation"
                   rows={3}
                   className="mt-2 w-full resize-y rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
@@ -467,7 +474,7 @@ function WorkspaceById() {
                 <div className="mt-6 flex justify-end gap-2">
                   <button
                     type="button"
-                    onClick={() => setUserToDelete(null)}
+                    onClick={() => setUserToDeactivate(null)}
                     disabled={savingUser}
                     className="rounded-lg border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface-muted disabled:opacity-50"
                   >
@@ -475,8 +482,15 @@ function WorkspaceById() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => void deactivateUser()}
-                    disabled={savingUser || !deleteReason.trim()}
+                    onClick={() => {
+                      void deactivateUser(
+                        userToDeactivate,
+                        deactivationReason,
+                      ).then((saved) => {
+                        if (saved) setUserToDeactivate(null);
+                      });
+                    }}
+                    disabled={savingUser || !deactivationReason.trim()}
                     className="rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {savingUser ? "Deactivating…" : "Deactivate user"}

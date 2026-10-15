@@ -9,6 +9,7 @@ import {
   updateConnector,
 } from "@/services/connectorService";
 import toast from "react-hot-toast";
+import ConnectorWebhookSetupModal from "./ConnectorWebhookSetupModal";
 
 const CONNECTOR_PROVIDERS = [
   { type: "razorpay", label: "Razorpay" },
@@ -36,6 +37,11 @@ interface ConnectorPayload {
   config: {
     webhookSecret: string;
   };
+}
+
+interface ConnectorSetup {
+  webhookUrl: string;
+  webhookSecret: string;
 }
 
 function getProviderLabel(type: string) {
@@ -219,6 +225,8 @@ function Connectors() {
   const [connectorToDelete, setConnectorToDelete] = useState<Connector | null>(
     null,
   );
+  const [connectorSetup, setConnectorSetup] =
+    useState<ConnectorSetup | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -240,11 +248,11 @@ function Connectors() {
       }
 
       setConnectors(connectorList);
-      return true;
+      return connectorList as Connector[];
     } catch (fetchError) {
       console.error("Failed to fetch connectors:", fetchError);
       setError("Unable to load connectors. Please try again.");
-      return false;
+      return null;
     } finally {
       setLoading(false);
     }
@@ -256,9 +264,26 @@ function Connectors() {
 
   const createConnector = async (values: ConnectorPayload) => {
     try {
-      await sendConnectors(values);
+      const response = await sendConnectors(values);
+      const payload = response.data?.data;
+      let connectorId: string | undefined =
+        payload?.id ?? response.data?.id;
+
+      const refreshedConnectors = await fetchConnectors();
+      connectorId ??= refreshedConnectors?.find(
+        (connector) => connector.type === values.type,
+      )?.id;
+
+      if (!connectorId) {
+        toast.error("Connector was created, but its ID was not returned.");
+        return false;
+      }
+
+      setConnectorSetup({
+        webhookUrl: `https://asbtemp-production.up.railway.app/api/connectors/${values.type}/webhook?connectorId=${connectorId}`,
+        webhookSecret: values.config.webhookSecret,
+      });
       toast.success("Connector created successfully.");
-      await fetchConnectors();
       return true;
     } catch (createError) {
       console.error("Failed to create connector:", createError);
@@ -281,8 +306,12 @@ function Connectors() {
 
     try {
       await updateConnector(connectorToEdit.id, values);
-      toast.success("Connector updated successfully.");
+      setConnectorSetup({
+        webhookUrl: `https://asbtemp-production.up.railway.app/api/connectors/${values.type}/webhook?connectorId=${connectorToEdit.id}`,
+        webhookSecret: values.config.webhookSecret,
+      });
       await fetchConnectors();
+      toast.success("Connector updated successfully.");
       return true;
     } catch (updateError) {
       console.error("Failed to update connector:", updateError);
@@ -467,6 +496,14 @@ function Connectors() {
             </div>
           </div>
         </div>
+      )}
+
+      {connectorSetup && (
+        <ConnectorWebhookSetupModal
+          webhookUrl={connectorSetup.webhookUrl}
+          webhookSecret={connectorSetup.webhookSecret}
+          onClose={() => setConnectorSetup(null)}
+        />
       )}
     </section>
   );

@@ -15,6 +15,16 @@ export default function NewSecretModal({
 }: NewSecretModalProps) {
   if (!secret) return null;
 
+  const downloadSecret = () => {
+    const file = new Blob([secret], { type: "text/plain;charset=utf-8" });
+    const fileUrl = URL.createObjectURL(file);
+    const link = document.createElement("a");
+    link.href = fileUrl;
+    link.download = "api-key.txt";
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(fileUrl), 0);
+  };
+
   return (
     <div className="fixed inset-0 z-60 flex items-center justify-center bg-black/50 p-4">
       <div
@@ -55,21 +65,6 @@ export default function NewSecretModal({
             onFocus={(event) => event.currentTarget.select()}
             className="min-w-0 flex-1 resize-none break-all rounded-lg border border-border bg-surface-muted p-3 font-mono text-sm focus-visible:ring-2 focus-visible:ring-primary"
           />
-
-          <button
-            type="button"
-            onClick={onCopy}
-            className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface-muted"
-          >
-            <i
-              className={
-                copied
-                  ? "fi fi-rr-check text-green-600"
-                  : "fi fi-rr-copy-alt"
-              }
-            />
-            {copied ? "Copied" : "Copy"}
-          </button>
         </div>
 
         {copyError && (
@@ -82,7 +77,29 @@ export default function NewSecretModal({
           Save this key in your password manager or secure secrets storage.
         </p>
 
-        <div className="mt-6 flex justify-end">
+        <div className="mt-6 flex flex-wrap justify-end gap-2">
+          <button
+            type="button"
+            onClick={onCopy}
+            className="flex shrink-0 cursor-pointer items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium transition hover:bg-surface-muted"
+          >
+            <i
+              className={` flex
+                ${copied
+                  ? "fi fi-rr-check text-green-600"
+                  : "fi fi-rr-copy-alt"} ` 
+              }
+            />
+            {copied ? "Copied" : "Copy"}
+          </button>
+          <button
+            type="button"
+            onClick={downloadSecret}
+            className="flex cursor-pointer items-center gap-2 rounded-lg border border-border px-4 py-2.5 text-sm font-medium transition hover:bg-surface-muted"
+          >
+            <i className="fi fi-rr-download flex" aria-hidden="true" />
+            Download key
+          </button>
           <button
             type="button"
             onClick={onClose}

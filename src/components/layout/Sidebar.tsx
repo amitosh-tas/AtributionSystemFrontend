@@ -90,7 +90,7 @@ function Sidebar({
                       ${
                         isActive
                           ? "bg-primary/20 text-sidebar-active"
-                          : "text-sidebar-text hover:bg-hover hover:text-sidebar-active"
+                          : "text-sidebar-text hover:bg-primary/20 hover:text-sidebar-active"
                       }
                     `
                   }

@@ -38,7 +38,7 @@ function Sidebar({
           ${isOpen ? "" : "translate-x-0"}
         `}
       >
-        {isOpen ? "Close" : "Menu"}
+        {isOpen ? "Close" :  (<i className="fi fi-br-bars-sort flex items-center text-lg"></i>)}
       </button>
 
       {isOpen && (

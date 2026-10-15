@@ -32,7 +32,7 @@ function Sidebar({
         onClick={() => setIsOpen((prev) => !prev)}
         className={`
           fixed left-4 top-4 z-0 flex h-10 items-center justify-center
-          rounded-lg border border-border bg-white px-3 text-xs font-medium text-text
+          rounded-lg border border-border bg-card px-3 text-xs font-medium text-text
           transition-colors duration-150 hover:bg-hover
           md:hidden
           ${isOpen ? "" : "translate-x-0"}
@@ -61,11 +61,11 @@ function Sidebar({
           `}
         >
           <div className="shrink-0 border-b border-border px-5 pb-5 pt-6">
-            <p className="font-Cinzel text-3xl font-medium tracking-tight text-text">
+            <p className="font-Cinzel text-3xl font-medium tracking-tight text-sidebar-active">
               Elysium
             </p>
             {companyName && (
-              <p className="mt-5 truncate text-xs font-medium text-text-muted">
+              <p className="mt-5 truncate text-xs font-medium text-sidebar-text">
                 {companyName}
               </p>
             )}
@@ -89,8 +89,8 @@ function Sidebar({
                       text-sm font-medium transition-colors duration-150
                       ${
                         isActive
-                          ? "bg-active text-text"
-                          : "text-sidebar-text hover:bg-hover hover:text-text"
+                          ? "bg-primary/20 text-sidebar-active"
+                          : "text-sidebar-text hover:bg-hover hover:text-sidebar-active"
                       }
                     `
                   }
@@ -130,19 +130,19 @@ function AccountComponent() {
 
   return (
     <div className="flex flex-col gap-1">
-      <p className="truncate text-sm font-semibold text-text">
+      <p className="truncate text-sm font-semibold text-sidebar-active">
         {user?.name}
       </p>
 
-      <p className="truncate text-xs text-text-muted">
+      <p className="truncate text-xs text-sidebar-text">
         {user?.email}
       </p>
 
       <span
         className="
           mt-2 w-max max-w-full truncate rounded-md
-          border border-border bg-surface-muted px-2 py-1
-          text-[10px] font-medium text-text-muted
+          border bg-white/10 border-white/20 px-2 py-1
+          text-[10px] font-medium text-sidebar-text
         "
       >
         {user?.role}
@@ -151,7 +151,7 @@ function AccountComponent() {
       <button
         type="button"
         onClick={handleLogout}
-        className="mt-3 rounded-lg border cursor-pointer border-border px-3 py-2 text-left text-xs font-medium text-text transition-colors hover:bg-hover"
+        className="mt-3 rounded-lg border cursor-pointer border-white/20 px-3 py-2 text-left text-xs font-medium text-sidebar-text transition-colors hover:bg-white/10"
       >
         Sign out
       </button>

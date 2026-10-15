@@ -51,8 +51,8 @@ export default function ApiKeyTable({
         <span
           className={`rounded-full px-2.5 py-1 text-xs font-medium ${
             key.mode === "live"
-              ? "bg-green-100 text-green-700"
-              : "bg-amber-100 text-amber-700"
+              ? "bg-success/10 text-success"
+              : "bg-warning/10 text-warning"
           }`}
         >
           {key.mode.toUpperCase()}
@@ -97,7 +97,7 @@ export default function ApiKeyTable({
             onClick={() => onEdit(key)}
             aria-label={`Edit ${key.name}`}
             title="Edit key"
-            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-hover disabled:cursor-not-allowed disabled:opacity-40"
           >
             <i className="fi fi-rr-edit" aria-hidden="true" />
             Edit
@@ -108,7 +108,7 @@ export default function ApiKeyTable({
             onClick={() => onRotate(key)}
             aria-label={`Rotate ${key.name}`}
             title="Rotate key"
-            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-surface-muted disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-hover disabled:cursor-not-allowed disabled:opacity-40"
           >
             <i className="fi fi-rr-refresh" aria-hidden="true" />
             Rotate
@@ -119,7 +119,7 @@ export default function ApiKeyTable({
             onClick={() => onRevoke(key)}
             aria-label={`Revoke ${key.name}`}
             title="Revoke key"
-            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
+            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-danger/30 px-2.5 py-1.5 text-xs font-medium text-danger transition hover:bg-danger/5 disabled:cursor-not-allowed disabled:opacity-40"
           >
             <i className="fi fi-rr-ban" aria-hidden="true" />
             Revoke

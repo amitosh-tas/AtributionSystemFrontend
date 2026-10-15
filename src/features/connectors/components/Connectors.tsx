@@ -99,7 +99,7 @@ function ConnectorForm({
           event.preventDefault();
           void submit();
         }}
-        className="w-full max-w-lg rounded-xl border border-border bg-card p-5 sm:p-6"
+        className="w-full max-w-lg rounded-2xl border border-border bg-card p-5 sm:p-6"
       >
         <h3
           id="connector-dialog-title"
@@ -133,7 +133,7 @@ function ConnectorForm({
             );
             if (selectedProvider) setType(selectedProvider.type);
           }}
-          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
+          className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary/40"
         >
           {CONNECTOR_PROVIDERS.map((provider) => (
             <option
@@ -166,7 +166,7 @@ function ConnectorForm({
           value={name}
           onChange={(event) => setName(event.target.value)}
           placeholder="e.g. Production payments"
-          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
+          className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary/40"
         />
 
         <label
@@ -187,7 +187,7 @@ function ConnectorForm({
               ? "Enter a new webhook secret"
               : "Enter webhook secret"
           }
-          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
+          className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary/40"
         />
 
         <div className="mt-6 flex justify-end gap-2">
@@ -202,7 +202,7 @@ function ConnectorForm({
           <button
             type="submit"
             disabled={saving || !name.trim() || !webhookSecret.trim()}
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving
               ? "Saving…"
@@ -369,7 +369,7 @@ function Connectors() {
             type="button"
             onClick={() => setConnectorToEdit(connector)}
             aria-label={`Edit ${connector.name}`}
-            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-surface-muted"
+            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-border px-2.5 py-1.5 text-xs font-medium transition hover:bg-hover"
           >
             <i className="fi fi-rr-edit" aria-hidden="true" />
             Edit
@@ -378,7 +378,7 @@ function Connectors() {
             type="button"
             onClick={() => setConnectorToDelete(connector)}
             aria-label={`Delete ${connector.name}`}
-            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-700 transition hover:bg-red-50"
+            className="flex cursor-pointer items-center gap-1.5 whitespace-nowrap rounded-md border border-danger/30 px-2.5 py-1.5 text-xs font-medium text-danger transition hover:bg-danger/5"
           >
             <i className="fi fi-rr-trash" aria-hidden="true" />
             Delete
@@ -409,7 +409,7 @@ function Connectors() {
                 ),
               )
             }
-          className="flex cursor-pointer items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800"
+          className="flex cursor-pointer items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary/90"
         >
           <i className="fi fi-rr-plus" aria-hidden="true" />
           Generate connector
@@ -431,7 +431,7 @@ function Connectors() {
       {error && (
         <div
           role="alert"
-          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-danger/30 bg-danger/5 p-4 text-sm text-danger"
         >
           <span>{error}</span>
           <button
@@ -465,7 +465,7 @@ function Connectors() {
             role="alertdialog"
             aria-modal="true"
             aria-labelledby="delete-connector-title"
-            className="w-full max-w-md rounded-xl border border-border bg-card p-5 sm:p-6"
+            className="w-full max-w-md rounded-2xl border border-border bg-card p-5 sm:p-6"
           >
             <h3
               id="delete-connector-title"
@@ -489,7 +489,7 @@ function Connectors() {
                 type="button"
                 onClick={() => void removeConnector()}
                 disabled={deleting}
-                className="cursor-pointer rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                className="cursor-pointer rounded-lg bg-danger px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-danger/90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {deleting ? "Deleting…" : "Delete connector"}
               </button>

@@ -48,7 +48,7 @@ function InviteCard() {
   if (!canInvite) return null;
 
   return (
-    <section className="w-full rounded-xl border border-border bg-card p-5 sm:p-6">
+    <section className="w-full rounded-2xl border border-border bg-card p-5 sm:p-6">
       <div className="mb-6 flex flex-wrap items-center justify-between gap-2">
         <h2 className="font-heading text-base font-semibold tracking-tight text-text">
           Invite a teammate
@@ -74,7 +74,7 @@ function InviteCard() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Full name"
-            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary"
+            className="h-10 min-w-0 rounded-lg border border-border bg-card px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
           />
         </div>
 
@@ -88,7 +88,7 @@ function InviteCard() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="teammate@company.com"
-            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary"
+            className="h-10 min-w-0 rounded-lg border border-border bg-card px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
           />
         </div>
 
@@ -103,7 +103,7 @@ function InviteCard() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="At least 8 characters"
-            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary"
+            className="h-10 min-w-0 rounded-lg border border-border bg-card px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
           />
         </div>
 
@@ -114,7 +114,7 @@ function InviteCard() {
           <select
             value={role}
             onChange={(e) => setRole(e.target.value as Role)}
-            className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary"
+            className="h-10 min-w-0 rounded-lg border border-border bg-card px-3 text-sm text-text focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
           >
             {allowedRoles.map((item) => (
               <option key={item} value={item}>
@@ -138,7 +138,7 @@ function InviteCard() {
               required
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              className="h-10 min-w-0 rounded-lg border border-border bg-white px-3 text-sm text-text focus:border-primary"
+              className="h-10 min-w-0 rounded-lg border border-border bg-card px-3 text-sm text-text focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none"
             >
               <option value="">Select company</option>
               {companies.map((item) => (
@@ -153,7 +153,7 @@ function InviteCard() {
         <div className="sm:col-span-2 xl:col-span-full">
           <button
             type="submit"
-            className="h-10 rounded-lg cursor-pointer bg-primary px-5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            className="h-10 rounded-lg cursor-pointer bg-primary px-5 text-sm font-semibold text-white transition hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
           >
             Create user
           </button>

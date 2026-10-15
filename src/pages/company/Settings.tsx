@@ -101,7 +101,7 @@ function Settings() {
                 type="button"
                 onClick={() => setCreateModalOpen(true)}
                 disabled={loading}
-                className="flex cursor-pointer items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                className="flex cursor-pointer items-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <i className="fi fi-rr-plus" />
                 Generate API key
@@ -114,7 +114,7 @@ function Settings() {
         {error && (
           <div
             role="alert"
-            className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+            className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-danger/30 bg-danger/5 p-4 text-sm text-danger"
           >
             <span>{error}</span>
 

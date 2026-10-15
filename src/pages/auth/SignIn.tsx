@@ -44,12 +44,12 @@ function SignIn() {
     }
   }
 
-  const inputClass = "h-11 w-full rounded-lg border border-border bg-white px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary";
+  const inputClass = "h-11 w-full rounded-lg border border-border bg-card px-3 text-sm text-text placeholder:text-slate-400 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none";
   const labelClass = "text-sm font-medium text-text";
 
   return (
     <div className="flex min-h-dvh w-full items-center justify-center bg-page-background px-4 py-10 text-text sm:px-6">
-      <main className="w-full max-w-md rounded-2xl border border-border bg-card px-6 py-9 sm:px-10 sm:py-10">
+      <main className="w-full max-w-md rounded-3xl border border-border bg-card px-6 py-9 shadow-lg sm:px-10 sm:py-10">
         <div className="w-full">
           {/* Brand */}
           <div className="mb-12">
@@ -155,7 +155,7 @@ function SignIn() {
             {error && (
               <p
                 role="alert"
-                className="text-sm text-red-700"
+                className="text-sm text-danger"
               >
                 {error}
               </p>
@@ -164,7 +164,7 @@ function SignIn() {
             <button
               type="submit"
               disabled={isLoading}
-              className="mt-2 h-11 w-full rounded-lg cursor-pointer bg-primary text-sm font-semibold text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-60"
+              className="mt-2 h-11 w-full rounded-lg cursor-pointer bg-primary text-sm font-semibold text-white transition-colors hover:bg-primary/90 focus-visible:ring-primary disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isLoading ? "Signing in..." : "Sign in"}
             </button>
@@ -176,7 +176,7 @@ function SignIn() {
               Don't have an account?{" "}
               <Link
                 to="/signup"
-                className="font-semibold text-text underline underline-offset-4 decoration-neutral-300 hover:decoration-text"
+                className="font-semibold text-text underline underline-offset-4 decoration-border hover:decoration-primary"
               >
                 Create account
               </Link>

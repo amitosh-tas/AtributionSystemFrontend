@@ -39,7 +39,7 @@ export default function ConnectorWebhookSetupModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="connector-webhook-setup-title"
-        className="w-full max-w-lg rounded-xl border border-border bg-card p-5 sm:p-6"
+        className="w-full max-w-lg rounded-2xl border border-border bg-card p-5 sm:p-6"
       >
         <h2
           id="connector-webhook-setup-title"
@@ -77,7 +77,7 @@ export default function ConnectorWebhookSetupModal({
           <button
             type="button"
             onClick={downloadSecret}
-            className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800"
+            className="flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90"
           >
             <i className="fi fi-rr-download" aria-hidden="true" />
             Download secret

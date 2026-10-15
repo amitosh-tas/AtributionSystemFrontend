@@ -152,7 +152,7 @@ function Workspaces() {
       description="Manage client workspaces, review registrations, and monitor their status."
     >
       {error ? (
-        <div className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-700">
+        <div className="rounded-2xl border border-danger/30 bg-danger/5 p-5 text-sm text-danger">
           <p>{error}</p>
           <button
             type="button"

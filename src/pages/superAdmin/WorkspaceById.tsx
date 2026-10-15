@@ -284,14 +284,14 @@ function WorkspaceById() {
       ) : workspaceData ? (
         <div className="space-y-6">
           {/* Workspace overview */}
-          <section className="rounded-xl border border-gray-200 bg-white p-6">
+          <section className="rounded-2xl border border-border bg-card p-6">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-xl font-semibold text-text">
                   {workspaceData.workspace.name}
                 </h2>
 
-                <p className="mt-1 text-sm text-gray-500">
+                <p className="mt-1 text-sm text-text-muted">
                   {workspaceData.workspace.slug}
                 </p>
               </div>
@@ -308,7 +308,7 @@ function WorkspaceById() {
             <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {WORKSPACE_DETAIL_FIELDS.map(({ key, label, suffix }) => (
                 <div key={key}>
-                  <p className="text-sm text-gray-500">{label}</p>
+                  <p className="text-sm text-text-muted">{label}</p>
                   <p className="mt-1 font-medium">
                     {workspaceData.workspace[key]}
                     {suffix ? ` ${suffix}` : ""}
@@ -346,7 +346,7 @@ function WorkspaceById() {
                   if (saved) setUserToEdit(null);
                 });
               }}
-              className="fixed inset-0 z-60 m-auto h-fit max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
+              className="fixed inset-0 z-60 m-auto h-fit max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-2xl border border-border bg-card p-5 sm:p-6"
             >
               <h2
                 id="edit-workspace-user-title"
@@ -367,7 +367,7 @@ function WorkspaceById() {
                 id="workspace-user-role"
                 name="role"
                 defaultValue={userToEdit.role}
-                className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
+                className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text"
               >
                 <option value="company_admin">Admin</option>
                 <option value="company_viewer">Viewer</option>
@@ -383,7 +383,7 @@ function WorkspaceById() {
                 id="workspace-user-status"
                 name="status"
                 defaultValue={userToEdit.status}
-                className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm capitalize text-text"
+                className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm capitalize text-text"
               >
                 <option value="invited">Invited</option>
                 <option value="active">Active</option>
@@ -401,7 +401,7 @@ function WorkspaceById() {
                 required
                 rows={3}
                 placeholder="Reason for this change"
-                className="mt-2 w-full resize-none rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
+                className="mt-2 w-full resize-none rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text"
               />
               <div className="mt-6 flex justify-end gap-2">
                 <button
@@ -415,7 +415,7 @@ function WorkspaceById() {
                 <button
                   type="submit"
                   disabled={savingUser}
-                  className="rounded-lg cursor-pointer bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-lg cursor-pointer bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {savingUser ? "Saving…" : "Save changes"}
                 </button>

@@ -31,7 +31,7 @@ export default function NewSecretModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="new-secret-title"
-        className="max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
+        className="max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-card p-5 sm:p-6"
       >
         <h3
           id="new-secret-title"
@@ -45,7 +45,7 @@ export default function NewSecretModal({
           available from the key list after you close this window.
         </p>
 
-        <div className="mt-5 rounded-lg border border-amber-200 bg-amber-50 p-3 text-sm text-amber-800">
+        <div className="mt-5 rounded-lg border border-warning/30 bg-warning/10 p-3 text-sm text-warning">
           Never share this key publicly or commit it to source control.
         </div>
 
@@ -68,7 +68,7 @@ export default function NewSecretModal({
         </div>
 
         {copyError && (
-          <p role="alert" className="mt-2 text-xs text-red-600">
+          <p role="alert" className="mt-2 text-xs text-danger">
             {copyError}
           </p>
         )}
@@ -103,7 +103,7 @@ export default function NewSecretModal({
           <button
             type="button"
             onClick={onClose}
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2"
           >
             I've saved my key
           </button>

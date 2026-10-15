@@ -2,21 +2,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-page-background: #ffffff;
-  --color-sidebar: #ffffff;
-  --color-sidebar-text: #666666;
-  --color-sidebar-active: #171717;
-  --color-card: #ffffff;
-  --color-border: #e5e5e5;
-  --color-surface-muted: #f7f7f7;
-  --color-primary: #171717;
-  --color-text: #171717;
-  --color-text-muted: #666666;
-  --color-hover: #f3f3f3;
-  --color-active: #ebebeb;
-  --color-success: #15803d;
-  --color-warning: #b45309;
-  --color-danger: #b91c1c;
+  --color-page-background: #F7F0E6;
+  --color-sidebar: #38291F;
+  --color-sidebar-text: #C4AA93;
+  --color-sidebar-active: #FFFCF7;
+  --color-card: #FFFCF7;
+  --color-border: #E8D9C9;
+  --color-surface-muted: #F4DFD3;
+  --color-primary: #B96F50;
+  --color-text: #38291F;
+  --color-text-muted: #79685B;
+  --color-hover: #F0E4D8;
+  --color-active: #EDD8CA;
+  --color-success: #5A8A5A;
+  --color-warning: #B88B2E;
+  --color-danger: #C0443A;
   --font-body: "Inter", sans-serif;
   --font-heading: "Manrope", sans-serif;
   --font-Cinzel : "Cinzel", serif;;
@@ -31,15 +31,15 @@
 
   html {
     min-width: 320px;
-    background: #ffffff;
+    background: #F7F0E6;
   }
 
   body {
     min-width: 320px;
     min-height: 100vh;
     margin: 0;
-    background: #ffffff;
-    color: #171717;
+    background: #F7F0E6;
+    color: #38291F;
     font-family: "Inter", sans-serif;
     font-size: 14px;
     line-height: 1.5;
@@ -62,12 +62,12 @@
   }
 
   :focus-visible {
-    outline: 2px solid #525252;
+    outline: 2px solid #B96F50;
     outline-offset: 2px;
   }
 
   ::selection {
-    background: #e5e5e5;
-    color: #171717;
+    background: #E8D9C9;
+    color: #38291F;
   }
 }

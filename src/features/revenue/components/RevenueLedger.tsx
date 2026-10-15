@@ -8,7 +8,7 @@ function RevenueLedger({ children }: RevenueLedgerProps) {
   return (
     <div
       className="
-        rounded-xl border border-border bg-card p-5 text-text-muted sm:p-6
+        rounded-2xl border border-border bg-card p-5 text-text-muted shadow-sm sm:p-6
       "
     >
       <div className="flex items-center justify-between gap-3">

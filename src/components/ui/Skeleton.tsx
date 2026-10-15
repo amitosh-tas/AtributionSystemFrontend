@@ -9,7 +9,7 @@ export function Skeleton({
   return (
     <div
       aria-hidden="true"
-      className={`animate-pulse rounded-md bg-neutral-200/80 motion-reduce:animate-none ${className}`}
+      className={`animate-pulse rounded-md bg-border/60 motion-reduce:animate-none ${className}`}
       {...props}
     />
   );
@@ -33,7 +33,7 @@ export function StatCardsSkeleton({
       {Array.from({ length: count }, (_, index) => (
         <div
           key={index}
-          className="flex min-h-32 min-w-0 flex-col gap-3 rounded-xl border border-border bg-card p-5"
+          className="flex min-h-32 min-w-0 flex-col gap-3 rounded-2xl border border-border bg-card p-5"
         >
           <Skeleton className="h-4 w-2/5" />
           <Skeleton className="mt-1 h-7 w-1/3" />
@@ -50,7 +50,7 @@ export function ChartSkeleton() {
     <section
       role="status"
       aria-label="Loading chart"
-      className="w-full min-w-0 rounded-xl border border-border bg-card p-5 sm:p-6"
+      className="w-full min-w-0 rounded-2xl border border-border bg-card p-5 sm:p-6"
     >
       <Skeleton className="h-5 w-36" />
       <Skeleton className="mt-2 h-3 w-48 max-w-full" />
@@ -73,7 +73,7 @@ export function ChartSkeleton() {
 export function WorkspaceDetailsSkeleton() {
   return (
     <div role="status" aria-label="Loading workspace details" className="space-y-6">
-      <section className="rounded-xl border border-border bg-card p-6">
+      <section className="rounded-2xl border border-border bg-card p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div className="w-full max-w-sm space-y-2">
             <Skeleton className="h-6 w-2/3" />
@@ -91,7 +91,7 @@ export function WorkspaceDetailsSkeleton() {
         </div>
       </section>
 
-      <section className="rounded-xl border border-border bg-card p-6">
+      <section className="rounded-2xl border border-border bg-card p-6">
         <Skeleton className="h-5 w-36" />
         <div className="mt-4 space-y-4">
           <div className="flex gap-4 border-b border-border pb-3">

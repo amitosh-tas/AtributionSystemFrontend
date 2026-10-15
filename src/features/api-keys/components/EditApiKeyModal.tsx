@@ -91,7 +91,7 @@ export default function EditApiKeyModal({
         aria-modal="true"
         aria-labelledby="edit-api-key-title"
         onSubmit={(event) => void submit(event)}
-        className="max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
+        className="max-h-[calc(100dvh-2rem)] w-full max-w-lg overflow-y-auto rounded-2xl border border-border bg-card p-5 sm:p-6"
       >
         <h3
           id="edit-api-key-title"
@@ -116,7 +116,7 @@ export default function EditApiKeyModal({
           maxLength={100}
           value={name}
           onChange={(event) => setName(event.target.value)}
-          className="mt-2 w-full rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
+          className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary/40"
         />
 
         <div className="mt-5 flex items-center justify-between gap-3">
@@ -143,7 +143,7 @@ export default function EditApiKeyModal({
               }
             }}
             placeholder="https://example.com"
-            className="min-w-0 flex-1 rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-neutral-500"
+            className="min-w-0 flex-1 rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary/40"
           />
           <button
             type="button"
@@ -170,7 +170,7 @@ export default function EditApiKeyModal({
                       current.filter((item) => item !== origin),
                     )
                   }
-                  className="cursor-pointer text-text-muted hover:text-red-600"
+                  className="cursor-pointer text-text-muted hover:text-danger"
                 >
                   <i className="fi fi-rr-cross-small" aria-hidden="true" />
                 </button>
@@ -180,7 +180,7 @@ export default function EditApiKeyModal({
         )}
 
         {validationError && (
-          <p role="alert" className="mt-3 text-sm text-red-600">
+          <p role="alert" className="mt-3 text-sm text-danger">
             {validationError}
           </p>
         )}
@@ -197,7 +197,7 @@ export default function EditApiKeyModal({
           <button
             type="submit"
             disabled={saving || !name.trim() || origins.length === 0}
-            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 focus-visible:ring-2 focus-visible:ring-neutral-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="cursor-pointer rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? "Saving…" : "Save changes"}
           </button>

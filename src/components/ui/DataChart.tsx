@@ -44,7 +44,7 @@ function DataChart({
     `${valuePrefix}${value.toLocaleString()}${valueSuffix}`;
 
   return (
-    <section className="w-full min-w-0 rounded-xl border border-border bg-card p-5 sm:p-6">
+    <section className="w-full min-w-0 rounded-2xl border border-border bg-card p-5 sm:p-6">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
         <div className="min-w-0">
         <h2 className="font-heading text-base font-semibold tracking-tight text-text">
@@ -80,12 +80,12 @@ function DataChart({
             >
               <CartesianGrid
                 vertical={false}
-                stroke="#E5E5E5"
+                stroke="#E8D9C9"
               />
 
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 11, fill: "#666666" }}
+                tick={{ fontSize: 11, fill: "#79685B" }}
                 tickLine={false}
                 axisLine={false}
                 minTickGap={24}
@@ -96,10 +96,10 @@ function DataChart({
               <Tooltip
                 formatter={(value) => formatValue(Number(value))}
                 contentStyle={{
-                  borderRadius: 8,
-                  border: "1px solid #E5E5E5",
+                  borderRadius: 10,
+                  border: "1px solid #E8D9C9",
                   fontSize: 12,
-                  color: "#171717",
+                  color: "#38291F",
                 }}
               />
 
@@ -117,12 +117,12 @@ function DataChart({
             >
               <CartesianGrid
                 vertical={false}
-                stroke="#E5E5E5"
+                stroke="#E8D9C9"
               />
 
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 11, fill: "#666666" }}
+                tick={{ fontSize: 11, fill: "#79685B" }}
                 tickLine={false}
                 axisLine={false}
                 minTickGap={24}
@@ -133,10 +133,10 @@ function DataChart({
               <Tooltip
                 formatter={(value) => formatValue(Number(value))}
                 contentStyle={{
-                  borderRadius: 8,
-                  border: "1px solid #E5E5E5",
+                  borderRadius: 10,
+                  border: "1px solid #E8D9C9",
                   fontSize: 12,
-                  color: "#171717",
+                  color: "#38291F",
                 }}
               />
 

@@ -54,7 +54,7 @@ export default function DataTable<T>({
   return (
     <section
       aria-busy={loading}
-      className="w-full min-w-0 overflow-hidden rounded-xl border border-border bg-card"
+      className="w-full min-w-0 overflow-hidden rounded-2xl border border-border bg-card"
     >
       {loading && (
         <span role="status" className="sr-only">
@@ -89,7 +89,7 @@ export default function DataTable<T>({
       <div className="w-full overflow-x-auto">
       <table className="w-full min-w-140 border-collapse text-sm">
         <thead>
-          <tr className="border-y border-border bg-slate-50/70">
+          <tr className="border-y border-border bg-surface-muted/50">
             {columns.map((column) => (
               <th
                 key={column.key}
@@ -152,7 +152,7 @@ export default function DataTable<T>({
                 }
                 className={[
                   "border-b border-border last:border-b-0",
-                  "transition-colors hover:bg-slate-50/70",
+                  "transition-colors hover:bg-hover",
                   onRowClick ? "cursor-pointer" : "",
                 ].join(" ")}
               >
@@ -192,7 +192,7 @@ export default function DataTable<T>({
               type="button"
               disabled={pagination.isLoading || pagination.page <= 1}
               onClick={() => pagination.onPageChange(pagination.page - 1)}
-              className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-hover disabled:cursor-not-allowed disabled:opacity-40"
             >
               Previous
             </button>
@@ -208,7 +208,7 @@ export default function DataTable<T>({
                 pagination.page >= pagination.pages
               }
               onClick={() => pagination.onPageChange(pagination.page + 1)}
-              className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+              className="rounded-lg border border-border px-3 py-2 text-xs font-medium text-text transition-colors hover:bg-hover disabled:cursor-not-allowed disabled:opacity-40"
             >
               Next
             </button>

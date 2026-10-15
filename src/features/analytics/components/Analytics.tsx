@@ -21,7 +21,7 @@ function Analytics({
   });
 
   return (
-    <div className="flex flex-col gap-5 rounded-xl border border-border bg-card p-5 sm:p-6 lg:flex-row lg:items-end lg:justify-between">
+    <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6 lg:flex-row lg:items-end lg:justify-between">
       <div className="min-w-0">
         <p className="font-heading text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl">
           {currency.format(revenue)}

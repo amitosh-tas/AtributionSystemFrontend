@@ -26,7 +26,7 @@ function Pill({ name }: IPill) {
 
   return (
     <span
-      className="inline-flex w-fit items-center gap-2 rounded-md px-2.5 py-1.5 text-xs font-medium whitespace-nowrap"
+      className="inline-flex w-fit items-center gap-2 rounded-full px-2.5 py-1.5 text-xs font-medium whitespace-nowrap"
       style={{
         backgroundColor: colors.backgroundColor,
         color: colors.textColor,

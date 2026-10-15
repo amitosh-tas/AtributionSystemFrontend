@@ -3,18 +3,18 @@ export const revenueSourceColors: Record<
   { color: string; backgroundColor: string; textColor: string }
 > = {
   google: {
-    color: "#4285F4",
-    backgroundColor: "#E8F0FE",
-    textColor: "#174EA6",
+    color: "#B96F50",
+    backgroundColor: "#F4DFD3",
+    textColor: "#6B3D29",
   },
   direct: {
-    color: "#16A34A",
-    backgroundColor: "#EAF6ED",
-    textColor: "#166534",
+    color: "#78876B",
+    backgroundColor: "#E8EDE4",
+    textColor: "#3D4A35",
   },
   meta: {
-    color: "#C026D3",
-    backgroundColor: "#FAE8FF",
-    textColor: "#86198F",
+    color: "#D6A85F",
+    backgroundColor: "#FBF0DA",
+    textColor: "#7A5A1E",
   },
 };

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 function Unauthorized() {
   return (
     <div className="flex min-h-dvh items-center justify-center bg-page-background px-5 py-12">
-      <main className="w-full max-w-lg rounded-2xl border border-border bg-card px-6 py-10 text-center sm:px-10">
+      <main className="w-full max-w-lg rounded-3xl border border-border bg-card px-6 py-10 shadow-lg text-center sm:px-10">
         <p className="text-xs font-medium text-text-muted">
           Access restricted
         </p>
@@ -17,7 +17,7 @@ function Unauthorized() {
         </p>
         <Link
           to="/"
-          className="mt-7 inline-flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-white transition hover:bg-neutral-800"
+          className="mt-7 inline-flex h-10 items-center justify-center rounded-lg bg-primary px-4 text-sm font-semibold text-white transition hover:bg-primary/90"
         >
           Back to dashboard
         </Link>

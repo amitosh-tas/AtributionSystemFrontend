@@ -128,7 +128,7 @@ function Customers() {
       headTitle="Audience"
       description="Review customer activity and purchase history."
     >
-      <section className="rounded-xl border border-border bg-card p-5 sm:p-6">
+      <section className="rounded-2xl border border-border bg-card p-5 sm:p-6">
         <h2 className="font-heading text-base font-semibold text-text">
           Customer API token
         </h2>
@@ -149,13 +149,13 @@ function Customers() {
               if (event.key === "Enter") saveToken();
             }}
             placeholder="Enter API token"
-            className="min-w-60 flex-1 rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
+            className="min-w-60 flex-1 rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text"
           />
           <button
             type="button"
             onClick={saveToken}
             disabled={!tokenInput.trim()}
-            className="rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-white hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {savedToken ? "Save token" : "Connect"}
           </button>
@@ -170,7 +170,7 @@ function Customers() {
           )}
         </div>
         {tokenError && (
-          <p role="alert" className="mt-3 text-sm text-red-600">
+          <p role="alert" className="mt-3 text-sm text-danger">
             {tokenError}
           </p>
         )}
@@ -184,7 +184,7 @@ function Customers() {
       ) : error ? (
         <div
           role="alert"
-          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-700"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-danger/30 bg-danger/5 p-4 text-sm text-danger"
         >
           <span>{error}</span>
           <button

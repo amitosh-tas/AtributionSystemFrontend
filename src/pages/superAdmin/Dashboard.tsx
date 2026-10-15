@@ -111,7 +111,7 @@ function Dashboard() {
       ) : error ? (
         <div
           role="alert"
-          className="rounded-xl border border-red-200 bg-red-50 p-5 text-sm text-red-700"
+          className="rounded-2xl border border-danger/30 bg-danger/5 p-5 text-sm text-danger"
         >
           <p>Unable to load the platform dashboard.</p>
           <button

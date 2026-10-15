@@ -106,9 +106,9 @@ function WorkspaceById() {
   const [error, setError] = useState<string | null>(null);
   const [savingUser, setSavingUser] = useState(false);
   const [userToEdit, setUserToEdit] = useState<WorkspaceUser | null>(null);
-  const [userToDeactivate, setUserToDeactivate] =
-    useState<WorkspaceUser | null>(null);
-  const [deactivationReason, setDeactivationReason] = useState("");
+  // const [userToDeactivate, setUserToDeactivate] =
+  //   useState<WorkspaceUser | null>(null);
+  // const [deactivationReason, setDeactivationReason] = useState("");
 
   useEffect(() => {
     if (!id) {
@@ -185,29 +185,29 @@ function WorkspaceById() {
     }
   };
 
-  const deactivateUser = async (user: WorkspaceUser, reason: string) => {
-    if (savingUser || !reason.trim()) return false;
-    setSavingUser(true);
-    try {
-      await updateUser({
-        id: user.id,
-        data: {
-          role: user.role,
-          status: "deactivated",
-          reason: reason.trim(),
-        },
-      });
-      toast.success("User deactivated successfully.");
-      await refreshWorkspaceUsers();
-      return true;
-    } catch (deactivateError) {
-      console.error("Failed to deactivate workspace user:", deactivateError);
-      toast.error("Unable to deactivate this user. Please try again.");
-      return false;
-    } finally {
-      setSavingUser(false);
-    }
-  };
+  // const deactivateUser = async (user: WorkspaceUser, reason: string) => {
+  //   if (savingUser || !reason.trim()) return false;
+  //   setSavingUser(true);
+  //   try {
+  //     await updateUser({
+  //       id: user.id,
+  //       data: {
+  //         role: user.role,
+  //         status: "deactivated",
+  //         reason: reason.trim(),
+  //       },
+  //     });
+  //     toast.success("User deactivated successfully.");
+  //     await refreshWorkspaceUsers();
+  //     return true;
+  //   } catch (deactivateError) {
+  //     console.error("Failed to deactivate workspace user:", deactivateError);
+  //     toast.error("Unable to deactivate this user. Please try again.");
+  //     return false;
+  //   } finally {
+  //     setSavingUser(false);
+  //   }
+  // };
 
   const userColumns: DataTableColumn<WorkspaceUser>[] = [
     {
@@ -247,11 +247,11 @@ function WorkspaceById() {
             type="button"
             onClick={() => setUserToEdit(user)}
             aria-label={`Edit ${user.name}`}
-            className="rounded-md border border-border px-2.5 py-1.5 text-xs font-medium hover:bg-surface-muted"
+            className=" cursor-pointer rounded-md border border-border px-2.5 py-1.5 text-xs font-medium hover:bg-surface-muted"
           >
             Edit
           </button>
-          <button
+          {/* <button
             type="button"
             onClick={() => {
               setUserToDeactivate(user);
@@ -262,7 +262,7 @@ function WorkspaceById() {
             className="rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-medium text-red-700 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
           >
             Deactivate
-          </button>
+          </button> */}
         </div>
       ),
     },
@@ -328,6 +328,8 @@ function WorkspaceById() {
           />
 
           {userToEdit && (
+            <>
+            <div className="bg-black/40 fixed h-full w-full top-0 left-0 z-50"></div>
             <form
               role="dialog"
               aria-modal="true"
@@ -344,7 +346,7 @@ function WorkspaceById() {
                   if (saved) setUserToEdit(null);
                 });
               }}
-              className="fixed inset-0 z-50 m-auto h-fit max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
+              className="fixed inset-0 z-60 m-auto h-fit max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] max-w-lg overflow-y-auto rounded-xl border border-border bg-card p-5 sm:p-6"
             >
               <h2
                 id="edit-workspace-user-title"
@@ -399,29 +401,30 @@ function WorkspaceById() {
                 required
                 rows={3}
                 placeholder="Reason for this change"
-                className="mt-2 w-full resize-y rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
+                className="mt-2 w-full resize-none rounded-lg border border-border bg-white px-3 py-2.5 text-sm text-text"
               />
               <div className="mt-6 flex justify-end gap-2">
                 <button
                   type="button"
                   onClick={() => setUserToEdit(null)}
                   disabled={savingUser}
-                  className="rounded-lg border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface-muted disabled:opacity-50"
+                  className="rounded-lg cursor-pointer border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface-muted disabled:opacity-50"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={savingUser}
-                  className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-lg cursor-pointer bg-primary px-4 py-2.5 text-sm font-semibold text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {savingUser ? "Saving…" : "Save changes"}
                 </button>
               </div>
             </form>
+            </>
           )}
 
-          {userToDeactivate && (
+          {/* {userToDeactivate && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
               <div
                 role="alertdialog"
@@ -461,7 +464,7 @@ function WorkspaceById() {
                     type="button"
                     onClick={() => setUserToDeactivate(null)}
                     disabled={savingUser}
-                    className="rounded-lg border border-border px-4 py-2.5 text-sm font-medium hover:bg-surface-muted disabled:opacity-50"
+                    className="rounded-lg border cursor-pointer border-border px-4 py-2.5 text-sm font-medium hover:bg-surface-muted disabled:opacity-50"
                   >
                     Cancel
                   </button>
@@ -476,14 +479,14 @@ function WorkspaceById() {
                       });
                     }}
                     disabled={savingUser || !deactivationReason.trim()}
-                    className="rounded-lg bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="rounded-lg cursor-pointer bg-red-600 px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     {savingUser ? "Deactivating…" : "Deactivate user"}
                   </button>
                 </div>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       ) : (
         <EmptyState

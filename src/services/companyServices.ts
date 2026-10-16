@@ -147,12 +147,9 @@ export interface CustomersResponse {
   };
 }
 
-export async function getCustomers(token: string, page = 1) {
+export async function getCustomers( page = 1) {
   return api.get<CustomersResponse>("/v1/customers", {
-    params: { page },
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    params: { page }
   });
 }
 

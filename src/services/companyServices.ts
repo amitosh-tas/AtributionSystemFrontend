@@ -131,6 +131,7 @@ export interface WorkspaceDashboard {
 
 export interface CustomerRecord {
   id: string;
+  email: string;
   firstSeenAt: string;
   firstPurchaseAt: string | null;
   lastPurchaseAt: string | null;

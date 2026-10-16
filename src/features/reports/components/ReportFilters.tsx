@@ -57,10 +57,7 @@ export default function ReportFilters({
   };
 
   return (
-    <section
-      aria-label="Report filters"
-      className="flex flex-col items-end justify-end gap-3"
-    >
+    <>
       <div
         aria-label="Date range"
         className="inline-flex shrink-0 flex-nowrap rounded-full border border-border bg-transparent p-1"
@@ -168,6 +165,6 @@ export default function ReportFilters({
           ))}
         </select>
       </div>
-    </section>
+    </>
   );
 }

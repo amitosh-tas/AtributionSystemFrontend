@@ -65,14 +65,14 @@ export default function CustomerTable({
       key: "email",
       header: "Customer email", 
       render: (customer) => (
-        <code className="text-xs text-text-muted">{customer.email}</code>
+        <p className="text-sm text-text-muted">{customer.email}</p>
       ),
     },
     {
       key: "firstSeenAt",
       header: "First seen",
       render: (customer) => (
-        <span className="whitespace-nowrap">
+        <span className="whitespace-nowrap text-xs">
           {formatDate(customer.firstSeenAt)}
         </span>
       ),
@@ -81,7 +81,7 @@ export default function CustomerTable({
       key: "firstPurchaseAt",
       header: "First purchase",
       render: (customer) => (
-        <span className="whitespace-nowrap">
+        <span className="whitespace-nowrap text-xs">
           {formatDate(customer.firstPurchaseAt)}
         </span>
       ),
@@ -90,7 +90,7 @@ export default function CustomerTable({
       key: "lastPurchaseAt",
       header: "Last purchase",
       render: (customer) => (
-        <span className="whitespace-nowrap">
+        <span className="whitespace-nowrap text-xs">
           {formatDate(customer.lastPurchaseAt)}
         </span>
       ),

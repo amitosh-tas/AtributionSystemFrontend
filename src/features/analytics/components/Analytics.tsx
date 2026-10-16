@@ -1,4 +1,5 @@
 import { formatMajorUnits } from "@/features/reports/utils/formatting";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 interface IAnalytics {
   revenue?: string;
@@ -7,6 +8,7 @@ interface IAnalytics {
   invoices?: number;
   currency?: string;
   description?: string;
+  loading?: boolean;
 }
 
 function Analytics({
@@ -16,7 +18,24 @@ function Analytics({
   invoices = 0,
   currency,
   description,
+  loading = false,
 }: IAnalytics) {
+  if (loading) {
+    return (
+      <section
+        role="status"
+        aria-label="Loading revenue summary"
+        className="flex min-h-36 flex-col gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6 lg:flex-row lg:items-end lg:justify-between"
+      >
+        <div className="w-full max-w-sm space-y-3">
+          <Skeleton className="h-10 w-3/4 sm:h-12" />
+          <Skeleton className="h-4 w-2/3" />
+        </div>
+        <Skeleton className="h-12 w-full max-w-64" />
+      </section>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-5 rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6 lg:flex-row lg:items-end lg:justify-between">
       <div className="min-w-0">

@@ -9,6 +9,7 @@ import {
   YAxis,
   Tooltip,
 } from "recharts";
+import { ChartSkeleton } from "@/components/ui/Skeleton";
 
 interface ChartData {
   label: string;
@@ -50,6 +51,8 @@ function DataChart({
     valueFormatter?.(value) ??
     `${valuePrefix}${value.toLocaleString()}${valueSuffix}`;
 
+  if (loading) return <ChartSkeleton />;
+
   return (
     <section className="w-full min-w-0 rounded-2xl border border-border bg-card p-5 sm:p-6">
       <div className="mb-5 flex flex-wrap items-start justify-between gap-3">
@@ -77,11 +80,7 @@ function DataChart({
         </div>
       </div>
 
-      {loading ? (
-        <p role="status" className="flex items-center text-sm text-text-muted" style={{ height }}>
-          Loading chart data…
-        </p>
-      ) : error ? (
+      {error ? (
         <p role="alert" className="flex items-center text-sm text-danger" style={{ height }}>
           {error}
         </p>

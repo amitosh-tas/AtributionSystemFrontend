@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "@/components/ui/Card";
+import { StatCardsSkeleton } from "@/components/ui/Skeleton";
 import PageLayout from "@/components/layout/PageLayout";
 import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid";
 import AvgOrderValueTrend from "@/features/analytics/components/AvgOrderValueTrend";
@@ -175,7 +176,9 @@ function Analytics() {
         </p>
       )}
 
-      {customerSummary && (
+      {loading ? (
+        <StatCardsSkeleton count={4} />
+      ) : customerSummary && (
         <AnalyticsGrid>
           <Card
             title="Total Customers"

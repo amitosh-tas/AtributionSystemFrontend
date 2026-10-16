@@ -12,9 +12,15 @@ interface RevenueLedgerChartProps {
 function RevenueLedgerChart({ data, loading }: RevenueLedgerChartProps) {
   if (loading) {
     return (
-      <p role="status" className="py-4 text-sm text-text-muted">
-        Loading revenue sources…
-      </p>
+      <div role="status" aria-label="Loading revenue sources" className="py-2">
+        <Skeleton className="h-7 w-full" />
+        <div className="my-5 h-px w-full bg-border" />
+        <div className="flex flex-wrap gap-x-6 gap-y-3">
+          {[1, 2, 3].map((item) => (
+            <Skeleton key={item} className="h-4 w-24" />
+          ))}
+        </div>
+      </div>
     );
   }
 
@@ -64,3 +70,4 @@ function RevenueLedgerChart({ data, loading }: RevenueLedgerChartProps) {
 }
 
 export default RevenueLedgerChart;
+import { Skeleton } from "@/components/ui/Skeleton";

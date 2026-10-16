@@ -4,6 +4,7 @@ import PageLayout from "@/components/layout/PageLayout";
 import Card from "@/components/ui/Card";
 import DataTable from "@/components/ui/DataTable";
 import Pill from "@/components/ui/Pill";
+import { StatCardsSkeleton } from "@/components/ui/Skeleton";
 import Analytics from "@/features/analytics/components/Analytics";
 import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid";
 import RevenueByPlatform from "@/features/revenue/components/RevenueByPlatform";
@@ -338,6 +339,7 @@ function Overview() {
         </p>
       )}
       <Analytics
+        loading={loading}
         revenue={data.dashboard?.primaryRevenue.totalRevenue}
         exclTax={data.dashboard?.primaryRevenue.exclTax}
         tax={data.dashboard?.primaryRevenue.tax}
@@ -346,26 +348,24 @@ function Overview() {
         description={data.dashboard?.primaryRevenue.description}
       />
 
-      {(dashboardCards.length > 0 || loading) && (
-        <AnalyticsGrid>
-          {loading && dashboardCards.length === 0 ? (
-            <p role="status" className="text-sm text-text-muted">
-              Loading workspace metrics…
-            </p>
-          ) : (
-            dashboardCards.map(({ title, value, description }) => (
+      {loading ? (
+        <StatCardsSkeleton count={9} />
+      ) : (
+        dashboardCards.length > 0 && (
+          <AnalyticsGrid>
+            {dashboardCards.map(({ title, value, description }) => (
               <Card
                 key={title}
                 title={title}
                 value={value}
                 description={description}
               />
-            ))
-          )}
-        </AnalyticsGrid>
+            ))}
+          </AnalyticsGrid>
+        )
       )}
 
-      {(summaryCards.length > 0 || errors.summary) && (
+      {(summaryCards.length > 0 || errors.summary || loading) && (
         <section className="space-y-3">
           <h2 className="font-heading text-base font-semibold text-text">
             Report summary
@@ -375,7 +375,9 @@ function Overview() {
               Unable to load report summary: {errors.summary}
             </p>
           )}
-          {summaryCards.length > 0 && (
+          {loading ? (
+            <StatCardsSkeleton count={3} />
+          ) : summaryCards.length > 0 ? (
             <AnalyticsGrid>
               {summaryCards.map(({ title, value, description }) => (
                 <Card
@@ -386,7 +388,7 @@ function Overview() {
                 />
               ))}
             </AnalyticsGrid>
-          )}
+          ) : null}
         </section>
       )}
 

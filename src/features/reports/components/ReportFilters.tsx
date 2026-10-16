@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Skeleton } from "@/components/ui/Skeleton";
 import {
   getPresetDateRange,
   getTodayDate,
@@ -171,11 +172,18 @@ export default function ReportFilters({
             </option>
           ))}
         </select>
-        <p id="report-location-help" className="text-xs text-text-muted">
-          {locationsLoading
-            ? "Loading available locations…"
-            : "Filter reports by location."}
-        </p>
+        {locationsLoading ? (
+          <Skeleton
+            id="report-location-help"
+            role="status"
+            aria-label="Loading locations"
+            className="h-3 w-36"
+          />
+        ) : (
+          <p id="report-location-help" className="text-xs text-text-muted">
+            Filter reports by location.
+          </p>
+        )}
       </div>
     </section>
   );

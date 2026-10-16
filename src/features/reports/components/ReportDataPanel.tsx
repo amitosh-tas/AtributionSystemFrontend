@@ -23,9 +23,18 @@ export default function ReportDataPanel({
       </div>
       <div className="max-h-120 overflow-auto p-5 sm:p-6">
         {loading ? (
-          <p role="status" className="text-sm text-text-muted">
-            Loading {title.toLowerCase()}…
-          </p>
+          <div
+            role="status"
+            aria-label={`Loading ${title.toLowerCase()}`}
+            className="space-y-3"
+          >
+            {Array.from({ length: 7 }, (_, index) => (
+              <Skeleton
+                key={index}
+                className={`h-3 ${index % 3 === 0 ? "w-4/5" : "w-full"}`}
+              />
+            ))}
+          </div>
         ) : error ? (
           <p role="alert" className="text-sm text-danger">
             {error}
@@ -41,3 +50,4 @@ export default function ReportDataPanel({
     </section>
   );
 }
+import { Skeleton } from "@/components/ui/Skeleton";

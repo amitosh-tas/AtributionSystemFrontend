@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Skeleton } from "@/components/ui/Skeleton";
 
 import {
   getReportsSummary,
@@ -349,7 +350,17 @@ export default function ReportsApiTester() {
                     }
                     className="shrink-0 rounded-lg bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {isLoading ? "Loading..." : "Test API"}
+                    {isLoading ? (
+                      <span
+                        role="status"
+                        aria-label={`Testing ${test.label}`}
+                        className="inline-flex w-16"
+                      >
+                        <Skeleton className="h-4 w-full bg-white/30" />
+                      </span>
+                    ) : (
+                      "Test API"
+                    )}
                   </button>
                 </div>
 

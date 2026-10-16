@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import React, { useState, type FormEvent } from "react";
 import type { KeyCredentials } from "@/services/apiService";
 import type { CompanyApiKey } from "../types/apiKey.types";
 import {
@@ -62,7 +62,7 @@ export default function EditApiKeyModal({
     setValidationError("");
   };
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!name.trim()) {
       setValidationError("Enter a name for this API key.");

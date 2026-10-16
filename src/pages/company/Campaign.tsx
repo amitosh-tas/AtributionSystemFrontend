@@ -9,6 +9,8 @@ import {
   type DateRange,
 } from "@/features/reports/utils/dateRange";
 import { formatMinorUnits } from "@/features/reports/utils/formatting";
+import { getRequestErrorMessage } from "@/features/reports/utils/requestError";
+import toast from "react-hot-toast";
 import {
   getReportCampaigns,
   getReportLocations,
@@ -16,10 +18,6 @@ import {
   type ReportCampaign,
   type ReportLocation,
 } from "@/services/companyServices";
-
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : "The request failed.";
-}
 
 interface CampaignResult {
   key: string;
@@ -65,6 +63,14 @@ function Campaign() {
       getReportsSummary(params),
     ]).then(([campaignResult, locationResult, summaryResult]) => {
       if (cancelled) return;
+      const failedRequests = [
+        campaignResult.status === "rejected" ? "campaign reports" : undefined,
+        locationResult.status === "rejected" ? "location filters" : undefined,
+        summaryResult.status === "rejected" ? "currency details" : undefined,
+      ].filter((request): request is string => request !== undefined);
+      if (failedRequests.length > 0) {
+        toast.error(`Unable to load ${failedRequests.join(", ")}.`);
+      }
 
       setResult({
         key,
@@ -83,16 +89,30 @@ function Campaign() {
         errors: {
           campaigns:
             campaignResult.status === "rejected"
-              ? getErrorMessage(campaignResult.reason)
+              ? getRequestErrorMessage(campaignResult.reason)
               : undefined,
           locations:
             locationResult.status === "rejected"
-              ? getErrorMessage(locationResult.reason)
+              ? getRequestErrorMessage(locationResult.reason)
               : undefined,
           summary:
             summaryResult.status === "rejected"
-              ? getErrorMessage(summaryResult.reason)
+              ? getRequestErrorMessage(summaryResult.reason)
               : undefined,
+        },
+      });
+    }).catch((requestError: unknown) => {
+      if (cancelled) return;
+      const message = getRequestErrorMessage(requestError);
+      toast.error("Unable to load campaign reports.");
+      setResult({
+        key,
+        campaigns: [],
+        locations: [],
+        errors: {
+          campaigns: message,
+          locations: message,
+          summary: message,
         },
       });
     });

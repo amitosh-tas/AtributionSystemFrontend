@@ -10,6 +10,8 @@ import {
   type DateRange,
 } from "@/features/reports/utils/dateRange";
 import { formatReportDate } from "@/features/reports/utils/formatting";
+import { getRequestErrorMessage } from "@/features/reports/utils/requestError";
+import toast from "react-hot-toast";
 import {
   getReportCustomers,
   getReportLocations,
@@ -19,10 +21,6 @@ import {
   type ReportLocation,
   type ReportTrendPoint,
 } from "@/services/companyServices";
-
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : "The request failed.";
-}
 
 interface AnalyticsResult {
   key: string;
@@ -72,6 +70,15 @@ function Analytics() {
       getReportsSummary(params),
     ]).then(([trendResult, customerResult, locationResult, summaryResult]) => {
       if (cancelled) return;
+      const failedRequests = [
+        trendResult.status === "rejected" ? "trend" : undefined,
+        customerResult.status === "rejected" ? "customer analytics" : undefined,
+        locationResult.status === "rejected" ? "location filters" : undefined,
+        summaryResult.status === "rejected" ? "currency details" : undefined,
+      ].filter((request): request is string => request !== undefined);
+      if (failedRequests.length > 0) {
+        toast.error(`Unable to load ${failedRequests.join(", ")}.`);
+      }
 
       setResult({
         key,
@@ -92,20 +99,35 @@ function Analytics() {
         errors: {
           trend:
             trendResult.status === "rejected"
-              ? getErrorMessage(trendResult.reason)
+              ? getRequestErrorMessage(trendResult.reason)
               : undefined,
           customers:
             customerResult.status === "rejected"
-              ? getErrorMessage(customerResult.reason)
+              ? getRequestErrorMessage(customerResult.reason)
               : undefined,
           locations:
             locationResult.status === "rejected"
-              ? getErrorMessage(locationResult.reason)
+              ? getRequestErrorMessage(locationResult.reason)
               : undefined,
           summary:
             summaryResult.status === "rejected"
-              ? getErrorMessage(summaryResult.reason)
+              ? getRequestErrorMessage(summaryResult.reason)
               : undefined,
+        },
+      });
+    }).catch((requestError: unknown) => {
+      if (cancelled) return;
+      const message = getRequestErrorMessage(requestError);
+      toast.error("Unable to load analytics reports.");
+      setResult({
+        key,
+        trend: [],
+        locations: [],
+        errors: {
+          trend: message,
+          customers: message,
+          locations: message,
+          summary: message,
         },
       });
     });

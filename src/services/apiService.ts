@@ -4,7 +4,7 @@ export type TMode = "live" | "test"
 
 export interface KeyCredentials {
   name: string;
-  mode: TMode;
+  mode?: TMode;
   allowedOrigins: string[];
 }
 

@@ -18,6 +18,8 @@ import {
   formatMajorUnits,
   formatMinorUnits,
 } from "@/features/reports/utils/formatting";
+import { getRequestErrorMessage } from "@/features/reports/utils/requestError";
+import toast from "react-hot-toast";
 import {
   getReportChannels,
   getReportLocations,
@@ -56,10 +58,6 @@ const emptyOverviewData: OverviewData = {
   locations: [],
   allLocations: [],
 };
-
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : "The request failed.";
-}
 
 function Overview() {
   const [dateRange, setDateRange] = useState<DateRange>(() =>
@@ -104,6 +102,19 @@ function Overview() {
     void requests.then(
       ([summary, channels, locations, allLocations, dashboard]) => {
         if (cancelled) return;
+        const failedRequests = [
+          summary.status === "rejected" ? "summary" : undefined,
+          channels.status === "rejected" ? "channels" : undefined,
+          locations.status === "rejected" ? "locations" : undefined,
+          allLocations.status === "rejected" && locationId
+            ? "location filter"
+            : undefined,
+          dashboard.status === "rejected" ? "workspace dashboard" : undefined,
+        ].filter((request): request is string => request !== undefined);
+        if (failedRequests.length > 0) {
+          toast.error(`Unable to load ${failedRequests.join(", ")}.`);
+        }
+
         setResult({
           key,
           data: {
@@ -123,24 +134,38 @@ function Overview() {
           errors: {
             summary:
               summary.status === "rejected"
-                ? getErrorMessage(summary.reason)
+                ? getRequestErrorMessage(summary.reason)
                 : undefined,
             channels:
               channels.status === "rejected"
-                ? getErrorMessage(channels.reason)
+                ? getRequestErrorMessage(channels.reason)
                 : undefined,
             locations:
               locations.status === "rejected"
-                ? getErrorMessage(locations.reason)
+                ? getRequestErrorMessage(locations.reason)
                 : undefined,
             dashboard:
               dashboard.status === "rejected"
-                ? getErrorMessage(dashboard.reason)
+                ? getRequestErrorMessage(dashboard.reason)
                 : undefined,
           },
         });
       },
-    );
+    ).catch((requestError: unknown) => {
+      if (cancelled) return;
+      const message = getRequestErrorMessage(requestError);
+      toast.error("Unable to load the dashboard reports.");
+      setResult({
+        key,
+        data: emptyOverviewData,
+        errors: {
+          summary: message,
+          channels: message,
+          locations: message,
+          dashboard: message,
+        },
+      });
+    });
 
     return () => {
       cancelled = true;

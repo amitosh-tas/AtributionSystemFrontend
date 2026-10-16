@@ -7,6 +7,8 @@ import {
   getCustomers,
   type CustomersResponse,
 } from "@/services/companyServices";
+import { getRequestErrorMessage } from "@/features/reports/utils/requestError";
+import toast from "react-hot-toast";
 
 function Customers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -18,13 +20,15 @@ function Customers() {
     pages: 1,
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [retryCount, setRetryCount] = useState(0);
 
   useEffect(() => {
-
     let cancelled = false;
 
     async function fetchCustomers() {
       setLoading(true);
+      setError("");
 
       try {
         const response = await getCustomers(page);
@@ -40,12 +44,14 @@ function Customers() {
           throw new Error("Unexpected customer API response format.");
         }
 
-        if (!cancelled) {
-          setCustomers(result.data);
-          setPagination(result.pagination);
-        }
-      } catch {
-         
+        if (cancelled) return;
+        setCustomers(result.data);
+        setPagination(result.pagination);
+      } catch (requestError) {
+        if (cancelled) return;
+        const message = getRequestErrorMessage(requestError);
+        setError(`Unable to load customers: ${message}`);
+        toast.error("Unable to load customers. Please try again.");
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -53,7 +59,10 @@ function Customers() {
 
     void fetchCustomers();
 
-  }, [page ]);
+    return () => {
+      cancelled = true;
+    };
+  }, [page, retryCount]);
   
   return (
     <PageLayout
@@ -61,6 +70,21 @@ function Customers() {
       headTitle="Audience"
       description="Review customer activity and purchase history."
     >
+      {error && (
+        <div
+          role="alert"
+          className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-danger/30 bg-danger/5 p-4 text-sm text-danger"
+        >
+          <span>{error}</span>
+          <button
+            type="button"
+            onClick={() => setRetryCount((count) => count + 1)}
+            className="font-medium underline"
+          >
+            Retry
+          </button>
+        </div>
+      )}
       <CustomerTable
         customers={customers}
         loading={loading}

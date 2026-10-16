@@ -1,130 +1,67 @@
-import { useMemo, useState } from "react";
 import DataTable, {
   type DataTableColumn,
 } from "@/components/ui/DataTable";
 import Pill from "@/components/ui/Pill";
+import { formatMinorUnits } from "@/features/reports/utils/formatting";
+import type { WorkspaceDashboard } from "@/services/companyServices";
 
-interface PlatformRevenue {
-  id: string;
-  platform: {
-    name: string;
-    key: string;
-    category: string;
-  };
-  conversions: number;
-  revenue: number;
+type PlatformRevenue = WorkspaceDashboard["revenueByPlatform"][number];
+
+interface RevenueByPlatformProps {
+  data: PlatformRevenue[];
+  currency?: string;
+  loading: boolean;
+  error?: string;
 }
 
-const platformData: PlatformRevenue[] = [
-  {
-    id: "direct",
-    platform: {
-      name: "Direct",
-      key: "direct",
-      category: "direct",
+export default function RevenueByPlatform({
+  data,
+  currency,
+  loading,
+  error,
+}: RevenueByPlatformProps) {
+  const columns: DataTableColumn<PlatformRevenue>[] = [
+    {
+      key: "platform",
+      header: "Platform",
+      render: (row) => <Pill name={row.platform} />,
     },
-    conversions: 735,
-    revenue: 47585.16,
-  },
-  {
-    id: "google",
-    platform: {
-      name: "Google",
-      key: "google",
-      category: "paid_search",
+    {
+      key: "conversions",
+      header: "Conversions",
+      align: "right",
+      render: (row) => row.conversions.toLocaleString(),
     },
-    conversions: 91,
-    revenue: 6542.63,
-  },
-  {
-    id: "awin",
-    platform: {
-      name: "AWIN",
-      key: "awin",
-      category: "affiliate",
+    {
+      key: "revenue",
+      header: "Revenue",
+      align: "right",
+      render: (row) => (
+        <span className="tabular-nums">
+          {currency
+            ? formatMinorUnits(row.revenueMinorUnits, currency)
+            : "—"}
+        </span>
+      ),
     },
-    conversions: 8,
-    revenue: 276.03,
-  },
-  {
-    id: "meta",
-    platform: {
-      name: "META",
-      key: "meta",
-      category: "affiliate",
-    },
-    conversions: 7,
-    revenue: 296.03,
-  },
-];
-
-const currency = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-});
-
-const columns: DataTableColumn<PlatformRevenue>[] = [
-  {
-    key: "platform",
-    header: "Platform",
-    render: (row) => <Pill name={row.platform.name} />,
-  },
-  {
-    key: "conversions",
-    header: "Conversions",
-    align: "right",
-    render: (row) => row.conversions.toLocaleString(),
-  },
-  {
-    key: "revenue",
-    header: "Revenue",
-    align: "right",
-    render: (row) => (
-      <span className="tabular-nums">
-        {currency.format(row.revenue)}
-      </span>
-    ),
-  },
-];
-
-
-export default function RevenueByPlatform() {
-  const [category, setCategory] = useState("all");
-
-  const filteredData = useMemo(() => {
-    if (category === "all") return platformData;
-
-    return platformData.filter(
-      (row) => row.platform.category === category
-    );
-  }, [category]);
+  ];
 
   return (
-    <DataTable
-      tableHead="Revenue by Platform"
-      tableSubHead="all locations · sent conversions only"
-      columns={columns}
-      data={filteredData}
-      getRowKey={(row) => row.id}
-      emptyMessage="No platform revenue found."
-      filters={
-        <div className="flex flex-wrap items-center gap-2">
-          <span className="text-xs text-text-muted">
-            Category
-          </span>
-
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-text"
-          >
-            <option value="all">All categories</option>
-            <option value="direct">Direct</option>
-            <option value="paid_search">Paid Search</option>
-            <option value="affiliate">Affiliate</option>
-          </select>
-        </div>
-      }
-    />
+    <div className="space-y-3">
+      {error && (
+        <p role="alert" className="text-sm text-danger">
+          {error}
+        </p>
+      )}
+      <DataTable
+        tableHead="Revenue by Platform"
+        tableSubHead="All locations · sent conversions only"
+        columns={columns}
+        data={data}
+        getRowKey={(row) => row.platform}
+        loading={loading}
+        emptyMessage="No platform revenue found."
+      />
+    </div>
   );
 }

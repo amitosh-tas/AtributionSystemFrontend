@@ -4,21 +4,12 @@ import CustomerTable, {
   type Customer,
 } from "@/features/customers/components/CustomerTable";
 import EmptyState from "@/components/ui/EmptyState";
-import { getCustomers } from "@/services/companyServices";
+import {
+  getCustomers,
+  type CustomersResponse,
+} from "@/services/companyServices";
 
 const CUSTOMER_API_TOKEN_KEY = "customer-api-token";
-
-interface CustomerPagination {
-  page: number;
-  limit: number;
-  total: number;
-  pages: number;
-}
-
-interface CustomersResponse {
-  data: Customer[];
-  pagination: CustomerPagination;
-}
 
 function readSavedToken() {
   try {
@@ -34,7 +25,7 @@ function Customers() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [page, setPage] = useState(1);
   const [reloadCount, setReloadCount] = useState(0);
-  const [pagination, setPagination] = useState<CustomerPagination>({
+  const [pagination, setPagination] = useState<CustomersResponse["pagination"]>({
     page: 1,
     limit: 25,
     total: 0,
@@ -60,7 +51,7 @@ function Customers() {
 
       try {
         const response = await getCustomers(savedToken, page);
-        const result = response.data as CustomersResponse;
+        const result = response.data;
         if (
           !Array.isArray(result?.data) ||
           !result.pagination ||

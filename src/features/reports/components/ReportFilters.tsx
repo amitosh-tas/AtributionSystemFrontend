@@ -12,6 +12,8 @@ interface ReportFiltersProps {
   onDateRangeChange: (range: DateRange) => void;
   locationId?: string;
   onLocationChange: (locationId?: string) => void;
+  locations?: Array<{ id: string; name: string }>;
+  locationsLoading?: boolean;
 }
 
 const presets: {
@@ -29,6 +31,8 @@ export default function ReportFilters({
   onDateRangeChange,
   locationId,
   onLocationChange,
+  locations = [],
+  locationsLoading = false,
 }: ReportFiltersProps) {
   const [selectedPreset, setSelectedPreset] =
     useState<DateRangePreset>("30D");
@@ -156,15 +160,21 @@ export default function ReportFilters({
           onChange={(event) =>
             onLocationChange(event.target.value || undefined)
           }
-          disabled
+          disabled={locationsLoading}
           aria-describedby="report-location-help"
-          className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-text disabled:cursor-not-allowed disabled:opacity-60"
+          className="rounded-lg border border-border bg-card px-3 py-2 text-sm text-text disabled:cursor-wait disabled:opacity-60"
         >
           <option value="">All Locations</option>
+          {locations.map((location) => (
+            <option key={location.id} value={location.id}>
+              {location.name}
+            </option>
+          ))}
         </select>
         <p id="report-location-help" className="text-xs text-text-muted">
-          Unavailable until the reporting API documents location identifiers
-          and display names.
+          {locationsLoading
+            ? "Loading available locations…"
+            : "Filter reports by location."}
         </p>
       </div>
     </section>

@@ -23,9 +23,12 @@ interface IDataChart {
   color?: string;
   valuePrefix?: string;
   valueSuffix?: string;
+  valueFormatter?: (value: number) => string;
   actionLabel?: string;
   onAction?: () => void;
   height?: number;
+  loading?: boolean;
+  error?: string;
 }
 
 function DataChart({
@@ -36,11 +39,15 @@ function DataChart({
   color = "#525252",
   valuePrefix = "",
   valueSuffix = "",
+  valueFormatter,
   actionLabel,
   onAction,
   height = 260,
+  loading = false,
+  error,
 }: IDataChart) {
   const formatValue = (value: number) =>
+    valueFormatter?.(value) ??
     `${valuePrefix}${value.toLocaleString()}${valueSuffix}`;
 
   return (
@@ -70,93 +77,87 @@ function DataChart({
         </div>
       </div>
 
-      {/* Chart */}
-      <div style={{ width: "100%", height }}>
-        <ResponsiveContainer width="100%" height="100%">
-          {type === "bar" ? (
-            <BarChart
-              data={data}
-              margin={{ top: 8, right: 4, left: 4, bottom: 0 }}
-            >
-              <CartesianGrid
-                vertical={false}
-                stroke="#E8D9C9"
-              />
-
-              <XAxis
-                dataKey="label"
-                tick={{ fontSize: 11, fill: "#79685B" }}
-                tickLine={false}
-                axisLine={false}
-                minTickGap={24}
-              />
-
-              <YAxis hide />
-
-              <Tooltip
-                formatter={(value) => formatValue(Number(value))}
-                contentStyle={{
-                  borderRadius: 10,
-                  border: "1px solid #E8D9C9",
-                  fontSize: 12,
-                  color: "#38291F",
-                }}
-              />
-
-              <Bar
-                dataKey="value"
-                fill={color}
-                radius={[2, 2, 0, 0]}
-                maxBarSize={18}
-              />
-            </BarChart>
-          ) : (
-            <LineChart
-              data={data}
-              margin={{ top: 8, right: 4, left: 4, bottom: 0 }}
-            >
-              <CartesianGrid
-                vertical={false}
-                stroke="#E8D9C9"
-              />
-
-              <XAxis
-                dataKey="label"
-                tick={{ fontSize: 11, fill: "#79685B" }}
-                tickLine={false}
-                axisLine={false}
-                minTickGap={24}
-              />
-
-              <YAxis hide />
-
-              <Tooltip
-                formatter={(value) => formatValue(Number(value))}
-                contentStyle={{
-                  borderRadius: 10,
-                  border: "1px solid #E8D9C9",
-                  fontSize: 12,
-                  color: "#38291F",
-                }}
-              />
-
-              <Line
-                type="linear"
-                dataKey="value"
-                stroke={color}
-                strokeWidth={2}
-                strokeDasharray="0"
-                dot={{
-                  r: 2.5,
-                  fill: color,
-                  strokeWidth: 0,
-                }}
-                activeDot={{ r: 5 }}
-              />
-            </LineChart>
-          )}
-        </ResponsiveContainer>
-      </div>
+      {loading ? (
+        <p role="status" className="flex items-center text-sm text-text-muted" style={{ height }}>
+          Loading chart data…
+        </p>
+      ) : error ? (
+        <p role="alert" className="flex items-center text-sm text-danger" style={{ height }}>
+          {error}
+        </p>
+      ) : data.length === 0 ? (
+        <p className="flex items-center text-sm text-text-muted" style={{ height }}>
+          No chart data available for this period.
+        </p>
+      ) : (
+        <div style={{ width: "100%", height }}>
+          <ResponsiveContainer width="100%" height="100%">
+            {type === "bar" ? (
+              <BarChart
+                data={data}
+                margin={{ top: 8, right: 4, left: 4, bottom: 0 }}
+              >
+                <CartesianGrid vertical={false} stroke="#E8D9C9" />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 11, fill: "#79685B" }}
+                  tickLine={false}
+                  axisLine={false}
+                  minTickGap={24}
+                />
+                <YAxis hide />
+                <Tooltip
+                  formatter={(value) => formatValue(Number(value))}
+                  contentStyle={{
+                    borderRadius: 10,
+                    border: "1px solid #E8D9C9",
+                    fontSize: 12,
+                    color: "#38291F",
+                  }}
+                />
+                <Bar
+                  dataKey="value"
+                  fill={color}
+                  radius={[2, 2, 0, 0]}
+                  maxBarSize={18}
+                />
+              </BarChart>
+            ) : (
+              <LineChart
+                data={data}
+                margin={{ top: 8, right: 4, left: 4, bottom: 0 }}
+              >
+                <CartesianGrid vertical={false} stroke="#E8D9C9" />
+                <XAxis
+                  dataKey="label"
+                  tick={{ fontSize: 11, fill: "#79685B" }}
+                  tickLine={false}
+                  axisLine={false}
+                  minTickGap={24}
+                />
+                <YAxis hide />
+                <Tooltip
+                  formatter={(value) => formatValue(Number(value))}
+                  contentStyle={{
+                    borderRadius: 10,
+                    border: "1px solid #E8D9C9",
+                    fontSize: 12,
+                    color: "#38291F",
+                  }}
+                />
+                <Line
+                  type="linear"
+                  dataKey="value"
+                  stroke={color}
+                  strokeWidth={2}
+                  dot={{ r: 2.5, fill: color, strokeWidth: 0 }}
+                  activeDot={{ r: 5 }}
+                />
+              </LineChart>
+            )}
+          </ResponsiveContainer>
+        </div>
+      )}
     </section>
   );
 }

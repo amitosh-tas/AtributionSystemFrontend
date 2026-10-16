@@ -1,26 +1,31 @@
 import DataChart from "@/components/ui/DataChart";
+import { formatCurrency } from "@/features/reports/utils/formatting";
 
-const orderValueData = [
-  { label: "Sep 9", value: 82 },
-  { label: "Sep 10", value: 68 },
-  { label: "Sep 11", value: 72 },
-  { label: "Sep 12", value: 54 },
-  { label: "Sep 13", value: 76 },
-  { label: "Sep 14", value: 75 },
-  { label: "Sep 15", value: 57 },
-];
+interface AvgOrderValueTrendProps {
+  data: Array<{ label: string; value: number }>;
+  currency?: string;
+  loading: boolean;
+  error?: string;
+}
 
-export default function AvgOrderValueTrend() {
+export default function AvgOrderValueTrend({
+  data,
+  currency,
+  loading,
+  error,
+}: AvgOrderValueTrendProps) {
   return (
     <DataChart
       title="Avg Order Value Trend"
       subtitle="by day"
-      data={orderValueData}
+      data={data}
       type="line"
       color="#B96F50"
-      valuePrefix="$"
-      actionLabel="‹ Prev wk"
-      onAction={() => console.log("Load previous week")}
+      valueFormatter={
+        currency ? (value) => formatCurrency(value, currency) : undefined
+      }
+      loading={loading}
+      error={error}
     />
   );
 }

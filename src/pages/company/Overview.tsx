@@ -5,6 +5,8 @@ import AnalyticsGrid from "@/features/analytics/components/AnalyticsGrid"
 import RevenueByPlatform from "@/features/revenue/components/RevenueByPlatform"
 import RevenueLedger from "@/features/revenue/components/RevenueLedger"
 import RevenueLedgerChart from "@/features/revenue/components/RevenueLedgerChart"
+import { getOrders, getReportsSummary } from "@/services/companyServices"
+import { useEffect } from "react"
 
 interface ICardData {
   title: string;
@@ -67,6 +69,16 @@ const cardData: ICardData[] = [
 ];
 
 function Overview() {
+
+  useEffect(()=>{
+    const api = async () => {
+      console.log(await getReportsSummary())
+      console.log(await getOrders())
+    }
+
+    api();
+  })
+
   return (
     <>
       <PageLayout

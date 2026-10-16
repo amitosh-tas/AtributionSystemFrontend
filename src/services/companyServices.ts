@@ -10,3 +10,11 @@ export async function getCustomers(token: string, page = 1) {
     },
   });
 }
+
+export async function getReportsSummary() {
+  return api.get("/api/workspace/reports/summary")
+}
+
+export async function getOrders() {
+  return api.get("/api/workspace/orders")
+}

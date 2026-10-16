@@ -7,6 +7,7 @@ import RevenueLedger from "@/features/revenue/components/RevenueLedger"
 import RevenueLedgerChart from "@/features/revenue/components/RevenueLedgerChart"
 import { getOrders, getReportsSummary } from "@/services/companyServices"
 import { useEffect } from "react"
+import ReportsApiTester from "../ReportsApiTester"
 
 interface ICardData {
   title: string;
@@ -72,8 +73,8 @@ function Overview() {
 
   useEffect(()=>{
     const api = async () => {
-      console.log(await getReportsSummary())
-      console.log(await getOrders())
+      // console.log(await getReportsSummary())
+      // console.log(await getOrders())
     }
 
     api();
@@ -81,7 +82,7 @@ function Overview() {
 
   return (
     <>
-      <PageLayout
+      {/* <PageLayout
       headTitle="TAS"
       title="Master Report"
       description="Everything in one place — company-wide totals or a single location, any date range."
@@ -110,8 +111,10 @@ function Overview() {
 
         <RevenueByPlatform />
         
-      </PageLayout>
+      </PageLayout> */}
 
+
+      <ReportsApiTester/>
     </>
   )
 }

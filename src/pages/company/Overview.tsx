@@ -323,16 +323,17 @@ function Overview() {
       headTitle="TAS"
       title="Master Report"
       description="Company-wide totals or a single location for your selected date range."
+      actions={
+        <ReportFilters
+          dateRange={dateRange}
+          onDateRangeChange={setDateRange}
+          locationId={locationId}
+          onLocationChange={setLocationId}
+          locations={locationOptions}
+          locationsLoading={loading}
+        />
+      }
     >
-      <ReportFilters
-        dateRange={dateRange}
-        onDateRangeChange={setDateRange}
-        locationId={locationId}
-        onLocationChange={setLocationId}
-        locations={locationOptions}
-        locationsLoading={loading}
-      />
-
       {errors.dashboard && (
         <p role="alert" className="text-sm text-danger">
           Unable to load workspace dashboard: {errors.dashboard}

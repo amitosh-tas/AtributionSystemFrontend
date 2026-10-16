@@ -160,16 +160,17 @@ function Analytics() {
       title="Analytics"
       headTitle="TAS"
       description="Explore customer and order trends for the selected reporting period."
+      actions={
+        <ReportFilters
+          dateRange={dateRange}
+          onDateRangeChange={setDateRange}
+          locationId={locationId}
+          onLocationChange={setLocationId}
+          locations={locationOptions}
+          locationsLoading={loading}
+        />
+      }
     >
-      <ReportFilters
-        dateRange={dateRange}
-        onDateRangeChange={setDateRange}
-        locationId={locationId}
-        onLocationChange={setLocationId}
-        locations={locationOptions}
-        locationsLoading={loading}
-      />
-
       {errors.locations && (
         <p role="alert" className="text-sm text-danger">
           Unable to load location filters: {errors.locations}

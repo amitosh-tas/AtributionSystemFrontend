@@ -16,7 +16,7 @@ export default function PageLayout({
   children,
   title,
   description,
-  actions
+  actions,
 }: IPageLayout) {
   return (
     <div className="mx-auto w-full max-w-360">

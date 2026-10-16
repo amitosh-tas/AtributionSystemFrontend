@@ -1,5 +1,5 @@
-import { useState, type FormEvent } from "react";
-import type { KeyCredentials } from "@/services/apiService";
+import { useState } from "react";
+import type { KeyCredentials, TMode } from "@/services/apiService";
 import {
   countUniqueOrigins,
   normalizeAllowedOrigin,
@@ -25,6 +25,7 @@ function CreateApiKeyModal({
   onSubmit,
 }: CreateApiKeyModalProps) {
   const [name, setName] = useState("");
+  const [mode, setMode] = useState<TMode>("live");
   const [originInput, setOriginInput] = useState("");
   const [origins, setOrigins] = useState<string[]>([]);
   const [validationError, setValidationError] = useState("");
@@ -78,7 +79,7 @@ function CreateApiKeyModal({
     onCancel();
   };
 
-  const submit = async (event: FormEvent<HTMLFormElement>) => {
+  const submit = async (event: React.SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!name.trim()) {
       setValidationError("Enter a name for this API key.");
@@ -98,7 +99,7 @@ function CreateApiKeyModal({
       return;
     }
 
-    if (await onSubmit({ name: name.trim(), allowedOrigins: origins })) {
+    if (await onSubmit({ name: name.trim() , mode: mode, allowedOrigins: origins })) {
       setName("");
       setOrigins([]);
       setOriginInput("");
@@ -142,6 +143,24 @@ function CreateApiKeyModal({
           placeholder="e.g. Production website"
           className="mt-2 w-full rounded-lg border border-border bg-card px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary/40"
         />
+        
+        <div
+        className="flex flex-col gap-2">
+          <label
+          htmlFor="api-key-mode"
+          className="mt-5 block text-xs font-medium text-text-muted">
+            Mode
+          </label>
+
+          <select id="api-key-mode"
+          onChange={(e) => setMode(e.target.value as TMode)}
+          className= "min-w-0 flex-1 rounded-lg border border-border  px-3 py-2.5 text-sm text-text focus-visible:ring-2 focus-visible:ring-primary/40"
+          >
+            <option value="live" selected>live</option>
+            <option value="test">Test</option>
+          </select>
+
+        </div>
 
         <div className="mt-5 flex items-center justify-between gap-3">
           <label

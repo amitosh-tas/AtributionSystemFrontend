@@ -1,7 +1,10 @@
 import { api } from "./api";
 
+export type TMode = "live" | "test"
+
 export interface KeyCredentials {
   name: string;
+  mode: TMode;
   allowedOrigins: string[];
 }
 

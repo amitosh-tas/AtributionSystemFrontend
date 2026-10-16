@@ -43,7 +43,7 @@ export default function PageLayout({
           {actions && 
           <div 
           className="
-          flex md:flex-col flex-wrap items-end justify-end gap-3 w-full
+          flex md:flex-col flex-wrap items-end justify-end gap-3 w-full md:w-fit
           ">{actions}</div>}
         </header>
       )}

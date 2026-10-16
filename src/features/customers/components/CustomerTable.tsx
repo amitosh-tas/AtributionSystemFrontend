@@ -5,10 +5,11 @@ import Pill from "@/components/ui/Pill";
 
 export interface Customer {
   id: string;
+  email: string;
   firstSeenAt: string;
   firstPurchaseAt: string | null;
   lastPurchaseAt: string | null;
-  externalIds: Record<string, unknown> | null;
+  externalIds: Record<string, unknown> | null;  
 }
 
 interface CustomerTableProps {
@@ -61,10 +62,10 @@ export default function CustomerTable({
 }: CustomerTableProps) {
   const columns: DataTableColumn<Customer>[] = [
     {
-      key: "id",
-      header: "Customer ID",
+      key: "email",
+      header: "Customer email", 
       render: (customer) => (
-        <code className="text-xs text-text-muted">{customer.id}</code>
+        <code className="text-xs text-text-muted">{customer.email}</code>
       ),
     },
     {
